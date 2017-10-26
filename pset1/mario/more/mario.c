@@ -22,6 +22,8 @@ int main(void)
     {
         printSpace((height-i)+1);
         printHash(i);
+
+        // Generate 2 half pyramids with 2 spaces between
         printf("  ");
         printHash(i);
         printSpace((height-i)+1);
