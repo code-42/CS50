@@ -4,7 +4,7 @@
 void printSpace(int nTimes);
 void printHash(int nTimes);
 
-// Assignment pset1/water
+// Assignment pset1/mario
 int main(void)
 {
     // Get input from user
