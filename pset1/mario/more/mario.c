@@ -4,7 +4,7 @@
 void printSpace(int nTimes);
 void printHash(int nTimes);
 
-// Assignment pset1/mario
+// Assignment pset1/mario/more
 int main(void)
 {
     // Get input from user
@@ -26,7 +26,7 @@ int main(void)
         // Generate 2 half pyramids with 2 spaces between
         printf("  ");
         printHash(i);
-        printSpace((height-i)+1);
+        // printSpace((height-i)+1);
         printf("\n");
     }
 
