@@ -30,66 +30,72 @@ int getCoins(float change){
     int nNickles = 0;
     int nPennies = 0;
     int coins = nQuarters + nDimes + nNickles + nPennies;
+    
+    // I refactored separate if blocks into nested if blocks
+    // and changed >= to <
     if (change >= 0.25)
     {
-        // do modulo
-        float rmd = (fmodf(change, 0.25));
-        printf("32.outside if(rmd == 0) %f\n", rmd);
-        if (rmd == 0)
+        if (change < 0.25)
         {
-            // change is a multiple of .25
-            coins += change / .25;
-            // printf("%d\n", coins);
-            printf("37.inside if(rmd == 0) %f\n", rmd);
-            return coins;
+            if (change < 0.10)
+            {
+                if (change < 0.05)
+                {
+                    // .04 % .01 == 0
+                    float rmdr = (fmodf(change, 0.01));
+                    printf("46.outside if(rmdr == 0) %f\n", rmdr);
+                    if (rmdr == 0)
+                    {
+                        coins = change / .01;
+                        // printf("coins == %d\n", coins);
+                        printf("51.inside if(rmdr == 0) %d\n", coins);
+                        return coins;
+                    }
+                } 
+                    
+                // if change < .10
+                float rmdr = (fmodf(change, 0.10));
+                printf("56.outside if(rmdr == 0) %f\n", rmdr);
+                if (rmdr == 0)
+                {
+                    // change is a multiple of .10
+                    coins = change / .10;
+                    // printf("coins == %d\n", coins);
+                    printf("63.inside if(rmdr == 0) %d\n", coins);
+                    return coins;
+                }
+                // subtract rmdr and recurse it
+                getCoins(rmdr);
+      
+            }
+            
+            // change > .10 && < .25
+            float rmdr = (fmodf(change, 0.25));
+            printf("70.outside if(rmdr == 0) %f\n", rmdr);
+            if (rmdr == 0)
+            {
+                // change is a multiple of .25
+                coins += change / .25;
+                // printf("%d\n", coins);
+                printf("76.inside if(rmdr == 0) %d\n", coins);
+                return coins;
+            }
+            getCoins(rmdr);
+    
         }
-        else
-        {
-            float baseCoin = change - rmd;
-            nQuarters = baseCoin / .25;
-            printf("remainingChange == %f\n", rmd);
-            getCoins(rmd);
-        }
-    }
 
-    else if (change >= 0.10)
-    {
-        // do modulo
-        float rmd = (fmodf(change, 0.10));
-        if (rmd == 0)
-        {
-            // change is a multiple of .10
-            coins = change / .10;
-            // printf("coins == %d\n", coins);
-            return coins;
-        }
-    }
-
-    else if (change >= 0.05)
-    {
-        // do modulo
-        float rmd = (fmodf(change, 0.05));
-        if (rmd == 0)
-        {
-            // change is a multiple of .05
-            // change < .10
-            coins = change / .05;
-            // printf("coins == %d\n", coins);
-            return coins;
-        }
-    }
-
-    else  // change < .05
-    {
-        // do modulo
-        float rmd = (fmodf(change, 0.01));
-        if (rmd == 0)
+        // change > .25
+        float rmdr = (fmodf(change, 0.25));
+        printf("89.outside if(rmdr == 0) %f\n", rmdr);
+        if (rmdr == 0)
         {
             // change is a multiple of .01
-            coins = change / .01;
+            coins = change / .25;
             // printf("coins == %d\n", coins);
+            printf("95.inside if(rmdr == 0) %d\n", coins);
             return coins;
         }
+        getCoins(rmdr);
     }
 
     return 1;
