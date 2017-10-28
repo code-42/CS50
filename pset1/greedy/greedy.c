@@ -4,6 +4,10 @@
 
 int getCoins(float change);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev3
 // Assignment pset1/greedy
 int main(void)
 {
@@ -15,8 +19,10 @@ int main(void)
         change = get_float();
 
     }
+
     while (change < 0);
 
+<<<<<<< HEAD
     printf("Change == %f\n",change);
     int coins = getCoins(change);
     printf("Coins == %d\n",coins);
@@ -93,4 +99,41 @@ int getCoins(float change){
     }
 
     return 1;
+=======
+    //printf("Change == %f\n",change);
+    int coins = getCoins(change);
+    printf("%d\n",coins);
 }
+
+// Returns the number of coins
+int getCoins(float change){
+
+    // First convert float to int
+    change = round(change*100);
+    // Now we are working with an int
+
+    int coins = 0;
+    while(change >= 25)
+    {
+        change = change - 25;
+        coins++;
+    }
+    while(change >= 10)
+    {
+        change = change - 10;
+        coins++;
+    }
+    while(change >= 5)
+    {
+        change = change - 5;
+        coins++;
+    }
+    while(change >= 1)
+    {
+        change = change - 1;
+        coins++;
+    }
+    return coins;
+>>>>>>> dev3
+}
+
