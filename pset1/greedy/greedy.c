@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <math.h>
 
+int getCoins(float change);
+
+
 // Assignment pset1/greedy
 int main(void)
 {
@@ -13,50 +16,42 @@ int main(void)
         change = get_float();
 
     }
+
     while (change < 0);
 
-    if (change > 0.25)
-    {
-        // do modulo
-        if (fmod(change, 0.25) == 0)
-        {
-            // change is a multiple of .25
-            int coins = change / .25;
-            printf("%d\n", coins);
-            return 0;
-        }
-    }
-
-    // if (change > 0.10)
-    // {
-    //     // do modulo
-    //     if ((int)change % .10 == 0)
-    //     {
-    //         // change is a multiple of .10
-    //         // change < .25
-    //         return (int)change / (int).10;
-    //     }
-    // }
-
-    // if (change > 0.05)
-    // {
-    //     // do modulo
-    //     if ((int)change % .05 == 0)
-    //     {
-    //         // change is a multiple of .05
-    //         // change < .10
-    //         return (int)change / (int).05;
-    //     }
-    // }
-
-    // if (change > 0.01)
-    // {
-    //     // do modulo
-    //     if ((int)change % .01 == 0)
-    //     {
-    //         // change is a multiple of .01
-    //         // change < .05
-    //         return (int)change / (int).01;
-    //     }
-    // }
+    //printf("Change == %f\n",change);
+    int coins = getCoins(change);
+    printf("%d\n",coins);
 }
+
+// Returns the number of coins
+int getCoins(float change){
+
+    // First convert float to int
+    change = round(change*100);
+    // Now we are working with an int
+
+    int coins = 0;
+    while(change >= 25)
+    {
+        change = change - 25;
+        coins++;
+    }
+    while(change >= 10)
+    {
+        change = change - 10;
+        coins++;
+    }
+    while(change >= 5)
+    {
+        change = change - 5;
+        coins++;
+    }
+    while(change >= 1)
+    {
+        change = change - 1;
+        coins++;
+    }
+    return coins;
+}
+
