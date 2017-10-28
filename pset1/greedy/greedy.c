@@ -3,22 +3,22 @@
 #include <math.h>
 
 int getCoins(float change, int coins);
+int calcCoins(float change, int coins,  int denomination);
 
 // Assignment pset1/greedy
 int main(void)
 {
     // Get input from user
-    float change;
+    float change = 0;
     do
     {
         printf("O hai! How much change is owed? ");
         change = get_float();
-
     }
     while (change < 0.0f);
 
     //printf("Change == %f\n",change);
-    int coins = getCoins(change, 0);
+    int coins = getCoins(change, 1);
     printf("\n22.Coins == %d\n",coins);
 }
 
@@ -28,23 +28,20 @@ int getCoins(float change, int coins){
 
     // First convert float to int
     change = change*100;
-    //change = change/100;
-    // double round(double change);
-
-    //printf("32. getCoins(%.65f,%d)\n", change, coins);
-    //printf("35. %.65f\n", round(change));
     change = round(change);
-    //change = change/100;
     printf("37. %.65f\n", change);
+    // Now we are working with an int * 100
+    // return it to cents when returns to main
 
+    int denomination = 0;
     if (change == 0)
     {
         printf("30. change == 0");
         return coins;
     }
 
-    float rmdr = 0.0;
     // I refactored separate if blocks into nested if blocks
+    // First determine amount of change and denomination size
     if (change >= 1)
     {
         if (change >= 5)
@@ -53,64 +50,43 @@ int getCoins(float change, int coins){
             {
                 if (change >= 25)
                 {
-                    rmdr = (fmod(change, 25));
-                    if (rmdr == 0)
-                    {
-                        coins = change / 25;
-                        // printf("coins == %d\n", coins);
-                        printf("49.inside if(rmdr == 0) %d\n", coins);
-                        return coins;
-                    }
-                    printf("52.rmdr == %f\n", rmdr);
-                    coins+= (change - rmdr) / 25;
-                    printf("54.coins == %d\n", coins);
-                    getCoins(rmdr/100, coins);
+                    denomination = 25;
+                    printf("65. change == %f denomination == %d\n", change, denomination);
+                    coins = calcCoins(change, coins, denomination);
                 }
-
-                // .10 <= change < .25
-                rmdr = (fmod(change, 10));
-                if (rmdr == 0)
-                {
-                    // change is a multiple of .10
-                    coins = change / 10;
-                    printf("66.inside if(rmdr == 0) %d\n", coins);
-                    return coins;
-                }
-                printf("69.rmdr == %f\n", rmdr);
-                coins+= (change - rmdr) / 10;
-                printf("71.coins == %d\n", coins);
-                getCoins(rmdr/100, coins);
-
+                denomination = 10;
+                printf("59. change == %f denomination == %d\n", change, denomination);
+                coins = calcCoins(change, coins, denomination);
             }
-
-            // .05 <= change < .10
-            rmdr = (fmod(change, 5));
-            if (rmdr == 0)
-            {
-                coins += change / 5;
-                printf("84.inside if(rmdr == 0) %d\n", coins);
-                return coins;
-            }
-            printf("87.rmdr == %.65f\n", rmdr);
-            coins+= (change - rmdr) / 5;
-            printf("89.coins == %d\n", coins);
-            getCoins(rmdr/100, coins);
+            denomination = 5;
+            printf("53. change == %f denomination == %d\n", change, denomination);
+            coins = calcCoins(change, coins, denomination);
         }
-
-
-        // .01 <= change < .05
-        rmdr = (fmod(change, 1));
-        if (rmdr == 0)
-        {
-            coins = change / 1;
-            printf("101.inside if(rmdr == 0) %d\n", coins);
-            return coins;
-        }
-        printf("104.rmdr == %f\n", rmdr);
-        coins+= (change - rmdr) / 1;
-        printf("106.coins == %d\n", coins);
-        getCoins(rmdr/100, coins);
+        denomination = 1;
+        printf("47. change == %f denomination == %d\n", change, denomination);
+        coins = calcCoins(change, coins, denomination);
     }
     return coins;
 }
 
+
+int calcCoins(float change, int coins, int denomination){
+
+        float remainderr = (fmod(change, denomination));
+        // int coins = 0;
+        if (remainderr == 0)
+        {
+            coins = change / denomination;
+            printf("133.inside if(remainderr == 0) and coins == %d\n", coins);
+            return coins;
+        }
+        else
+        {
+            printf("136.rmdr == %f\n", remainderr);
+            coins = (change - remainderr) / denomination;
+            printf("138.coins == %d\n", coins);
+            getCoins(remainderr/100, coins);
+            return coins;
+        }
+        // return coins;
+}
