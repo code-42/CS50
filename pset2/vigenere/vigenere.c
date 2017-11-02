@@ -16,7 +16,7 @@ int main(int argc, string argv[])
     if (argc != 2)
     {
         // Error message if no argument or too many arguments
-        printf("Usage: ./vigenere k\n");
+        printf("Usage: ./vigenere key\n");
         return 1;
     }
 
@@ -27,40 +27,34 @@ int main(int argc, string argv[])
     printf("plaintext:  ");
     string p = get_string();
 
+    // Array of alphabet characters
+    // for (int i = 65; i < 65 + 26; i++)
+    // {
+    //     printf("%c is %i\n", (char) i, i-65);
+    // }
+
+    // Get the length of p and k for loops
+    int lenP = strlen(p);
+    int lenK = strlen(k);
+
     printf("ciphertext: ");
 
     // Loop through the plaintext string
-    for (int i = 0, n = strlen(p); i < n; i++)
+    for (int i = 0; i < lenP; i++)
     {
-        // Check that the character in p is a letter
-        if ((p[i] >= 'A' && p[i] <= 'Z') || (p[i] >= 'a' && p[i] <= 'z'))
+        // Determine that the character in p is an Uppercase letter
+        if (p[i] >= 'A' && p[i] <= 'Z')
         {
-
-            for (int j = 0, l = strlen(k); j < l; j++)
-            {
-                 // Determine if the character is uppercase
-                if (p[i] >= 'A' && p[i] <= 'Z')
-                {
-                    // Calculate ciher for uppercase letter
-                    printf("%c", ((p[i] + k[j] - 'A') % 26) + 'A');
-
-                }
-
-                // Determine if the character is lowercase
-                if (p[i] >= 'a' && p[i] <= 'z')
-                {
-                    // Calculate ciher for lowercase letter
-                    printf("%c", ((p[i] + k[j] - 'a') % 26) + 'a');
-                }
-                break;
-            }
+            // Calculate ciher for uppercase letter
+            printf("%c", (char)((int)p[i]-65 + (int)k[i%lenK]-65) % 26 + 65);
         }
-        else
+
+        // Determine if the character is lowercase
+        if (p[i] >= 'a' && p[i] <= 'z')
         {
-            // Print characters that are not letters
-            printf("%c", p[i]);
+            // Calculate ciher for lowercase letter
+            printf("%c", (char)((int)p[i]-97 + (int)k[i%lenK]-97) % 26 + 97);
         }
-        continue;
     }
 
     // After outputting ciphertext, you should print a newline
