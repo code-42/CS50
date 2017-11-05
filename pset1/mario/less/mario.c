@@ -18,9 +18,9 @@ int main(void)
     while (height < 0 || height > 23);
 
     // Send spaces and hashes to print function
-    for (int i = 2; i <= height+1; i++)
+    for (int i = 2; i <= height + 1; i++)
     {
-        printSpace((height-i)+1);
+        printSpace((height - i) + 1);
         printHash(i);
         printf("\n");
     }

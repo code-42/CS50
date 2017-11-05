@@ -18,9 +18,9 @@ int main(void)
     while (height < 0 || height > 23);
 
     // Send spaces and hashes to print function
-    for (int i = 2; i <= height+1; i++)
+    for (int i = 1; i <= height ; i++)
     {
-        printSpace((height-i)+1);
+        printSpace((height - i));
         printHash(i);
 
         // Generate 2 half pyramids with 2 spaces between
