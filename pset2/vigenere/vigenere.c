@@ -2,10 +2,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 // pset2/vigenere.c
 // Implement a program that encrypts messages using Vigenère’s cipher:
-// If p is some plaintext and k is a keyword (i.e., an alphbetical string,
+// If p is some plain text and k is a keyword (i.e., an alphbetical string,
 // whereby A represents 0, B represents 1, C represents 2, …, and Z represents 25),
 // then each letter, ci, in the ciphertext, c, is computed as c[i] = (p[i] + k[j]) % 26
 
@@ -20,40 +21,68 @@ int main(int argc, string argv[])
         return 1;
     }
 
-    // Assign key to k
+    // Assign argv[1] to k
     string k = argv[1];
+
+    for (int i = 0; i < strlen(argv[1]); i++)
+    {
+        if (!((k[i] >= 'A' && k[i] <= 'Z') || (k[i] >= 'a' && k[i] <= 'z')))
+        {
+            // Error message if key is not alphabetical characters
+            printf("Usage: ./vigenere key must be alphabetical characters\n");
+            return 1;
+        }
+    }
 
     // Prompt user for a plaintext string
     printf("plaintext:  ");
     string p = get_string();
 
-    // Array of alphabet characters
-    // for (int i = 65; i < 65 + 26; i++)
-    // {
-    //     printf("%c is %i\n", (char) i, i-65);
-    // }
+    // variable k is for key
+    // variable p is for plaintext
 
-    // Get the length of p and k for loops
+    // Get the length of p and key for loops
     int lenP = strlen(p);
     int lenK = strlen(k);
 
+    // Output will go after ciphertext:
     printf("ciphertext: ");
 
     // Loop through the plaintext string
-    for (int i = 0; i < lenP; i++)
+    for (int i = 0, j = 0; i < lenP; i++)
     {
+        // Make the key character look like its from zero-based array
+        int upperK = toupper(k[j]);
+
         // Determine that the character in p is an Uppercase letter
         if (p[i] >= 'A' && p[i] <= 'Z')
         {
             // Calculate ciher for uppercase letter
-            printf("%c", (char)((int)p[i]-65 + (int)k[i%lenK]-65) % 26 + 65);
+            printf("%c", (char)(((int)p[i] - 65 + upperK - 65) % 26) + 65);
+
+            // Increment the index of key
+            j++;
+
+            // Loop around to the first letter of key
+            j = j % lenK;
         }
 
-        // Determine if the character is lowercase
-        if (p[i] >= 'a' && p[i] <= 'z')
+        // // Determine if the character is lowercase
+        else if (p[i] >= 'a' && p[i] <= 'z')
         {
             // Calculate ciher for lowercase letter
-            printf("%c", (char)((int)p[i]-97 + (int)k[i%lenK]-97) % 26 + 97);
+            printf("%c", (char)(((int)p[i] - 97 + upperK - 65) % 26) + 97);
+
+            // Increment the index of key
+            j++;
+
+            // Loop around to the first letter of key
+            j = j % lenK;
+        }
+        else
+        {
+            // Print characters that are not letters
+            printf("%c", p[i]);
         }
     }
 
