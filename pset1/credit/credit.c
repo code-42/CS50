@@ -2,9 +2,9 @@
 #include <stdio.h>
 
 // Function prototype
-void getCCID(int digit1, int digit2);
+void getCCbank(int digit1, int digit2);
 int countCCDigits(long long cc);
-void makeCCArray(int count, long long cc);
+long makeCCArray(int count, long long cc);
 
 // Assignment pset1/credit
 int main(void)
@@ -12,6 +12,7 @@ int main(void)
     /*
     * Temporarily comment out user input
     * Hard-code cc number instead
+    * Uncomment line 24 cc = ... to get user input
     */
     // Get input from user and store in cc
     long long cc = 378282246310005;
@@ -29,14 +30,28 @@ int main(void)
 
     printf("Success: You entered %d digits in cc: %lli\n", count, cc);
 
-    // long ccArray[count];
-    makeCCArray(count, cc);
+    long *pccArray;
+    pccArray = makeCCArray(count, cc);
+    /*
+    // Getting error returning array to pointer
+    ~/workspace/cs50/pset1/credit/ (master) $ make credit
+clang -fsanitize=signed-integer-overflow -fsanitize=undefined -ggdb3 -O0 -std=c11 -Wall -Werror -Wextra -Wno-sign-compare -Wshadow    credit.c  -lcrypt -lcs50 -lm -o credit
+credit.c:34:14: error: incompatible integer to pointer conversion assigning to 'long *' from 'long' [-Werror,-Wint-conversion]
+    pccArray = makeCCArray(count, cc);
+             ^ ~~~~~~~~~~~~~~~~~~~~~~
+credit.c:144:12: error: incompatible pointer to integer conversion returning 'long (*)[count]' from a function with result type
+      'long' [-Werror,-Wint-conversion]
+    return &ccArray;
+           ^~~~~~~~
+2 errors generated.
+make: *** [credit] Error 1
+    */
 
     // Store first two digits of cc number to identify bank
-    // int digit1 = ccArray[0];
-    // int digit2 = ccArray[1];
+    // int *digit1 = makeCCArray(count, cc);
+    // int *digit2 = makeCCArray(count, cc);
     // // printf("72. %d%d\n", digit1, digit2);
-    // getCCID(digit1, digit2);
+    // getCCbank(digit1, digit2);
 
 
     return 0;
@@ -56,25 +71,30 @@ int countCCDigits(long long cc)
         // printf("26. ccdigits == %lli\n", ccDigits);
         count++;
     }
-    printf("29. count == %d\n", count);
+    // printf("29. count == %d\n", count);
     return count;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-void makeCCArray(int count, long long cc)
+long makeCCArray(int count, long long cc)
 {
 
     printf("36. count == %d\n", count);
 
     long ccArray[count];
+
+    // Calculate number of elements in ccArray
     int arrLength = sizeof(ccArray) / sizeof(long);
-    printf("39. ccArray.length == %d\n", arrLength);
+    printf("39. arrLength == %d\n", arrLength);
     long n = 0;
     // count = 0;
+    // Assing cc to a variable so cc does not change
+    // Pass by value
     n = cc;
 
-    for(int i = arrLength - 1; i >= 0; i--)
+    // Initialize loop to number of array elements - 1
+    for(int i = count - 1; i >= 0; i--)
     {
         // Digits go into array backwards
         ccArray[i] = n % 10;
@@ -85,13 +105,14 @@ void makeCCArray(int count, long long cc)
     printf("57. cc entered is: ");
 
     // Print out the cc number for sanity check
-    for(int i = 0; i < arrLength; i++)
+    for(int i = 0; i < count; i++)
     {
         printf("%li", ccArray[i]);
     }
     printf("\n");
 
-        // Multiply every other digit by 2, starting with the number’s second-to-last digit,
+/*
+    // Multiply every other digit by 2, starting with the number’s second-to-last digit,
     // and then add those products' digits together.
     // int sumEveryOtherDigit = 0;
     int sumCount = 0;
@@ -132,15 +153,16 @@ void makeCCArray(int count, long long cc)
         printf("%d\n", sumArray[i]);
     }
     printf("\n");
+*/
 
-    // return ccArray;
+    return &ccArray;
 
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
 
-void getCCID(int digit1, int digit2)
+void getCCbank(int digit1, int digit2)
 {
     printf("119. first 2 digits of cc are: %d%d \nType is: ", digit1, digit2);
 
