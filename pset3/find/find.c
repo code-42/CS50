@@ -14,7 +14,7 @@
 #include "helpers.h"
 
 // maximum amount of hay
-const int MAX = 65536;
+const int MAX = 65536;  // Magic number
 
 int main(int argc, string argv[])
 {
@@ -29,7 +29,7 @@ int main(int argc, string argv[])
     int needle = atoi(argv[1]);
 
     // fill haystack
-    int size;
+    int size; // Used in for loop as counter
     int haystack[MAX];
     for (size = 0; size < MAX; size++)
     {
