@@ -17,11 +17,14 @@
 #include <time.h>
 
 // upper limit on range of integers that can be generated
-#define LIMIT 65536
+#define LIMIT 65536  // 2^16 see https://en.wikipedia.org/wiki/65536_(number)
+                     // and http://www.numberempire.com/65536
+                     
 
 int main(int argc, string argv[])
 {
     // TODO: comment me
+    // ./generate takes an argument and an optional argument
     if (argc != 2 && argc != 3)
     {
         printf("Usage: ./generate n [s]\n");
@@ -29,6 +32,7 @@ int main(int argc, string argv[])
     }
 
     // TODO: comment me
+    // Convert string argument to int
     int n = atoi(argv[1]);
 
     // TODO: comment me
@@ -42,6 +46,8 @@ int main(int argc, string argv[])
     }
 
     // TODO: comment me
+    // see https://reference.cs50.net/stdlib/drand48
+    // see https://en.wikipedia.org/wiki/65536_(number)
     for (int i = 0; i < n; i++)
     {
         printf("%i\n", (int) (drand48() * LIMIT));
