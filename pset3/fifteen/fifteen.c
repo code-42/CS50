@@ -11,7 +11,7 @@
  * Note that usleep is obsolete, but it offers more granularity than
  * sleep and is simpler to use than nanosleep; `man usleep` for more.
  */
- 
+
 #define _XOPEN_SOURCE 500
 
 #include <cs50.h>
@@ -82,6 +82,7 @@ int main(int argc, string argv[])
         {
             for (int j = 0; j < d; j++)
             {
+                // Next line gets written to log.txt
                 fprintf(file, "%i", board[i][j]);
                 if (j < d - 1)
                 {
@@ -102,7 +103,7 @@ int main(int argc, string argv[])
         // prompt for move
         printf("Tile to move: ");
         int tile = get_int();
-        
+
         // quit if user inputs 0 (for testing)
         if (tile == 0)
         {
@@ -110,7 +111,7 @@ int main(int argc, string argv[])
         }
 
         // log move (for testing)
-        fprintf(file, "%i\n", tile);
+        fprintf(file, "tile%i\n", tile);
         fflush(file);
 
         // move if possible, else report illegality
@@ -123,7 +124,7 @@ int main(int argc, string argv[])
         // sleep thread for animation's sake
         usleep(500000);
     }
-    
+
     // close log
     fclose(file);
 
@@ -146,17 +147,34 @@ void clear(void)
 void greet(void)
 {
     clear();
-    printf("WELCOME TO GAME OF FIFTEEN\n");
+    printf("WELCOME TO the GAME OF FIFTEEN\n");
     usleep(2000000);
 }
 
 /**
  * Initializes the game's board with tiles numbered 1 through d*d - 1
- * (i.e., fills 2D array with values but does not actually print them).  
+ * (i.e., fills 2D array with values but does not actually print them).
  */
 void init(void)
 {
     // TODO
+        // Get Total number of tiles
+    int nTiles = d * d;
+
+    // Add tiles to board
+    for (int r = 0; r < d; r++)
+    {
+        for (int c = 0; c < d; c++)
+        {
+            // Decrement value by one and assign to array
+            board[r][c] = --nTiles;
+            // printf("%dinitboard[%d][%d]%i\n", d, r, c, board[r][c]);
+        }
+        // printf("%d\n", board[r][c]);
+    }
+
+    // Swap 2 and 1 if even number of spaces
+
 }
 
 /**
@@ -165,11 +183,38 @@ void init(void)
 void draw(void)
 {
     // TODO
+    // Draw the board
+    for (int i = 0; i < d; i++)
+    {
+        for (int j = 0; j < d; j++)
+        {
+            if(board[i][j] < 1)
+            {
+                printf("  ");
+            }
+            // Right-align numbers if < 10
+            else if(board[i][j] < 10)
+            {
+                printf(" %i", board[i][j]);
+            }
+            else
+            {
+                printf("%i", board[i][j]);
+            }
+            if (j < d - 1)
+            {
+                printf("|");
+            }
+
+
+        }
+        printf("\n");
+    }
 }
 
 /**
  * If tile borders empty space, moves tile and returns true, else
- * returns false. 
+ * returns false.
  */
 bool move(int tile)
 {
@@ -178,7 +223,7 @@ bool move(int tile)
 }
 
 /**
- * Returns true if game is won (i.e., board is in winning configuration), 
+ * Returns true if game is won (i.e., board is in winning configuration),
  * else false.
  */
 bool won(void)
