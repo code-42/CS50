@@ -25,7 +25,7 @@ bool search(int value, int values[], int n)
     // Linear search
     for (int i = 0; i < n ; i++)
     {
-        if (values[i] == value)
+                if (values[i] == value)
         {
             return true;
         }
