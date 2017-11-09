@@ -37,6 +37,9 @@ void draw(void);
 bool move(int tile);
 bool won(void);
 
+void findLegitMoves(void);
+// int legitMoves[d];
+
 int main(int argc, string argv[])
 {
     // ensure proper usage
@@ -104,6 +107,15 @@ int main(int argc, string argv[])
         printf("Tile to move: ");
         int tile = get_int();
 
+        // Much like you automated input into find,
+        // you can automate execution of this game.
+        // In fact, in ~cs50/pset3 are 3x3.txt and 4x4.txt,
+        // winning sequences of moves for a 3 × 3 board and
+        // a 4 × 4 board, respectively. To test your program execute
+        // ./fifteen 3 < ~cs50/pset3/3x3.txt
+        // ./fifteen 4 < ~cs50/pset3/4x4.txt
+        // printf("%d\n", tile);
+
         // quit if user inputs 0 (for testing)
         if (tile == 0)
         {
@@ -111,18 +123,18 @@ int main(int argc, string argv[])
         }
 
         // log move (for testing)
-        fprintf(file, "tile%i\n", tile);
+        fprintf(file, "tile %i\n", tile);
         fflush(file);
 
         // move if possible, else report illegality
         if (!move(tile))
         {
             printf("\nIllegal move.\n");
-            usleep(500000);
+            usleep(50000);
         }
 
         // sleep thread for animation's sake
-        usleep(500000);
+        usleep(50000);
     }
 
     // close log
@@ -158,23 +170,19 @@ void greet(void)
 void init(void)
 {
     // TODO
-        // Get Total number of tiles
+    // Calculate total number of tiles
     int nTiles = d * d;
 
     // Add tiles to board
     for (int r = 0; r < d; r++)
     {
+        // printf("%dx%d board ", d, d);
         for (int c = 0; c < d; c++)
         {
             // Decrement value by one and assign to array
             board[r][c] = --nTiles;
-            // printf("%dinitboard[%d][%d]%i\n", d, r, c, board[r][c]);
         }
-        // printf("%d\n", board[r][c]);
     }
-
-    // Swap 2 and 1 if even number of spaces
-
 }
 
 /**
@@ -183,32 +191,65 @@ void init(void)
 void draw(void)
 {
     // TODO
+
     // Draw the board
-    for (int i = 0; i < d; i++)
+    for (int r = 0; r < d; r++)
     {
-        for (int j = 0; j < d; j++)
+        for (int c = 0; c < d; c++)
         {
-            if(board[i][j] < 1)
+            if(board[r][c] < 1)
             {
                 printf("  ");
             }
             // Right-align numbers if < 10
-            else if(board[i][j] < 10)
+            else if(board[r][c] < 10)
             {
-                printf(" %i", board[i][j]);
+                printf(" %i", board[r][c]);
             }
             else
             {
-                printf("%i", board[i][j]);
+                printf("%i", board[r][c]);
             }
-            if (j < d - 1)
+            if (c < d - 1)
             {
                 printf("|");
             }
-
-
         }
         printf("\n");
+    }
+
+    // The positions of tiles numbered 1 and 2 should start off swapped
+    // if the board has an odd number of tiles (ex. 4x4 board)
+    // in other words, if d is even, for example: if(d % 2 == 0)
+    // IMPORTANT: add this code snippet to init() also
+    // if(d % 2 == 0)
+    // {
+    //     // Swap elements
+    //     int temp = board[j];
+    //     board[j] = board[j + 1];
+    //     board[j + 1] = temp;
+    // }
+
+    // Draw the matrix for dev
+    for (int r = 0; r < d; r++)
+    {
+        printf("%dx%d board ", d, d);
+        for (int c = 0; c < d; c++)
+        {
+            printf("[%d,%d]", r, c);
+        }
+        printf("\n");
+    }
+
+    // Make modulo table
+    for (int r = 0; r < d; r++)
+    {
+        printf("[%d mod %d] = %i\n",r, d, r%d);
+        for (int c = 0; c < d; c++)
+        {
+            // printf("[%d mod %d] = %i\n",r, d, r%d);
+        }
+        // printf("\n");
     }
 }
 
@@ -218,7 +259,56 @@ void draw(void)
  */
 bool move(int tile)
 {
+    // printf("262. Inside move(tile)\n");
+    // get_int();
     // TODO
+    // Check 4 ways around blank to see what tiles can move
+    // int legitMoves[d];
+
+    // Find tile row & col
+    for (int r = 0; r < d; r++)
+    {
+        for (int c = 0; c < d; c++)
+        {
+            if (board[r][c] == tile)
+            {
+                printf("Found tile %d [%d,%d]",tile, r, c);
+                get_char();
+                return true;
+            }
+
+            // Find edges of board
+            // if (r % d > 0 && board[r - 1][c] == 0)
+            // {
+            //     printf("\nTop edge of board");
+            //     // Row must be r or r+1
+            //     printf("\nLegit move is row %d or %d", r, r + 1);
+            // }
+
+
+            // if ((r + 1) % d == 0 && board[r + 1][c] == 0)
+            // {
+            //     printf("\nBottom edge of board");
+            //     // Row must be r or r-1
+            //     printf("\nLegit move is row %d or %d", r, r - 1);
+            // }
+
+            // if (c % d == 0 && c % d < d)
+            // {
+            //     printf("\nLeft edge of board");
+            //     // Col must be c or c+1
+            //     printf("\nLegit move is col %d or %d", c, c + 1);
+            // }
+
+
+            // if ((c + 1) % d == 0 && board[r][c + 1] == 0)
+            // {
+            //     printf("\nRight edge of board");
+            //     // Col must be c or c-1
+            //     printf("\nLegit move is col %d or %d", c, c - 1);
+            // }
+        }
+    }
     return false;
 }
 
