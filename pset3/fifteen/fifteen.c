@@ -259,12 +259,21 @@ void draw(void)
  */
 bool move(int tile)
 {
-    // printf("262. Inside move(tile)\n");
-    // get_int();
     // TODO
-    // Check 4 ways around blank to see what tiles can move
-    // int legitMoves[d];
 
+    // Find the empty square
+    for (int r = 0; r < d; r++)
+    {
+        for (int c = 0; c < d; c++)
+        {
+            if (board[r][c] == 0)
+            {
+                printf("Found empty square [%d,%d]", r, c);
+                get_char();
+                return true;
+            }
+        }
+    }
     // Find tile row & col
     for (int r = 0; r < d; r++)
     {
@@ -276,39 +285,41 @@ bool move(int tile)
                 get_char();
                 return true;
             }
-
-            // Find edges of board
-            // if (r % d > 0 && board[r - 1][c] == 0)
-            // {
-            //     printf("\nTop edge of board");
-            //     // Row must be r or r+1
-            //     printf("\nLegit move is row %d or %d", r, r + 1);
-            // }
-
-
-            // if ((r + 1) % d == 0 && board[r + 1][c] == 0)
-            // {
-            //     printf("\nBottom edge of board");
-            //     // Row must be r or r-1
-            //     printf("\nLegit move is row %d or %d", r, r - 1);
-            // }
-
-            // if (c % d == 0 && c % d < d)
-            // {
-            //     printf("\nLeft edge of board");
-            //     // Col must be c or c+1
-            //     printf("\nLegit move is col %d or %d", c, c + 1);
-            // }
-
-
-            // if ((c + 1) % d == 0 && board[r][c + 1] == 0)
-            // {
-            //     printf("\nRight edge of board");
-            //     // Col must be c or c-1
-            //     printf("\nLegit move is col %d or %d", c, c - 1);
-            // }
         }
     }
+
+    // Check 4 ways around blank to see what tiles can move
+    // Find edges of board
+    // if (r % d > 0 && board[r - 1][c] == 0)
+    // {
+    //     printf("\nTop edge of board");
+    //     // Row must be r or r+1
+    //     printf("\nLegit move is row %d or %d", r, r + 1);
+    // }
+
+
+    // if ((r + 1) % d == 0 && board[r + 1][c] == 0)
+    // {
+    //     printf("\nBottom edge of board");
+    //     // Row must be r or r-1
+    //     printf("\nLegit move is row %d or %d", r, r - 1);
+    // }
+
+    // if (c % d == 0 && c % d < d)
+    // {
+    //     printf("\nLeft edge of board");
+    //     // Col must be c or c+1
+    //     printf("\nLegit move is col %d or %d", c, c + 1);
+    // }
+
+
+    // if ((c + 1) % d == 0 && board[r][c + 1] == 0)
+    // {
+    //     printf("\nRight edge of board");
+    //     // Col must be c or c-1
+    //     printf("\nLegit move is col %d or %d", c, c - 1);
+    // }
+
     return false;
 }
 
