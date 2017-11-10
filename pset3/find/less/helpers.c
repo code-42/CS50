@@ -33,6 +33,7 @@ bool search(int value, int values[], int n)
     }
 
     // Need to implement binary search
+    // Recursion will help but not required
     return false;
 }
 
