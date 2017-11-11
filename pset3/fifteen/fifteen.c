@@ -53,8 +53,8 @@ int main(int argc, string argv[])
     d = atoi(argv[1]);
     if (d < DIM_MIN || d > DIM_MAX)
     {
-        printf("Board must be between %i x %i and %i x %i, inclusive.\n",
-            DIM_MIN, DIM_MIN, DIM_MAX, DIM_MAX);
+        printf("Board must be between %i x %i and %i x %i, inclusive.\n", DIM_MIN, DIM_MIN, DIM_MAX,
+               DIM_MAX);  // style50 insisted on making spaces to line up DIM_MAX with "Board instead of tab
         return 2;
     }
 
@@ -197,12 +197,12 @@ void draw(void)
     {
         for (int c = 0; c < d; c++)
         {
-            if(board[r][c] < 1)
+            if (board[r][c] < 1)
             {
                 printf("  ");
             }
             // Right-align numbers if < 10
-            else if(board[r][c] < 10)
+            else if (board[r][c] < 10)
             {
                 printf(" %i", board[r][c]);
             }
@@ -246,7 +246,7 @@ void draw(void)
     printf("\n");
     for (int r = 0; r < d; r++)
     {
-        printf("[%d mod %d] = %i\n",r, d, r%d);
+        printf("[%d mod %d] = %i\n", r, d, r % d);
         for (int c = 0; c < d; c++)
         {
             // printf("[%d mod %d] = %i\n",r, d, r%d);
@@ -269,7 +269,7 @@ bool move(int tile)
         {
             if (board[r][c] == tile)
             {
-                printf("Found tile %d @ element [%d,%d]",tile, r, c);
+                printf("Found tile %d @ element [%d,%d]", tile, r, c);
                 // get_int();
                 return true;
             }
