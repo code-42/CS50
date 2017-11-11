@@ -1,7 +1,7 @@
 # This is CS50 - Week 3 - Find/less
 
 
-![screenshot of check50 find/less](check50 find_less.png)
+![screenshot of check50 find/less](check50_find_less.png)
 
 Disclaimer: unashamedly converted to README.md from https://docs.cs50.net/problems/find/less/find.html
 
