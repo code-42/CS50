@@ -1,4 +1,4 @@
-# This is CS50 - Week 2 -Caesar
+# This is CS50 - Week 2 - Caesar
 
 ![screenshot of check50 caesar](check50_caesar.png)
 
