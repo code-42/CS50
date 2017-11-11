@@ -1,5 +1,7 @@
 # This is CS50 - Week 2 - Initials/more
 
+![screenshot of check50 initials/more](check50_initials_more.png)
+
 Disclaimer: unashamedly converted to README.md from https://docs.cs50.net/problems/initials/more/initials.html
 
 ## [tl;dr](#tl-dr)
@@ -63,4 +65,3 @@ _None so far! Reload this page periodically to check if any arise!_
 * 2016-09-09
   - Initial release.
 
-![screenshot of check50 initials/more](check50_initials_more.png)
