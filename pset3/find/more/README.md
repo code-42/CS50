@@ -1,5 +1,7 @@
 # This is CS50 - Week 3 - Find/more
 
+![screenshot of check50 find/more](check50_find_more.png)
+
 Disclaimer: unashamedly converted to README.md from https://docs.cs50.net/problems/find/more/find.html
 
 ## [tl;dr](#tl-dr)
