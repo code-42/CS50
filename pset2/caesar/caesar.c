@@ -41,7 +41,8 @@ int main(int argc, string argv[])
             }
 
             // Determine if the character is lowercase
-            if (p[i] >= 'a' && p[i] <= 'z')
+            // if (p[i] >= 'a' && p[i] <= 'z')
+            else
             {
                 // Calculate ciher for lowercase letter
                 printf("%c", ((p[i] + k - 'a') % 26) + 'a');

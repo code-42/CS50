@@ -231,10 +231,10 @@ void draw(void)
     // }
 
     // Draw the matrix for dev
-    printf("\n");
+    printf("\n%dx%d board\n", d, d);
     for (int r = 0; r < d; r++)
     {
-        printf("%dx%d board ", d, d);
+
         for (int c = 0; c < d; c++)
         {
             printf("[%d,%d]", r, c);
