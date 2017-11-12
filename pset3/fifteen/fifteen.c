@@ -183,6 +183,27 @@ void init(void)
             board[r][c] = --nTiles;
         }
     }
+
+    // The positions of tiles numbered 1 and 2 should start off swapped
+    // if the board has an odd number of tiles (ex. 4x4 board)
+    // in other words, if d is even, for example: if(d % 2 == 0)
+    // IMPORTANT: add this code snippet to init() also
+    if(d % 2 == 0)
+    {
+        for (int r = 0; r < d; r++)
+        {
+            // printf("%dx%d board ", d, d);
+            for (int c = 0; c < d; c++)
+            {
+                // Swap elements
+                if(r == d-1 && board[r][c] == 2){
+                    board[r][c] = 1;
+                    board[r][c + 1] = 2;
+                    break;
+                }
+            }
+        }
+    }
 }
 
 /**
@@ -217,18 +238,6 @@ void draw(void)
         }
         printf("\n");
     }
-
-    // The positions of tiles numbered 1 and 2 should start off swapped
-    // if the board has an odd number of tiles (ex. 4x4 board)
-    // in other words, if d is even, for example: if(d % 2 == 0)
-    // IMPORTANT: add this code snippet to init() also
-    // if(d % 2 == 0)
-    // {
-    //     // Swap elements
-    //     int temp = board[j];
-    //     board[j] = board[j + 1];
-    //     board[j + 1] = temp;
-    // }
 
     // Draw the matrix for dev
     // printf("\n%dx%d board\n", d, d);
