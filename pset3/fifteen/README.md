@@ -1,5 +1,7 @@
 # This is CS50 - Week 3: Game of Fifteen
 
+![screenshot of check50 Game of Fifteeen](check50_fifteen.png)
+
 Screenshot of Game of Fifteeen in development, showing the board, array with row and column, and mod table.
 ![screenshot of Game of Fifteeen in development](fifteen_dev.png)
 

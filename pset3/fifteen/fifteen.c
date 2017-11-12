@@ -99,22 +99,17 @@ int main(int argc, string argv[])
         // check for win
         if (won())
         {
-            printf("ftw!\n");
+            printf("\nftw!\n");
             break;
+            // return 0;
         }
 
         // prompt for move
         printf("\nTile to move: ");
         int tile = get_int();
+        printf("%d", tile);
 
-        // Much like you automated input into find,
-        // you can automate execution of this game.
-        // In fact, in ~cs50/pset3 are 3x3.txt and 4x4.txt,
-        // winning sequences of moves for a 3 × 3 board and
-        // a 4 × 4 board, respectively. To test your program execute
-        // ./fifteen 3 < ~cs50/pset3/3x3.txt
-        // ./fifteen 4 < ~cs50/pset3/4x4.txt
-        // printf("%d\n", tile);
+        usleep(500);
 
         // quit if user inputs 0 (for testing)
         if (tile == 0)
@@ -129,8 +124,8 @@ int main(int argc, string argv[])
         // move if possible, else report illegality
         if (!move(tile))
         {
-            printf("\nIllegal move.\n");
-            usleep(500000);
+            printf("Illegal move.\n");
+            usleep(1000000);
         }
 
         // sleep thread for animation's sake
@@ -160,7 +155,7 @@ void greet(void)
 {
     clear();
     printf("WELCOME TO the GAME OF FIFTEEN\n");
-    usleep(2000000);
+    usleep(200000);
 }
 
 /**
@@ -184,19 +179,20 @@ void init(void)
         }
     }
 
-    // The positions of tiles numbered 1 and 2 should start off swapped
-    // if the board has an odd number of tiles (ex. 4x4 board)
-    // in other words, if d is even, for example: if(d % 2 == 0)
-    // IMPORTANT: add this code snippet to init() also
-    if(d % 2 == 0)
+    // If the board has an odd number of tiles (ex. 4x4 board)
+    // the positions of tiles numbered 1 and 2 should start off swapped.
+    // In other words, if d is even, for example: if(d % 2 == 0)
+    if (d % 2 == 0)
     {
+        // Loop through board to find tiles 1 and 2
         for (int r = 0; r < d; r++)
         {
             // printf("%dx%d board ", d, d);
             for (int c = 0; c < d; c++)
             {
-                // Swap elements
-                if(r == d-1 && board[r][c] == 2){
+                // Swap tiles
+                if (r == d - 1 && board[r][c] == 2)
+                {
                     board[r][c] = 1;
                     board[r][c + 1] = 2;
                     break;
@@ -214,10 +210,14 @@ void draw(void)
     // TODO
 
     // Draw the board
+    printf("\n");
+
+    // Loop through board to find 0 tile
     for (int r = 0; r < d; r++)
     {
         for (int c = 0; c < d; c++)
         {
+            // Found 0 tile and make it blank
             if (board[r][c] < 1)
             {
                 printf("  ");
@@ -238,18 +238,6 @@ void draw(void)
         }
         printf("\n");
     }
-
-    // Draw the matrix for dev
-    // printf("\n%dx%d board\n", d, d);
-    // for (int r = 0; r < d; r++)
-    // {
-
-    //     for (int c = 0; c < d; c++)
-    //     {
-    //         printf("[%d,%d]", r, c);
-    //     }
-    //     printf("\n");
-    // }
 }
 
 /**
@@ -265,45 +253,35 @@ bool move(int tile)
     {
         for (int c = 0; c < d; c++)
         {
+            // Found blank tile
             if (board[r][c] == 0)
             {
-                // printf("\nFound blank @ element [%d,%d]", r, c);
-                // usleep(1000000);
-
-                if (board[r + 1][c] == tile ||
-                    board[r - 1][c] == tile ||
-                    board[r][c + 1] == tile ||
-                    board[r][c - 1] == tile)
+                // Find element with tile number in it
+                if (board[r + 1][c] == tile || board[r - 1][c] == tile || board[r][c + 1] == tile
+                    || board[r][c - 1] == tile)
+                {
+                    // Find row & col of tile
+                    for (int row = 0; row < d; row++)
                     {
-                        // printf("\nFound tile adjacent to blank == %d", tile);
-                        // usleep(1000000);
-
-                        // Find row & col of tile
-                        for (int row = 0; row < d; row++)
+                        for (int col = 0; col < d; col++)
                         {
-                            for (int col = 0; col < d; col++)
+                            if (board[row][col] == tile)
                             {
-                                if (board[row][col] == tile)
-                                {
-                                    // printf("\nFound tile %d @ element [%d,%d]", tile, r, c);
-                                    // usleep(500000);
-
-                                    // Move tile out of its spot
-                                    board[row][col] = 0;
-                                }
+                                // Move tile out of its spot and set element equal 0
+                                board[row][col] = 0;
                             }
                         }
-
-                        // Now move the tile into the blank space
-                        board[r][c] = tile;
-                        usleep(500000);
-                        return true;
                     }
-                    return false;
+
+                    // Now move the tile into the blank space
+                    board[r][c] = tile;
+                    usleep(500000);
+                    return true;
+                }
+                return false;
             }
         }
     }
-
     return false;
 }
 
@@ -314,5 +292,34 @@ bool move(int tile)
 bool won(void)
 {
     // TODO
-    return false;
+
+    // Initialize counter
+    int counter = 1;
+
+    // Loop through the board
+    for (int row = 0; row < d; row++)
+    {
+        for (int col = 0; col < d; col++)
+        {
+            // The blank has to be last element on the board
+            // So if a blank shows up while looping through the board
+            // Don't even look any further
+            if (board[row][col] != 0)
+            {
+                // If the element on the board is not greater than previous element
+                // Then the elements are not in order
+                // Thank you Zamalya for pointing that out to me
+                // But I found a counter works better
+                // Because Zamaylas way can stop early
+                if (board[row][col] != counter)
+                {
+                    return false;
+                }
+            }
+            // Increment counter for next loop
+            counter++;
+        }
+    }
+    // Looped all the way through and so you won!
+    return true;
 }
