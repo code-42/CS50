@@ -4,6 +4,8 @@
 
 Props to Wikipedia article for the cartoon image here -->  https://en.wikipedia.org/wiki/15_puzzle
 
+[Shameless twitter post](https://twitter.com/GeekyCoderr/status/929760979440693249)
+
 [The Game of Fifteen](https://en.wikipedia.org/wiki/15_puzzle) is a puzzle played on a square, two-dimensional board with numbered tiles that slide. The goal of this puzzle is to arrange the board's tiles from smallest to largest, left to right, top to bottom, with an empty space in board's bottom-right corner, as described below.
 
 ![screenshot of check50 Game of Fifteeen](check50_fifteen.png)
@@ -15,6 +17,7 @@ For an even groovier check50 run verification click here -->  https://cs50.me/su
 
 Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/problems/fifteen/fifteen.html
 
+with the help of this really cool open-source online MD editor -->  https://dillinger.io/
 
 ## [tl;dr](#tl-dr)
 
