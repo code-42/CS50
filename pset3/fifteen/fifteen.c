@@ -130,11 +130,11 @@ int main(int argc, string argv[])
         if (!move(tile))
         {
             printf("\nIllegal move.\n");
-            usleep(50000);
+            usleep(500000);
         }
 
         // sleep thread for animation's sake
-        usleep(50000);
+        usleep(1000);
     }
 
     // close log
@@ -231,28 +231,16 @@ void draw(void)
     // }
 
     // Draw the matrix for dev
-    printf("\n%dx%d board\n", d, d);
-    for (int r = 0; r < d; r++)
-    {
+    // printf("\n%dx%d board\n", d, d);
+    // for (int r = 0; r < d; r++)
+    // {
 
-        for (int c = 0; c < d; c++)
-        {
-            printf("[%d,%d]", r, c);
-        }
-        printf("\n");
-    }
-
-    // Make modulo table
-    printf("\n");
-    for (int r = 0; r < d; r++)
-    {
-        printf("[%d mod %d] = %i\n", r, d, r % d);
-        for (int c = 0; c < d; c++)
-        {
-            // printf("[%d mod %d] = %i\n",r, d, r%d);
-        }
-        // printf("\n");
-    }
+    //     for (int c = 0; c < d; c++)
+    //     {
+    //         printf("[%d,%d]", r, c);
+    //     }
+    //     printf("\n");
+    // }
 }
 
 /**
@@ -262,67 +250,47 @@ void draw(void)
 bool move(int tile)
 {
     // TODO
-    // Find tile row & col
-    for (int r = 0; r < d; r++)
-    {
-        for (int c = 0; c < d; c++)
-        {
-            if (board[r][c] == tile)
-            {
-                printf("Found tile %d @ element [%d,%d]", tile, r, c);
-                // get_int();
-                return true;
-            }
-        }
-    }
 
-    // Find the empty square
+    // Find row & col of blank
     for (int r = 0; r < d; r++)
     {
         for (int c = 0; c < d; c++)
         {
             if (board[r][c] == 0)
             {
-                printf("Found empty square [%d,%d]", r, c);
-                // get_int();
-                return true;
-            }
-        }
-    }
+                // printf("\nFound blank @ element [%d,%d]", r, c);
+                // usleep(1000000);
 
+                if (board[r + 1][c] == tile ||
+                    board[r - 1][c] == tile ||
+                    board[r][c + 1] == tile ||
+                    board[r][c - 1] == tile)
+                    {
+                        // printf("\nFound tile adjacent to blank == %d", tile);
+                        // usleep(1000000);
 
-    // Check 4 ways around blank to see what tiles can move
-    for (int r = 0; r < d; r++)
-    {
-        for (int c = 0; c < d; c++)
-        {
-            // Find edges of board
-            if (r % d > 0)
-            {
-                printf("\nTop edge of board");
-                // Row must be r or r+1
-                printf("\nLegit move is row %d or %d", r, r + 1);
-            }
+                        // Find row & col of tile
+                        for (int row = 0; row < d; row++)
+                        {
+                            for (int col = 0; col < d; col++)
+                            {
+                                if (board[row][col] == tile)
+                                {
+                                    // printf("\nFound tile %d @ element [%d,%d]", tile, r, c);
+                                    // usleep(500000);
 
-            if ((r + 1) % d == 0)
-            {
-                printf("\nBottom edge of board");
-                // Row must be r or r-1
-                printf("\nLegit move is row %d or %d", r, r - 1);
-            }
+                                    // Move tile out of its spot
+                                    board[row][col] = 0;
+                                }
+                            }
+                        }
 
-            if (c % d == 0)
-            {
-                printf("\nLeft edge of board");
-                // Col must be c or c+1
-                printf("\nLegit move is col %d or %d", c, c + 1);
-            }
-
-            if ((c + 1) % d == 0)
-            {
-                printf("\nRight edge of board");
-                // Col must be c or c-1
-                printf("\nLegit move is col %d or %d", c, c - 1);
+                        // Now move the tile into the blank space
+                        board[r][c] = tile;
+                        usleep(500000);
+                        return true;
+                    }
+                    return false;
             }
         }
     }
