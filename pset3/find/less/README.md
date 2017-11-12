@@ -2,7 +2,9 @@
 
 ![screenshot of check50 find/less](check50_find_less.png)
 
-Disclaimer: unashamedly converted to README.md from https://docs.cs50.net/problems/find/less/find.html
+For an even groovier check50 run verification click here -->  https://cs50.me/checks/f1340de5e86d8f51a36b0beea50093d87c621259
+
+Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/problems/find/less/find.html
 
 ## [tl;dr](#tl-dr)
 

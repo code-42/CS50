@@ -5,7 +5,9 @@
 Screenshot of Game of Fifteeen in development, showing the board, array with row and column, and mod table.
 ![screenshot of Game of Fifteeen in development](fifteen_dev.png)
 
-Disclaimer: unashamedly converted to README.md from https://docs.cs50.net/problems/fifteen/fifteen.html
+For an even groovier check50 run verification click here -->  https://cs50.me/submit50/results/code-42/4fa669fd6662edb1f2f7fa415af8468baa8b8e70
+
+Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/problems/fifteen/fifteen.html
 
 
 ## [tl;dr](#tl-dr)
