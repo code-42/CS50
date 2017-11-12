@@ -1,6 +1,6 @@
 # This is CS50 - Week 3: Game of Fifteen
 
-![Game of Fifteen 1880 political cartoon](https://en.wikipedia.org/wiki/15_puzzle)
+![Game of Fifteen 1880 political cartoon](the_boss_puzzle.jpg)
 Props to Wikipedia article here -->  https://en.wikipedia.org/wiki/15_puzzle
 
 ![screenshot of check50 Game of Fifteeen](check50_fifteen.png)
