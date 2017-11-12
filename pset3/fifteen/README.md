@@ -1,6 +1,7 @@
 # This is CS50 - Week 3: Game of Fifteen
 
-![Game of Fifteen 1880 political cartoon](the_boss_puzzle.jpg)
+![Sam Loyd The 14-15 Puzzle in Puzzleland](Sam_Loyd_The_14-15_Puzzle_in_Puzzleland.jpg)
+
 
 Props to Wikipedia article for the cartoon image here -->  https://en.wikipedia.org/wiki/15_puzzle
 
