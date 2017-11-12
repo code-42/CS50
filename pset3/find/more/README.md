@@ -4,7 +4,8 @@
 
 For an even groovier check50 run verification click here -->  https://cs50.me/submit50/results/code-42/081af0230166fab344aab7235cc999b3a67a73b9
 
-Disclaimer: unashamedly converted to README.md from https://docs.cs50.net/problems/find/more/find.html
+Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/problems/find/more/find.html
+with the help of this really cool open-source online MD editor -->  https://dillinger.io/
 
 ## [tl;dr](#tl-dr)
 

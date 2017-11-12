@@ -1,6 +1,7 @@
 # This is CS50 - Week 3
 
-Disclaimer: unashamedly converted to README.md from https://docs.cs50.net/2016/fall/notes/3/week3.html
+Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/2016/fall/notes/3/week3.html
+with the help of this really cool open-source online MD editor -->  https://dillinger.io/
 
 ## Last Time
 We looked at debugging, with tools like: help50, to help us understand error messages when we compile a program; eprintf, to print messages that might be helpful; debug50, which will let us go through our program line by line, and see variables as they are changed.
