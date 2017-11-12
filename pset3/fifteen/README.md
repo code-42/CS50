@@ -1,5 +1,8 @@
 # This is CS50 - Week 3: Game of Fifteen
 
+![Game of Fifteen 1880 political cartoon](https://en.wikipedia.org/wiki/15_puzzle)
+Props to Wikipedia article here -->  https://en.wikipedia.org/wiki/15_puzzle
+
 ![screenshot of check50 Game of Fifteeen](check50_fifteen.png)
 
 Screenshot of Game of Fifteeen in development, showing the board, array with row and column, and mod table.
