@@ -481,7 +481,7 @@ int main(void)
   - After we use `fprintf`, another library function to write to the `file`, we close the file.
 * With all these tools, we can now do more and more interesting things!
 
-## [Useful Links](#)
+## [Shorts Video Transcripts](#)
 
 [Hexadecimal](http://cdn.cs50.net/2015/fall/sections/5/hexadecimal/lang/en/hexadecimal.txt)
 
