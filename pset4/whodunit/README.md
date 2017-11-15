@@ -217,6 +217,8 @@ Implement a program called `whodunit` that reveals Mr. Boddy's drawing in such a
 
 ## [Walkthrough](#walkthrough)
 
+![Zamylas Walkthrough](https://youtu.be/Igsa7V5ouzg)
+
 ## [Usage](#usage)
 
 Your program should behave per the examples below. Assumed that the underlined text is what some user has typed.

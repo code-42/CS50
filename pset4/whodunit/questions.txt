@@ -59,13 +59,21 @@
 
 9. Why is the third argument to fread always 1 in our code?
 
-    count - Maximum number of items to be read.
+    number of elements to read
 
-    ref= https://msdn.microsoft.com/en-us/library/kt0etdcs.aspx
+    ref = Zamyla's walkthrough -->  https://youtu.be/Igsa7V5ouzg?t=186
 
 
 10. What value does line 65 of copy.c assign to padding if bi.biWidth is 3?
 
+    if I change bi.biWidth to 3, padding is assigned the value 3
+    because if I leave bi.biWidth as it is, padding is 0
+
+    // int padding =  (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+    int padding =  (4 - (3 * sizeof(RGBTRIPLE)) % 4) % 4;
+    printf("67. padding == %d\n", padding);
+
+    but it has no visible effect on verdict.bmp as far as I can see with my eyes
 
 
 11. What does fseek do?
