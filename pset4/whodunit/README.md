@@ -1,5 +1,7 @@
 # This is CS50 - Week 4: Whodunit
 
+![screenshot of check50 whodunit](https://cs50.me/submit50/results/code-42/6bda57c0cb60ffb289adb81f579a9ca3df9cb227)
+
 Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/problems/whodunit/whodunit.html
 with the help of this really cool open-source online MD editor -->  https://dillinger.io/
 
