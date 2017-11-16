@@ -49,20 +49,20 @@ int main(int argc, char *argv[])
     BITMAPINFOHEADER bi;
     fread(&bi, sizeof(BITMAPINFOHEADER), 1, inptr);
 
-    // printf("48. bf.bfType == %i\n", bf.bfType);
-    // printf("49. bi.biSize == %i\n", bi.biSize);
-    // printf("50. bf.bfOffBits == %i\n", bf.bfOffBits);
-    // printf("51. bi.biSize == %i\n", bi.biSize);
-    // printf("52. bi.biWidth == %i\n", bi.biWidth);
-    // printf("53. bi.biHeight == %i\n", bi.biHeight);
-    // printf("54. bi.biPlanes == %i\n", bi.biPlanes);
-    // printf("55. bi.biBitCount == %i\n", bi.biBitCount);
-    // printf("56. bi.biCompression == %i\n", bi.biCompression);
-    // printf("57. bi.biSizeImage == %i\n", bi.biSizeImage);
-    // printf("58. bi.biXPelsPerMeter == %i\n", bi.biXPelsPerMeter);
-    // printf("59. bi.biYPelsPerMeter == %i\n", bi.biYPelsPerMeter);
-    // printf("60. bi.biClrUsed == %i\n", bi.biClrUsed);
-    // printf("61. bi.biClrImportant == %i\n", bi.biClrImportant);
+    printf("48. bf.bfType == %i\n", bf.bfType);
+    printf("49. bf.bfSize == %i\n", bf.bfSize);
+    printf("50. bf.bfOffBits == %i\n", bf.bfOffBits);
+    printf("51. bi.biSize == %i\n", bi.biSize);
+    printf("52. bi.biWidth == %i\n", bi.biWidth);
+    printf("53. bi.biHeight == %i\n", bi.biHeight);
+    printf("54. bi.biPlanes == %i\n", bi.biPlanes);
+    printf("55. bi.biBitCount == %i\n", bi.biBitCount);
+    printf("56. bi.biCompression == %i\n", bi.biCompression);
+    printf("57. bi.biSizeImage == %i\n", bi.biSizeImage);
+    printf("58. bi.biXPelsPerMeter == %i\n", bi.biXPelsPerMeter);
+    printf("59. bi.biYPelsPerMeter == %i\n", bi.biYPelsPerMeter);
+    printf("60. bi.biClrUsed == %i\n", bi.biClrUsed);
+    printf("61. bi.biClrImportant == %i\n", bi.biClrImportant);
 
     // ensure infile is (likely) a 24-bit uncompressed BMP 4.0
     if (bf.bfType != 0x4d42 || bf.bfOffBits != 54 || bi.biSize != 40 ||
@@ -84,9 +84,11 @@ int main(int argc, char *argv[])
     int padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
 
     // iterate over infile's scanlines
+    // for each row
     for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
     {
         // iterate over pixels in scanline
+        // for each pixel in row
         for (int j = 0; j < bi.biWidth; j++)
         {
             // temporary storage
@@ -95,8 +97,29 @@ int main(int argc, char *argv[])
             // read RGB triple from infile
             fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
 
-            // make it bigger here
+            // write to outfile horizontally n times
+            for(int z = 0; z < n; z++)
+            {
+                if(triple.rgbtRed == 0x00){
+                // tripleR++;
+                triple.rgbtRed = 0xFF;
+                }
 
+                if(triple.rgbtGreen == 0xFF){
+                    // tripleG++;
+                    triple.rgbtGreen = 0x00;
+                }
+                // write RGB triple to outfile
+                fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+            }
+        }
+
+        // temporary storage
+        RGBTRIPLE triple;
+
+        // write to outfile vertically n times
+        for(int y = 0; y < n; y++)
+        {
             // write RGB triple to outfile
             fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
         }
@@ -110,6 +133,22 @@ int main(int argc, char *argv[])
             fputc(0x00, outptr);
         }
     }
+
+    printf("117. bf.bfType == %i\n", bf.bfType);
+    printf("118. bf.bfSize == %i\n", bf.bfSize);
+    printf("119. bf.bfOffBits == %i\n", bf.bfOffBits);
+    printf("120. bi.biSize == %i\n", bi.biSize);
+    printf("121. bi.biWidth == %i\n", bi.biWidth);
+    // bi.biWith * 3 = xxd -c columns
+    printf("122. bi.biHeight == %i\n", bi.biHeight);
+    printf("123. bi.biPlanes == %i\n", bi.biPlanes);
+    printf("124. bi.biBitCount == %i\n", bi.biBitCount);
+    printf("125. bi.biCompression == %i\n", bi.biCompression);
+    printf("126. bi.biSizeImage == %i\n", bi.biSizeImage);
+    printf("127. bi.biXPelsPerMeter == %i\n", bi.biXPelsPerMeter);
+    printf("128. bi.biYPelsPerMeter == %i\n", bi.biYPelsPerMeter);
+    printf("129. bi.biClrUsed == %i\n", bi.biClrUsed);
+    printf("130. bi.biClrImportant == %i\n", bi.biClrImportant);
 
     // close infile
     fclose(inptr);
