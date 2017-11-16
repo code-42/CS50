@@ -38,6 +38,7 @@ Implement a program called `resize` that resizes (i.e., enlarges) 24-bit uncompr
 * Your program, if it uses `malloc`, must not leak any memory.
 
 ## [Walkthrough](https://youtu.be/zOylgRdzv_U)
+[![Zamyla's Walkthrough](walkthrough)](https://youtu.be/zOylgRdzv_U)
 
 ## [Usage](#usage)
 

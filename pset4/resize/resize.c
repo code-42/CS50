@@ -1,7 +1,7 @@
 /**
  * Copies a BMP piece by piece, just because.
  */
-       
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,17 +10,19 @@
 int main(int argc, char *argv[])
 {
     // ensure proper usage
-    if (argc != 3)
+    if (argc != 4)
     {
-        fprintf(stderr, "Usage: ./copy infile outfile\n");
+        fprintf(stderr, "Usage: ./copy n infile outfile\n");
         return 1;
     }
 
-    // remember filenames
-    char *infile = argv[1];
-    char *outfile = argv[2];
+    int n = atoi(argv[1]);
 
-    // open input file 
+    // remember filenames
+    char *infile = argv[2];
+    char *outfile = argv[3];
+
+    // open input file
     FILE *inptr = fopen(infile, "r");
     if (inptr == NULL)
     {
@@ -37,6 +39,8 @@ int main(int argc, char *argv[])
         return 3;
     }
 
+    printf("42. inputs are: %d, %s, %s\n", n, infile, outfile);
+
     // read infile's BITMAPFILEHEADER
     BITMAPFILEHEADER bf;
     fread(&bf, sizeof(BITMAPFILEHEADER), 1, inptr);
@@ -45,8 +49,23 @@ int main(int argc, char *argv[])
     BITMAPINFOHEADER bi;
     fread(&bi, sizeof(BITMAPINFOHEADER), 1, inptr);
 
+    // printf("48. bf.bfType == %i\n", bf.bfType);
+    // printf("49. bi.biSize == %i\n", bi.biSize);
+    // printf("50. bf.bfOffBits == %i\n", bf.bfOffBits);
+    // printf("51. bi.biSize == %i\n", bi.biSize);
+    // printf("52. bi.biWidth == %i\n", bi.biWidth);
+    // printf("53. bi.biHeight == %i\n", bi.biHeight);
+    // printf("54. bi.biPlanes == %i\n", bi.biPlanes);
+    // printf("55. bi.biBitCount == %i\n", bi.biBitCount);
+    // printf("56. bi.biCompression == %i\n", bi.biCompression);
+    // printf("57. bi.biSizeImage == %i\n", bi.biSizeImage);
+    // printf("58. bi.biXPelsPerMeter == %i\n", bi.biXPelsPerMeter);
+    // printf("59. bi.biYPelsPerMeter == %i\n", bi.biYPelsPerMeter);
+    // printf("60. bi.biClrUsed == %i\n", bi.biClrUsed);
+    // printf("61. bi.biClrImportant == %i\n", bi.biClrImportant);
+
     // ensure infile is (likely) a 24-bit uncompressed BMP 4.0
-    if (bf.bfType != 0x4d42 || bf.bfOffBits != 54 || bi.biSize != 40 || 
+    if (bf.bfType != 0x4d42 || bf.bfOffBits != 54 || bi.biSize != 40 ||
         bi.biBitCount != 24 || bi.biCompression != 0)
     {
         fclose(outptr);
@@ -75,6 +94,8 @@ int main(int argc, char *argv[])
 
             // read RGB triple from infile
             fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+
+            // make it bigger here
 
             // write RGB triple to outfile
             fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
