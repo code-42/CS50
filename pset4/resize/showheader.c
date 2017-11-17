@@ -65,12 +65,29 @@ int main(int argc, char *argv[])
 
     // iterate over infile's scanlines
     // for each row
+
+    int blueCount = 0;
+    int greenCount = 0;
+    int redCount = 0;
+
     for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
     {
         // iterate over pixels in scanline
         // for each pixel in row
         for (int j = 0; j < bi.biWidth; j++)
         {
+            RGBTRIPLE triple;
+
+            if(triple.rgbtBlue == 0xFF)
+                blueCount++;
+
+            if(triple.rgbtGreen == 0xFF)
+                greenCount++;
+
+            if(triple.rgbtRed == 0xFF)
+                redCount++;
+
+
             // print to screen single characters read from file
             // https://youtu.be/QOD2hHiHpn0?t=497
             char ch;
@@ -79,7 +96,7 @@ int main(int argc, char *argv[])
 
             printf("%i ", bi.biWidth);
             // temporary storage
-            RGBTRIPLE triple;
+
 
             // read RGB triple from infile
             fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
@@ -89,6 +106,10 @@ int main(int argc, char *argv[])
         }
         printf("\n");
     }
+
+    printf("110. rgbBlue %i\n", blueCount);
+    printf("111. rgbGreen %i\n", greenCount);
+    printf("112. rgbRed %i\n", redCount);
 
     // video @ 8.27
     char ch;
