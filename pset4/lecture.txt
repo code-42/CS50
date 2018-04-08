@@ -1,0 +1,6 @@
+https://stackoverflow.com/questions/2229498/passing-by-reference-in-c
+
+It should be noted that C doesn't have pass by reference, it can only be emulated using pointers. – Some programmer dude Mar 9 '16 at 13:05
+
+The correct statement is "C does not support implicitly passing a variable by reference" -- you need to explicitly create a reference (with &) before calling the function and explicitly dereference it (with *) in the function. – Chris Dodd May 26 '17 at 18:49
+

@@ -108,9 +108,10 @@ int main(int argc, char *argv[])
     // iterate over infile's scanlines
     for (int i = 0;  i < labs(original_biHeight); i++)
     {
+        printf("111. %d ", i);
         // declare array to hold pixels
         RGBTRIPLE pixArr[bi.biWidth];
-        int x = 0;
+        int r = 0;
 
         // iterate over pixels in scanline
         for (int j = 0; j < original_biWidth; j++)
@@ -123,28 +124,30 @@ int main(int argc, char *argv[])
 
                 for (int k = 0; k < n; k++)
                 {
-                    // write RGB triple to pixArr[]
-                    pixArr[x] = triple;
-                    x++;
+                    // write RGB triple to outfile
+                    // fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+                    pixArr[r] = triple;
+                    r++;
                 }
         }
 
-        for (int l = 0; l < n; l++){
-            fwrite(&pixArr, sizeof(pixArr), 1, outptr);
-            for (int k = 0; k < padding; k++)
-            {
-                fputc(0x00, outptr);
-            }
-        }
+                for (int l = 0; l < n; l++){
+                    fwrite(&pixArr, sizeof(pixArr), 1, outptr);
+                }
+
+
+
 
         // skip over padding, if any
         fseek(inptr, padding, SEEK_CUR);
 
         // then add it back (to demonstrate how)
-        // for (int k = 0; k < padding; k++)
-        // {
-        //     fputc(0x00, outptr);
-        // }
+        for (int k = 0; k < padding; k++)
+        {
+            fputc(0x00, outptr);
+        }
+
+        printf("146. %d ", i);
     }
 
     printf("\n176. header after fwrite to %s \n", outfile);

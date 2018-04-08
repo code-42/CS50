@@ -90,9 +90,9 @@ int main(int argc, char *argv[])
 
             // print to screen single characters read from file
             // https://youtu.be/QOD2hHiHpn0?t=497
-            char ch;
-            while((ch = fgetc(inptr)) != EOF)
-                printf("%c", ch);
+            // char ch;
+            // while((ch = fgetc(inptr)) != EOF)
+            //     printf("ch == %c", ch);
 
             printf("%i ", bi.biWidth);
             // temporary storage
