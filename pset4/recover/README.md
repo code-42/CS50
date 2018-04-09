@@ -1,4 +1,4 @@
-[This is check50 -->] (https://cs50.me/checks/4400409eaef920430c18533a6adf7f0b65496cd7)
+[This is check50 -->](https://cs50.me/checks/4400409eaef920430c18533a6adf7f0b65496cd7)
 ![check50 screenshot](check50_recover.png "check50 screenshot")
 
 Table of Contents
