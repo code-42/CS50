@@ -62,15 +62,15 @@ int main(int argc, char *argv[])
     fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
 
     // determine padding for scanlines
-    int padding =  (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+    int padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
     // int padding =  (4 - (3 * sizeof(RGBTRIPLE)) % 4) % 4;
     // printf("66. bi.biWidth == %d\n", bi.biWidth);
     // printf("67. padding == %d\n", padding);
 
-        // initialize variables to count the number of RGB pixels
-        // int tripleR = 0;
-        // int tripleG = 0;
-        // int tripleB = 0;
+    // initialize variables to count the number of RGB pixels
+    // int tripleR = 0;
+    // int tripleG = 0;
+    // int tripleB = 0;
 
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
@@ -84,36 +84,39 @@ int main(int argc, char *argv[])
             // read RGB triple from infile
             fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
 
-/*
-            Zamylas walkthrough
-            open file
-            read clues scanline pixel by pixel
-            change pixels color as necessary
-            write verdicts scanline pixel by pixel
+            /*
+                Zamylas walkthrough
+                open file
+                read clues scanline pixel by pixel
+                change pixels color as necessary
+                write verdicts scanline pixel by pixel
 
-            copy.c opens a file
-            updates header info for outfile
-            reads each scanline pixel by pixel
-            writes each pixel into the output files scanline
-            creating an identical copy of the input file
+                copy.c opens a file
+                updates header info for outfile
+                reads each scanline pixel by pixel
+                writes each pixel into the output files scanline
+                creating an identical copy of the input file
 
-            // add my code in here
-            // RGB is backwards - BGR
-            // remove the red noise
-            // if triple is red, make it white
-*/
+                // add my code in here
+                // RGB is backwards - BGR
+                // remove the red noise
+                // if triple is red, make it white
+            */
 
-            if(triple.rgbtRed == 0xFF){
+            if (triple.rgbtRed == 0xFF)
+            {
                 // tripleR++;
                 triple.rgbtRed = 0x00;
             }
 
-            if(triple.rgbtGreen == 0xFF){
+            if (triple.rgbtGreen == 0xFF)
+            {
                 // tripleG++;
                 triple.rgbtGreen = 0x00;
             }
 
-            if(triple.rgbtBlue == 0xFF){
+            if (triple.rgbtBlue == 0xFF)
+            {
                 // tripleB++;
                 triple.rgbtGreen = 0x00;
             }
