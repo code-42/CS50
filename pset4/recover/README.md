@@ -1,3 +1,5 @@
+![check50 screenshot](check50_recover.png "check50 screenshot")
+
 Table of Contents
 
 * [tl;dr](#tl-dr)
