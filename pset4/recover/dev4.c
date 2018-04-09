@@ -1,7 +1,7 @@
 /**
  * recover.c
  *
- * find JPEGs in file card.raw
+ * find JPEGs in card.raw
  *
  * Usage: ./recover card.raw
  *
@@ -9,13 +9,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <cs50.h>
-#include "bmp.h"
+#include <stdint.h>
+#include <stdbool.h>
 
 
 int main(int argc, char *argv[])
 {
-        // ensure proper usage
+    // program should accept one command-line argument - name of  file to recover
     if (argc != 2)
     {
         fprintf(stderr, "Usage: recover card.raw\n");
@@ -27,87 +27,82 @@ int main(int argc, char *argv[])
 
     // open input file
     FILE *inptr = fopen(infile, "r");
+
+    // check if something went wrong
     if (inptr == NULL)
     {
         fprintf(stderr, "Could not open %s.\n", infile);
         return 2;
     }
 
-    // buffer = (char *)malloc(fileLen+1);
-    BYTE buffer[512];
-    // uint8_t buffer[512];
+    // struct to contain bytes from fread
+    uint8_t buffer[512];
 
     // initialize jpg variables
     int fileNum = 0;
     char filename[8];
-
-    // int fileLen = 0;
-    // int *pfileLen = NULL;
-
-    int k = 0; //, l = 0, m = 0, n = 0, startBlock = 0, endBlock = 0, bytesLong = 0;
-    // int sf = 0, ef = 0;
+    FILE *img = NULL;
 
     // repeat until end of file card.raw
     // read 512 bytes into buffer
-
-    long block = 0;
-    while(fread(buffer, 512, 1, inptr) != 0)
+    while (fread(buffer, 512, 1, inptr) != 0)
     {
-        eprintf("block %ld == %d \n",block, k);
-        _Bool sof = false;
+        // set a flag
+        bool SOF = false;
 
-        // set fseek to beginning of current 512k block
-        // fseek(inptr, block, SEEK_SET);
+        // look for jpg signature in header
+        if (buffer[0] == 0xff &&
+            buffer[1] == 0xd8 &&
+            buffer[2] == 0xff &&
+            (buffer[3] & 0xf0) == 0xe0)
+        {
+            // found jpg signature in header
+            SOF = true;
+        }
 
-        for (int i = 1; i < 511; i++){
-            // look for SOF signature in header
-            if (buffer[i-1] == 0xff &&
-                buffer[i] == 0xd8 &&
-                buffer[i+1] == 0xff &&
-                (buffer[i+2] >= 0xe0 && buffer[i+2] <= 0xef))
+        if (SOF)
+        {
+            // close previous output file when next jpg found
+            if (img)
             {
-                sof = true;
-                eprintf("found 0x%0x%0x%0x%0x @ byte %d in block %d\n", buffer[0], buffer[1], buffer[2], buffer[3], i-1, k);
-            }
-
-            if (sof)
-            {
-                fseek(inptr, block, SEEK_SET);
-
-                eprintf("block %ld == %d ",block, k);
-                // eprintf(" %d \n",i);
-
-                sprintf(filename, "%03i.jpg", fileNum++);
-                eprintf("%s \n",filename);
-
-                FILE *img = fopen(filename, "w");
-
-                while (fread(buffer, 512, 1, inptr) != 0)
-                {
-                    fwrite(buffer, 512, 1, img);
-
-                    block++;
-
-                    fseek(inptr, block, SEEK_SET);
-
-                    // if next file signature is detected
-                    if (buffer[i-1] == 0xff &&
-                        buffer[i] == 0xd8 &&
-                        buffer[i+1] == 0xff &&
-                        (buffer[i+2] == 0xe1 || buffer[i+2] == 0xe0))
-                    {
-                        block--;
-                        break;
-                    }
-                    fseek(inptr, block, SEEK_SET);
-                }
-                fileNum++;
                 fclose(img);
             }
+
+            // sprintf writes an empty file then increments filename number
+            sprintf(filename, "%03i.jpg", fileNum++);
+
+            // open the img file for writing
+            img = fopen(filename, "w");
+
+            // check if something went wrong
+            if (img == NULL)
+            {
+                fprintf(stderr, "Could not open %s.\n", filename);
+                return 2;
+            }
+
+            // write 512 byte until new jpg is found
+            fwrite(buffer, 512, 1, img);
         }
-        block++;
-        k++;
+        else
+        {
+            // continue writing next buffer if img file is still open
+            if (img != NULL)
+            {
+                fwrite(buffer, 512, 1, img);
+            }
+        }
     }
-    fclose(inptr);
+
+    // close any open files before exit
+    if (img)
+    {
+        fclose(img);
+    }
+
+    if (inptr)
+    {
+        fclose(inptr);
+    }
     return 0;
 }
