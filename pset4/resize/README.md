@@ -1,4 +1,4 @@
-# This is CS50 - Week 4: Resize
+# This is CS50 - Problem Set 4: Resize
 
 ![screenshot of check50](check50_resize.png)
 
@@ -8,7 +8,7 @@ For an even groovier check50 verification click here --> https://cs50.me/checks/
 
 ![screenshot of resize algorithm](resize_algo_ss.png)
 
-Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/2018/x/psets/4/resize/less/resize.html with the help of https://dillinger.io/
+Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/2018/x/psets/4/resize/less/resize.html with the help of https://dillinger.io/ (Props due where due. I'd do the same for you!)
 
 Table of Contents
 
@@ -69,15 +69,15 @@ Implement a program called `resize` that resizes (i.e., enlarges) 24-bit uncompr
 Your program should behave per the examples below. Assumed that the underlined text is what some user has typed.
 
 ```
-$ <span class="underline">./resize</span>
+$ ./resize
 Usage: ./resize n infile outfile
-$ <span class="underline">echo $?</span>
+$ echo $?
 1
 ```
 
 ```
-$ <span class="underline">./resize 2 small.bmp larger.bmp</span>
-$ <span class="underline">echo $?</span>
+$ ./resize 2 small.bmp larger.bmp
+$ echo $?
 0
 ```
 
