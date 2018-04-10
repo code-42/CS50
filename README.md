@@ -1,6 +1,8 @@
 # This is CS50
 
-This repo contains notes and homework assignments for the Harvard CS50x course I took while at CareerDevs in Providence, RI
+This repo contains notes and homework assignments for the 2017 - 2018 Harvard CS50x course I took while at CareerDevs in Providence, RI
+
+![screenshot of mycs50 submissions](cs50.me.png)
 
 CS50 Instructor David Malan demonstrating Binary Search Algorithm
 ![CS50 Instructor David Malan demonstrating Binary Search Algorithm](https://github.com/code-42/cs50/blob/master/demonstrating_Binary_Search_Algorithm.png)
