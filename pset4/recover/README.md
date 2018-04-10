@@ -10,8 +10,6 @@ For an even groovier check50 verification click here --> https://cs50.me/checks/
 
 Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/2018/x/psets/4/recover/recover.html with the help of https://dillinger.io/ (Props due where due. I'd do the same for you!)
 
-![check50 screenshot](check50_recover.png "check50 screenshot")
-
 Table of Contents
 
 * [tl;dr](#tl-dr)
