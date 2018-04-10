@@ -13,7 +13,7 @@ _____
 Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/problems/whodunit/whodunit.html
 with the help of this really cool open-source online MD editor -->  https://dillinger.io/  (Props due where due. I'd do the same for you!)
 
-Table of Contents
+# Table of Contents
 
 * [tl;dr](#tl-dr)
 * [Distribution](#distribution)
