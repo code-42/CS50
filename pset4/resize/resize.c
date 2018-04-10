@@ -60,7 +60,6 @@ int main(int argc, char *argv[])
 
     // determine original_padding for scanlines
     int original_padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
-    printf("81. padding == %i\n", original_padding);
 
     // original_biWidth and original_biHeight
     long original_biWidth = bi.biWidth;
@@ -69,14 +68,11 @@ int main(int argc, char *argv[])
     // determine new header values calculated with n
     // new bi.biWidth and bi.biHeight calculated with n
     bi.biWidth = bi.biWidth * n;
-    printf("87. bi.biWidth * n == %d\n", bi.biWidth);
 
     bi.biHeight = bi.biHeight * n;
-    printf("90. bi.biHeight * n == %d\n", bi.biHeight);
 
     // new padding calculated with n
     int padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
-    // printf("96. padding == %i\n", padding);
 
     bi.biSizeImage = ((sizeof(RGBTRIPLE) * bi.biWidth) + padding) * abs(bi.biHeight);
     bf.bfSize = bi.biSizeImage + sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
@@ -103,17 +99,20 @@ int main(int argc, char *argv[])
             // read RGB triple from infile
             fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
 
+            // for each pixel write to array n times
             for (int k = 0; k < n; k++)
             {
                 // assign RGB triple to pixArr[]
                 pixArr[x] = triple;
                 x++;
             }
-        // skip over padding, if any
-        fseek(inptr, original_padding, SEEK_CUR);
         }
 
-        // write the array n times
+        // skip over padding, if any
+        fseek(inptr, original_padding, SEEK_CUR);
+
+
+        // write the array to outfile n times
         for (int row = 0; row < n; row++)
         {
             fwrite(&pixArr, sizeof(pixArr), 1, outptr);

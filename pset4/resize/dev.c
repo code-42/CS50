@@ -125,29 +125,34 @@ int main(int argc, char *argv[])
             fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
             eprintf("sizeof(RGBTRIPLE) == %ld\n", sizeof(RGBTRIPLE));
 
+            // for each pixel write to array n times
             for (int k = 0; k < n; k++)
             {
                 // assign RGB triple to pixArr[]
                 pixArr[x] = triple;
                 x++;
             }
+
+        }
         // skip over padding, if any
         eprintf("original padding %d \n", original_padding);
+
         fseek(inptr, original_padding, SEEK_CUR);
-        }
+
 
 
 eprintf("sizeof(pixArr) == %lu\n", sizeof(pixArr));
 eprintf("original_padding == %lu\n", sizeof(original_padding));
 eprintf("padding == %lu\n", sizeof(padding));
 
-        // write the array n times
+        // write the array to outfile n times
         for (int row = 0; row < n; row++)
         {
             eprintf("fwrite row %d \n", row);
             fwrite(&pixArr, sizeof(pixArr), 1, outptr);
+            // fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
 
-            // write padding
+            // write outfile padding
             for (int k = 0; k < padding; k++)
             {
                 eprintf("fwrite padding %d \n", k);
@@ -170,8 +175,8 @@ eprintf("padding == %lu\n", sizeof(padding));
     printf("187. bi.biSizeImage == %i\n", bi.biSizeImage);
 
     // calculate padding for scanlines
-    padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
-    printf("191. padding == %i\n", padding);
+    // padding = (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+    // printf("191. padding == %i\n", padding);
 
 
     // close infile
