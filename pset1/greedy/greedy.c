@@ -2,14 +2,17 @@
 #include <stdio.h>
 #include <math.h>
 
+// Initialize prototype function
 int getCoins(float change);
 int calcCoins(int cents, int coins,  int denomination);
 
 // Assignment pset1/greedy
 int main(void)
 {
-    // Get input from user
+    // Initialize variable
     float change;
+
+    // Get input from user
     do
     {
         printf("O hai! How much change is owed? ");
@@ -17,6 +20,7 @@ int main(void)
     }
     while (change < 0.0f);
 
+<<<<<<< HEAD
     // Separate preentation from logic
     int coins = getCoins(change);
     printf("\n22.Coins == %d\n",coins);
@@ -122,3 +126,51 @@ int calcCoins(int cents, int coins, int denomination){
             return coins;
         }
 }
+=======
+    // Initialize variable and call function
+    int coins = getCoins(change);
+
+    // Print results
+    printf("%d\n", coins);
+}
+
+
+// Returns the number of coins
+int getCoins(float change)
+{
+
+    // First convert float to int
+    change = round(change * 100);
+    // Now we are working with an int
+
+    int coins = 0;
+
+    // Loop through decreasing coin sizes
+    while
+    (change >= 25)
+    {
+        change = change - 25;
+        coins++;
+    }
+    while
+    (change >= 10)
+    {
+        change = change - 10;
+        coins++;
+    }
+    while
+    (change >= 5)
+    {
+        change = change - 5;
+        coins++;
+    }
+    while
+    (change >= 1)
+    {
+        change = change - 1;
+        coins++;
+    }
+    return coins;
+}
+
+>>>>>>> c09b9cf89bad422ea59d74fe8af3befa0fe4c7e3
