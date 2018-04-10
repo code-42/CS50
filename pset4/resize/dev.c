@@ -108,6 +108,7 @@ int main(int argc, char *argv[])
     // iterate over infile's scanlines
     for (int i = 0;  i < labs(original_biHeight); i++)
     {
+        eprintf("i.row %d \n", i);
         // declare array to hold pixels
         RGBTRIPLE pixArr[bi.biWidth];
         int x = 0;
@@ -115,39 +116,47 @@ int main(int argc, char *argv[])
         // iterate over pixels in scanline
         for (int j = 0; j < original_biWidth; j++)
         {
-                // temporary storage
-                RGBTRIPLE triple;
+            eprintf("j.col %d \n", j);
+            // temporary storage
+            RGBTRIPLE triple;
+            eprintf("sizeof(RGBTRIPLE) == %ld\n", sizeof(RGBTRIPLE));
 
-                // read RGB triple from infile
-                fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+            // read RGB triple from infile
+            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+            eprintf("sizeof(RGBTRIPLE) == %ld\n", sizeof(RGBTRIPLE));
 
-                for (int k = 0; k < n; k++)
-                {
-                    // write RGB triple to pixArr[]
-                    pixArr[x] = triple;
-                    x++;
-                }
+            for (int k = 0; k < n; k++)
+            {
+                // assign RGB triple to pixArr[]
+                pixArr[x] = triple;
+                x++;
+            }
+        // skip over padding, if any
+        eprintf("original padding %d \n", original_padding);
+        fseek(inptr, original_padding, SEEK_CUR);
         }
 
-        for (int l = 0; l < n; l++){
+
+eprintf("sizeof(pixArr) == %lu\n", sizeof(pixArr));
+eprintf("original_padding == %lu\n", sizeof(original_padding));
+eprintf("padding == %lu\n", sizeof(padding));
+
+        // write the array n times
+        for (int row = 0; row < n; row++)
+        {
+            eprintf("fwrite row %d \n", row);
             fwrite(&pixArr, sizeof(pixArr), 1, outptr);
+
+            // write padding
             for (int k = 0; k < padding; k++)
             {
+                eprintf("fwrite padding %d \n", k);
                 fputc(0x00, outptr);
             }
         }
-
-        // skip over padding, if any
-        fseek(inptr, padding, SEEK_CUR);
-
-        // then add it back (to demonstrate how)
-        // for (int k = 0; k < padding; k++)
-        // {
-        //     fputc(0x00, outptr);
-        // }
     }
 
-    printf("\n176. header after fwrite to %s \n", outfile);
+    eprintf("header after fwrite to %s \n", outfile);
     // printf("42. inputs are: %d, %s, %s\n", n, infile, outfile);
 
     printf("179. bf.bfType == %i\n", bf.bfType);
