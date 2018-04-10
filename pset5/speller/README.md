@@ -36,7 +36,7 @@ Table of Contents
 Implement a program that spell-checks a file, per the below.
 
 ```
-$ <span class="underline">./speller texts/lalaland.txt</span>
+$ ./speller texts/lalaland.txt
 MISSPELLED WORDS
 
 [...]
