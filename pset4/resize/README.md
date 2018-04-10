@@ -2,9 +2,13 @@
 
 ![screenshot of check50](check50_resize.png)
 
-The objective of this exercise is to implement a program called resize that resizes (i.e., enlarges) 24-bit uncompressed BMPs by a factor of n.
+For an even groovier check50 verification click here --> https://cs50.me/checks/658a934e9970f6e00e94534cb14b55aad78c462d
+
+**The objective** of this exercise is to implement a program called resize that resizes (i.e., enlarges) 24-bit uncompressed BMPs by a factor of n.
 
 ![screenshot of resize algorithm](resize_algo_ss.png)
+
+Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/2018/x/psets/4/resize/less/resize.html with the help of https://dillinger.io/
 
 Table of Contents
 
@@ -27,7 +31,7 @@ Table of Contents
 Implement a program that resizes BMPs, per the below.
 
 ```
-$ <span class="underline">./resize 4 small.bmp large.bmp</span>
+$ ./resize 4 small.bmp large.bmp
 ```
 
 ## [Background](#background)
