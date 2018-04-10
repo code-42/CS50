@@ -1,4 +1,15 @@
-[This is check50 -->](https://cs50.me/checks/4400409eaef920430c18533a6adf7f0b65496cd7)
+# This is CS50 - Problem Set 4: Recover
+
+![screenshot of check50](check50_recover.png)
+
+For an even groovier check50 verification click here --> https://cs50.me/checks/e5fd08d6d62c43fb630c7b3d7c18ff9779c67935
+
+**The objective** of this exercise is to Implement a program that recovers JPEGs from a forensic image.
+
+![screenshot of recover algorithm](memory_card_ss.png)
+
+Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/2018/x/psets/4/recover/recover.html with the help of https://dillinger.io/ (Props due where due. I'd do the same for you!)
+
 ![check50 screenshot](check50_recover.png "check50 screenshot")
 
 Table of Contents
@@ -22,7 +33,7 @@ Table of Contents
 Implement a program that recovers JPEGs from a forensic image, per the below.
 
 ```
-$ <span class="underline">./recover card.raw</span>
+$ ./recover card.raw
 ```
 
 ## [Background](#background)
@@ -76,15 +87,15 @@ Implement a program called `recover` that recovers JPEGs from a forensic image.
 Your program should behave per the examples below. Assumed that the underlined text is what some user has typed.
 
 ```
-$ <span class="underline">./recover</span>
+$ ./recover
 Usage: ./recover image
-$ <span class="underline">echo $?</span>
+$ echo $?
 1
 ```
 
 ```
-$ <span class="underline">./recover card.raw</span>
-$ <span class="underline">echo $?</span>
+$ ./recover card.raw
+$ echo $?
 0
 ```
 
