@@ -2,6 +2,12 @@
 
 ![screenshot of check50 whodunit](images/check50_whodunit.png)
 
+Because whodunit can be implemented in several ways, afraid you can’t check your implementation’s correctness with check50!
+
+_____
+
+**The objective** of this exercise is to implement a program that reveals a hidden message in a BMP.
+
 ![screenshot of the answer](images/verdict.png)
 
 Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/problems/whodunit/whodunit.html
