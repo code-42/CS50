@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     FILE *file = fopen(text, "r");
     if (file == NULL)
     {
-        printf("Could not open %s.\n", text);
+        printf("58. Could not open %s.\n", text);
         unload();
         return 1;
     }

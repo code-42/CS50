@@ -1,10 +1,7 @@
 // Implements a dictionary's functionality
+// video tutorial https://www.youtube.com/watch?v=_vSJOl4LiEU
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
 #include <stdbool.h>
-#include <cs50.h>
 
 #include "dictionary.h"
 
@@ -27,14 +24,6 @@ bool load(const char *dictionary)
     {
         fprintf(stderr, "29. Could not open %s.\n", dictionary);
         return 2;
-    }
-
-    // read the dictionary file one char at a time and print to screen
-    for (char c = fgetc(inptr); c != EOF; c = fgetc(inptr)){
-        // read each char
-        if (c != '\n'){
-            printf("%c ", c);
-        }
     }
 
     return true;
