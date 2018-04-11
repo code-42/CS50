@@ -20,7 +20,6 @@ SRCS = speller.c dictionary.c
 # automatically generated list of object files
 OBJS = $(SRCS:.c=.o)
 
-
 # default target
 $(EXE): $(OBJS) $(HDRS) Makefile
 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
