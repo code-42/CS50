@@ -1,6 +1,10 @@
-# This is CS50 - Pset5: Speller
+# This is CS50 - Problem Set 5: Speller
 
 ![screenshot of study.s50.net typedef](typedef.png)
+
+**The objective** of this exercise is to implement a program that spell-checks a file.
+
+Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/2018/x/psets/4/resize/less/resize.html with the help of https://dillinger.io/ (Props due where due. I'd do the same for you!)
 
 Table of Contents
 
