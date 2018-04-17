@@ -91,11 +91,9 @@ bool load(const char *dictionary)
             // tolower() requires <ctype.h>
             index = tolower(c) - 'a';
             if (c == '\'') index = 26;
-            // printf("58. %i ", index);
 
             // build a word
             word[index] = c;
-            // printf("%c\n", word[index]);
 
             // source: Zamyla's walkthrough
             // check the value at children[i]
@@ -120,7 +118,7 @@ bool load(const char *dictionary)
 unsigned int size(void)
 {
     // TODO
-    return 0;
+    return word_count;
 }
 
 // Unloads dictionary from memory, returning true if successful else false
