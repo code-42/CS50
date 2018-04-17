@@ -4,7 +4,7 @@
 
 **The objective** of this exercise is to implement a program that spell-checks a file.
 
-Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/2018/x/psets/4/resize/less/resize.html with the help of https://dillinger.io/ (Props due where due. I'd do the same for you!)
+Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/problems/speller/speller.html with the help of https://dillinger.io/ (Props due where due. I'd do the same for you!)
 
 Table of Contents
 
