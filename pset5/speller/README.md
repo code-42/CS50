@@ -1,3 +1,7 @@
+# This is CS50 - Pset5: Speller
+
+![screenshot of study.s50.net typedef](typedef.png)
+
 Table of Contents
 
 * [tl;dr](#tl-dr)
