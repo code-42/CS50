@@ -1,5 +1,6 @@
 // Implements a dictionary's functionality
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -9,6 +10,38 @@
 #include <cs50.h>
 
 #include "dictionary.h"
+
+// source https://study.cs50.net/tries
+typedef struct node
+{
+    // marker for end of word
+    bool is_word;
+
+    // pointers to other nodes
+    struct node* children[27];
+}
+node;
+
+struct node* newNode()
+{
+    struct node *p_node = NULL;
+    p_node = (struct node *) malloc(sizeof(struct node));
+
+    if (p_node)
+    {
+        p_node->is_word = false;
+
+        // fill the array with NULL
+        for (int i = 0; i < 27; i++)
+        {
+            p_node->children[i] = NULL;
+        }
+    }
+    return p_node;
+}
+
+node *root_node;
+int word_count = 0;
 
 // Returns true if word is in dictionary else false
 bool check(const char *word)
@@ -32,6 +65,10 @@ bool load(const char *dictionary)
         return 2;
     }
 
+    // set a pointer to root so I can get back to it
+    // struct node *root_node;
+    root_node = newNode();
+
     // LENGTH is defined in dictionary.h
     // Maximum length for a word
     char word[LENGTH + 1];
@@ -47,17 +84,35 @@ bool load(const char *dictionary)
     // source: speller.c
     for (char c = fgetc(inptr); c != EOF; c = fgetc(inptr))
     {
+        // make a pointer to root
+        node* parent = root_node;
         if (c != '\n'){
             // source: study.cs50.net/tries Kevin's video
             // tolower() requires <ctype.h>
             index = tolower(c) - 'a';
             if (c == '\'') index = 26;
-            printf("58. %i ", index);
+            // printf("58. %i ", index);
+
             // build a word
             word[index] = c;
-            printf("%c\n", word[index]);
+            // printf("%c\n", word[index]);
+
+            // source: Zamyla's walkthrough
+            // check the value at children[i]
+            if (parent->children[index] == NULL)
+            {
+                // if NULL, malloc a new node
+                parent->children[index] = newNode();
+            }
+            // have children[i] point to it
+            parent = parent->children[index];
+            index++;
         }
+        // if at end of word, set is_word to true
+        parent->is_word = true;
+        word_count++;
     }
+    fclose(inptr);
     return true;
 }
 
