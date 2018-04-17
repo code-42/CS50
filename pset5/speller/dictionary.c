@@ -24,16 +24,19 @@ node;
 
 struct node* newNode()
 {
+    // malloc space for a new node pointer
     struct node *p_node = NULL;
     p_node = (struct node *) malloc(sizeof(struct node));
 
+    // malloc was successful and created new node
     if (p_node)
     {
+        // set is_word to false
         p_node->is_word = false;
 
-        // fill the array with NULL
         for (int i = 0; i < 27; i++)
         {
+            // fill the array with NULL
             p_node->children[i] = NULL;
         }
     }
@@ -42,13 +45,59 @@ struct node* newNode()
 
 node *root_node;
 int word_count = 0;
+int word_index = 0;
 
 // Returns true if word is in dictionary else false
 bool check(const char *word)
 {
     // eat the error message
     // error: unused parameter 'word'
-    word++;
+    // word++;
+    // return false;
+
+        int len = strlen(word);
+    // printf("50. %s passed in len == %d \n", word, len);
+
+    // make a pointer to root
+    node* parent = root_node;
+
+    // source: Zamyla's walkthrough
+    // traversing a trie
+    // for each letter in input word
+    for (int i = 0; i < len; i++)
+    {
+        if(isalpha(word[i]))
+        {
+            word_index = tolower(word[i])-'a';
+            // printf("65. %c index == %d \n", word[i], word_index);
+
+            if (parent->is_word){
+                // printf("72. char is %c\n", word[i]);
+                // go to corresponding element in children
+                if (parent->children[word_index] == NULL)
+                {
+                    // if NULL word is misspelled
+                    printf("79. %s is misspelled \n", word);
+                    // return false;
+                }
+
+                // have children[i] point to it
+                parent = parent->children[word_index];
+            }
+
+        }
+        else
+        {
+            // index for '\''
+            word_index = 26;
+        }
+
+        // once at end of input word
+        // check if is_word is true
+        return true;
+    }
+
+    // word not found in dictionary
     return false;
 }
 
