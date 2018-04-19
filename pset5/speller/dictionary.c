@@ -91,7 +91,6 @@ bool check(const char *word)
     if(parent->is_word) return true;
 
     // word not found
-    // printf("%s \n", word);
     return false;
 }
 
@@ -153,7 +152,6 @@ bool load(const char *dictionary)
         parent->is_word = true;
         word_count++;
     }
-    // printf("150. %d ", word_count);
     fclose(inptr);
     return true;
 }
@@ -162,14 +160,34 @@ bool load(const char *dictionary)
 unsigned int size(void)
 {
     // TODO
-    // source: speller.c line 144
+    // source: speller.c line 147
     return word_count;
+}
+
+// Deletes trie from the bottom up
+void delete_node(node* a_node)
+{
+    // if no node return
+    if(!a_node)
+    {
+        return;
+    }
+
+    // travel to lowest possible node
+    for (int i = 0; i < 27; i++)
+    {
+        // free all pointers in children
+       delete_node(a_node->children[i]);
+    }
+
+    // backtrack upwards, freeing all elements
+    free(a_node);
 }
 
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    // TODO
+    delete_node(root_node);
     return true;
 }
 
