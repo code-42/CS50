@@ -1,4 +1,5 @@
 # This is CS50 - Problem Set 5: Speller
+![screenshot of check50 dictionary.c](check50.png)
 
 ![screenshot of study.s50.net typedef](typedef.png)
 
