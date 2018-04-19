@@ -1,5 +1,5 @@
+// usage: ./speller dictionaries/small texts/cat.txt
 // Implements a dictionary's functionality
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,21 +22,19 @@ typedef struct node
 }
 node;
 
-struct node* newNode()
+struct node* newNode(void)
 {
-    // malloc space for a new node pointer
+    // malloc space for a new node
     struct node *p_node = NULL;
     p_node = (struct node *) malloc(sizeof(struct node));
 
-    // malloc was successful and created new node
-    if (p_node)
+    if (p_node != NULL)
     {
-        // set is_word to false
         p_node->is_word = false;
 
+        // fill the array with NULL
         for (int i = 0; i < 27; i++)
         {
-            // fill the array with NULL
             p_node->children[i] = NULL;
         }
     }
@@ -45,18 +43,12 @@ struct node* newNode()
 
 node *root_node;
 int word_count = 0;
-int word_index = 0;
 
 // Returns true if word is in dictionary else false
 bool check(const char *word)
 {
-    // eat the error message
-    // error: unused parameter 'word'
-    // word++;
-    // return false;
-
-        int len = strlen(word);
-    // printf("50. %s passed in len == %d \n", word, len);
+    int len = strlen(word);
+    int index = 0;
 
     // make a pointer to root
     node* parent = root_node;
@@ -66,38 +58,40 @@ bool check(const char *word)
     // for each letter in input word
     for (int i = 0; i < len; i++)
     {
-        if(isalpha(word[i]))
-        {
-            word_index = tolower(word[i])-'a';
-            // printf("65. %c index == %d \n", word[i], word_index);
-
-            if (parent->is_word){
-                // printf("72. char is %c\n", word[i]);
-                // go to corresponding element in children
-                if (parent->children[word_index] == NULL)
-                {
-                    // if NULL word is misspelled
-                    printf("79. %s is misspelled \n", word);
-                    // return false;
-                }
-
-                // have children[i] point to it
-                parent = parent->children[word_index];
-            }
-
-        }
-        else
+        if (word[i] == '\'')
         {
             // index for '\''
-            word_index = 26;
+            index = 26;
+            if (parent->children[index] == NULL)
+            {
+                // if NULL, word is misspelled or not in dictionary
+                return false;
+            }
+            else
+            {
+                parent = parent->children[index];
+            }
         }
-
-        // once at end of input word
-        // check if is_word is true
-        return true;
+        else // its alpha
+        {
+            // index = tolower(word[i]) - 'a';
+            if (parent->children[tolower(word[i]) - 'a'] == NULL)
+            {
+                return false;
+            }
+            else
+            {
+                // have children[i] point to it
+                parent = parent->children[tolower(word[i]) - 'a'];
+            }
+        }
     }
 
-    // word not found in dictionary
+    // word found in dictionary
+    if(parent->is_word) return true;
+
+    // word not found
+    // printf("%s \n", word);
     return false;
 }
 
@@ -117,48 +111,49 @@ bool load(const char *dictionary)
     // set a pointer to root so I can get back to it
     // struct node *root_node;
     root_node = newNode();
-
-    // LENGTH is defined in dictionary.h
-    // Maximum length for a word
-    char word[LENGTH + 1];
-    for (int i = 0; i < 46; i++)
-    {
-        // fill word array with zeros
-        (word[i] = 0);
-    }
-
-    int index = 0;
+    char word[47];
 
     // read each character in dictionary
     // source: speller.c
-    for (char c = fgetc(inptr); c != EOF; c = fgetc(inptr))
+    // for (char c = fgetc(inptr); c != EOF; c = fgetc(inptr))
+    while(fgets(word, sizeof(word), inptr) != NULL)
     {
+        int index = 0;
         // make a pointer to root
         node* parent = root_node;
-        if (c != '\n'){
+        // if (c != '\n')
+        while (word[index] != '\n')
+        {
             // source: study.cs50.net/tries Kevin's video
             // tolower() requires <ctype.h>
-            index = tolower(c) - 'a';
-            if (c == '\'') index = 26;
-
-            // build a word
-            word[index] = c;
-
-            // source: Zamyla's walkthrough
-            // check the value at children[i]
-            if (parent->children[index] == NULL)
+            if (word[index] == '\'')
             {
-                // if NULL, malloc a new node
-                parent->children[index] = newNode();
+                // index = 26;
+                // source: Zamyla's walkthrough
+                // check the value at children[i]
+                if (parent->children[26] == NULL)
+                {
+                    // if NULL, malloc a new node
+                    parent->children[26] = newNode();
+                }
+                // have children[i] point to it
+                parent = parent->children[26];
             }
-            // have children[i] point to it
-            parent = parent->children[index];
+            else
+            {
+                if (parent->children[word[index] - 'a'] == NULL)
+                {
+                    parent->children[word[index] - 'a'] = newNode();
+                }
+                parent = parent->children[word[index] - 'a'];
+            }
             index++;
         }
         // if at end of word, set is_word to true
         parent->is_word = true;
         word_count++;
     }
+    // printf("150. %d ", word_count);
     fclose(inptr);
     return true;
 }
@@ -167,6 +162,7 @@ bool load(const char *dictionary)
 unsigned int size(void)
 {
     // TODO
+    // source: speller.c line 144
     return word_count;
 }
 
@@ -174,5 +170,6 @@ unsigned int size(void)
 bool unload(void)
 {
     // TODO
-    return false;
+    return true;
 }
+

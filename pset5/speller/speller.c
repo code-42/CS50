@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
     FILE *file = fopen(text, "r");
     if (file == NULL)
     {
-        printf("58. Could not open %s.\n", text);
+        printf("Could not open %s.\n", text);
         unload();
         return 1;
     }
@@ -118,7 +118,6 @@ int main(int argc, char *argv[])
             // Print word if misspelled
             if (misspelled)
             {
-                printf("%s\n", word);
                 misspellings++;
             }
 
