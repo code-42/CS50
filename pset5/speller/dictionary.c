@@ -18,11 +18,11 @@ typedef struct node
     bool is_word;
 
     // pointers to other nodes
-    struct node* children[27];
+    struct node *children[27];
 }
 node;
 
-struct node* newNode(void)
+struct node *newNode(void)
 {
     // malloc space for a new node
     struct node *p_node = NULL;
@@ -51,7 +51,7 @@ bool check(const char *word)
     int index = 0;
 
     // make a pointer to root
-    node* parent = root_node;
+    node *parent = root_node;
 
     // source: Zamyla's walkthrough
     // traversing a trie
@@ -88,7 +88,10 @@ bool check(const char *word)
     }
 
     // word found in dictionary
-    if(parent->is_word) return true;
+    if (parent->is_word)
+    {
+        return true;
+    }
 
     // word not found
     return false;
@@ -115,11 +118,11 @@ bool load(const char *dictionary)
     // read each character in dictionary
     // source: speller.c
     // for (char c = fgetc(inptr); c != EOF; c = fgetc(inptr))
-    while(fgets(word, sizeof(word), inptr) != NULL)
+    while (fgets(word, sizeof(word), inptr) != NULL)
     {
         int index = 0;
         // make a pointer to root
-        node* parent = root_node;
+        node *parent = root_node;
         // if (c != '\n')
         while (word[index] != '\n')
         {
@@ -165,10 +168,10 @@ unsigned int size(void)
 }
 
 // Deletes trie from the bottom up
-void delete_node(node* a_node)
+void delete_node(node *a_node)
 {
     // if no node return
-    if(!a_node)
+    if (!a_node)
     {
         return;
     }
@@ -177,7 +180,7 @@ void delete_node(node* a_node)
     for (int i = 0; i < 27; i++)
     {
         // free all pointers in children
-       delete_node(a_node->children[i]);
+        delete_node(a_node->children[i]);
     }
 
     // backtrack upwards, freeing all elements
