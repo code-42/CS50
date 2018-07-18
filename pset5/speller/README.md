@@ -1,9 +1,9 @@
 # This is CS50 - Problem Set 5: Speller
 ![screenshot of check50 dictionary.c](check50.png)
 
-![screenshot of study.s50.net typedef](typedef.png)
-
 **The objective** of this exercise is to implement a program that spell-checks a file.
+
+![screenshot of study.s50.net typedef](typedef.png)
 
 Disclaimer: shamelessly converted to README.md from https://docs.cs50.net/problems/speller/speller.html with the help of https://dillinger.io/ (Props due where due. I'd do the same for you!)
 
