@@ -47,7 +47,6 @@ def main():
     for match in sorted(matches, key=len, reverse=True):
         print(match.replace("\n", "\\n").replace("\r", "\\r"))
 
-
 def positive(string):
     """Convert string to a positive integer."""
     value = int(string)

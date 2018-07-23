@@ -1,32 +1,33 @@
-# command line test
 # ./compare --lines LittlePrince_HowardTranslation.txt LittlePrince_WoodsTranslation.txt
 
-""" splitting a string into lines
-    https://docs.python.org/3/library/stdtypes.html#string-methods
-
-    data structures to consider: list, set, ?
-    https://docs.python.org/3/tutorial/datastructures.html
-"""
-
 def lines(a, b):
-    """Return lines in both a and b"""
-
     # TODO
-    print("got a")
-    print("got b")
-    return ["got a and b"]
+    # Return lines in both a and b
+
+    # data structures to consider: list, set, ?
+    # https://docs.python.org/3/tutorial/datastructures.html
+    linesa = []
+    linesb = []
+
+    # splitting a string into lines
+    # https://docs.python.org/3/library/stdtypes.html#string-methods
+    linesa = a.splitlines()
+    linesb = b.splitlines()
+
+    # compare two python lists
+    # http://appcrawler.com/wordpress/2010/10/22/quick-way-to-compare-two-python-lists/
+    return [line for line in linesb if line in linesa]
 
 
 def sentences(a, b):
-    """Return sentences in both a and b
+    # TODO
+    """ Return sentences in both a and b
         split each string into sentences
         make a list of sentences appearing in both a and b
         'Hello there! How are you?' => ['Hello there', 'How are you?']
         use nltk sent_tokenize
         from nltk.tokenize import sent_tokenize
     """
-
-    # TODO
     return []
 
 
