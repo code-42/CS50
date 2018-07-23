@@ -1,3 +1,5 @@
+from nltk.tokenize import sent_tokenize
+
 # ./compare --lines LittlePrince_HowardTranslation.txt LittlePrince_WoodsTranslation.txt
 
 def lines(a, b):
@@ -28,7 +30,17 @@ def sentences(a, b):
         use nltk sent_tokenize
         from nltk.tokenize import sent_tokenize
     """
-    return []
+    sentencesa = []
+    sentencesb = []
+
+    # splitting a string into sentences
+    # https://docs.cs50.net/2018/x/psets/6/similarities/less/similarities.html#code-templates-index-html-code-2
+    # from nltk.tokenize import sent_tokenize
+    sentencesa = sent_tokenize(a)
+    sentencesb = sent_tokenize(b)
+
+    print("same: ")
+    return [sentence for sentence in sentencesb if sentence in sentencesa]
 
 
 def substrings(a, b, n):
