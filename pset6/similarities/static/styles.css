@@ -44,3 +44,7 @@ span
 {
     background-color: #ff0;
 }
+
+#number {
+  width: 4em;
+}

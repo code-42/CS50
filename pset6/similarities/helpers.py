@@ -1,3 +1,6 @@
+# command line test
+# ./compare --lines LittlePrince_HowardTranslation.txt LittlePrince_WoodsTranslation.txt
+
 """ splitting a string into lines
     https://docs.python.org/3/library/stdtypes.html#string-methods
 
@@ -9,7 +12,9 @@ def lines(a, b):
     """Return lines in both a and b"""
 
     # TODO
-    return []
+    print("got a")
+    print("got b")
+    return ["got a and b"]
 
 
 def sentences(a, b):

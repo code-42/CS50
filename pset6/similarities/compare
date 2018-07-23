@@ -24,17 +24,20 @@ def main():
     try:
         with open(args["FILE1"], "r") as file:
             file1 = file.read()
+            print(file1)
     except IOError:
         sys.exit(f"Could not read {args['FILE1']}")
     try:
         with open(args["FILE2"], "r") as file:
             file2 = file.read()
+            print(file2)
     except IOError:
         sys.exit(f"Could not read {args['FILE2']}")
 
     # Compare files
     if args["lines"]:
         matches = lines(file1, file2)
+        print(matches)
     elif args["sentences"]:
         matches = sentences(file1, file2)
     elif args["substrings"]:
