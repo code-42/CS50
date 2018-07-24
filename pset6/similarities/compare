@@ -24,13 +24,13 @@ def main():
     try:
         with open(args["FILE1"], "r") as file:
             file1 = file.read()
-            print(file1)
+            # print(file1)
     except IOError:
         sys.exit(f"Could not read {args['FILE1']}")
     try:
         with open(args["FILE2"], "r") as file:
             file2 = file.read()
-            print(file2)
+            # print(file2)
     except IOError:
         sys.exit(f"Could not read {args['FILE2']}")
 
@@ -46,6 +46,7 @@ def main():
     # Output matches, sorted from longest to shortest, with line endings escaped
     for match in sorted(matches, key=len, reverse=True):
         print(match.replace("\n", "\\n").replace("\r", "\\r"))
+    # print(matches)
 
 def positive(string):
     """Convert string to a positive integer."""
@@ -53,7 +54,6 @@ def positive(string):
     if value <= 0:
         raise argparse.ArgumentTypeError("invalid length")
     return value
-
 
 if __name__ == "__main__":
     main()

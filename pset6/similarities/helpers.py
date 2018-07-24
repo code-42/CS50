@@ -44,13 +44,32 @@ def sentences(a, b):
 
 
 def substrings(a, b, n):
+    # TODO
     """Return substrings of length n in both a and b
         n is substring length to compare
         split each string into all substrings of length n
         s[i:j] returns s[i] to s[j-1] does not include index j
-        write a helper function for s[i:j]
+        write a helper function for substrings[i:j]
         make a list of all substrings appearing in both a and b
+        count(substring):int
+        ./compare --substrings 2 LesMis1.txt LesMis2.txt
     """
 
-    # TODO
-    return []
+    substringsa = []
+    substringsb = []
+
+    lena = len(a)
+    lenb = len(b)
+    for i in range(lena-n):
+        for j in range(n):
+            if j+1 == n:
+                substringsa = a[i:i+j+1]
+                print(substringsa)
+
+    for i in range(lenb-n):
+        for j in range(n):
+            if j+1 == n:
+                substringsb = b[i:i+j+1]
+                print(substringsb)
+
+    return [substring for substring in substringsb if substring in substringsa]
