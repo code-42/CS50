@@ -63,8 +63,8 @@ def substrings(a, b, n):
 
     # data structures to consider: list, set, ?
     # https://docs.python.org/3/tutorial/datastructures.html
-    seta = helperFunction(a, n)
-    setb = helperFunction(b, n)
+    seta = set(helperFunction(a, n))
+    setb = set(helperFunction(b, n))
 
     # make a list of all substrings appearing in both a and b
     return(list(seta.intersection(setb)))
@@ -75,15 +75,14 @@ def helperFunction(str, n):
 
     # data structures to consider: list, set, ?
     # https://docs.python.org/3/tutorial/datastructures.html
-    subset = set()
+    subset = []
 
     # store length of a and b in a variable so not calculating on each iteration
     lenstr = len(str)
 
     # split each string into all substrings of length n
-    for i in range(lenstr - n):
+    for i in range(lenstr - n + 1):
         # append each substring to the list
-        subset.add(str[i:i + n])
+        subset.append(str[i:i + n])
 
     return subset
-
