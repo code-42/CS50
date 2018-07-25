@@ -9,17 +9,15 @@ def lines(a, b):
 
     # data structures to consider: list, set, ?
     # https://docs.python.org/3/tutorial/datastructures.html
-    linesa = []
-    linesb = []
 
     # splitting a string into lines
     # https://docs.python.org/3/library/stdtypes.html#string-methods
-    linesa = a.splitlines()
-    linesb = b.splitlines()
+    linesa = set(a.splitlines())
+    linesb = set(b.splitlines())
 
     # compare two python lists
     # http://appcrawler.com/wordpress/2010/10/22/quick-way-to-compare-two-python-lists/
-    return [line for line in linesb if line in linesa]
+    return(list(linesa.intersection(linesb)))
 
 
 def sentences(a, b):
@@ -45,6 +43,7 @@ def sentences(a, b):
     sentencesb = sent_tokenize(b)
 
     return [sentence for sentence in sentencesb if sentence in sentencesa]
+
 
 
 
@@ -87,3 +86,4 @@ def helperFunction(str, n):
         subset.add(str[i:i + n])
 
     return subset
+
