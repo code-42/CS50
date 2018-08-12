@@ -139,22 +139,27 @@ def register():
         # passed above tests so add name and password hash to database
         username = request.form.get("username")
         password = request.form.get("password")
-        eprint(username)
-        eprint(password)
         print("144. " + username + password)
 
-        pw_hash = generate_password_hash(password)
-        print("147. " + pw_hash)
+        # source https://docs.python.org/2/library/hashlib.html
+        hash = generate_password_hash(password)
+        print("147. " + hash)
 
-        check_hash = check_password_hash(pw_hash, password)
+        check_hash = check_password_hash(hash, password)
         print("150. " + str(check_hash))
+
+        # source Zamylas walkthrough video 2
+        db.execute("INSERT INTO users (username, hash) \
+        VALUES(:username, :hash)", \
+        username=request.form.get("username"), \
+        hash=hash)
 
 
         #return apology("TODO")
     return render_template("register.html")
-    # return pw_hash
+    # return hash
     # dd == pbkdf2:sha256:50000$H6Foo5gv$033f9ddefbd5fd0cf0a4aefa176cc2f2c30df74dbad69646d83f2a6c9ee04fbe
-
+    # dd == pbkdf2:sha256:50000$7oDoMsF4$e55bab56c17f4614115ef6fdec9c52044339fa77c2f25e5ace1ed5e0cfd17d14
 
 
 
@@ -173,16 +178,3 @@ def errorhandler(e):
 # listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
-
-# source http://flask.pocoo.org/snippets/54/
-# class User(object):
-
-#     def __init__(self, username, password):
-#         self.username = username
-#         self.set_password(password)
-
-#     def set_password(self, password):
-#         self.pw_hash = generate_password_hash(password)
-
-#     def check_password(self, password):
-#         return check_password_hash(self.pw_hash, password)
