@@ -1,7 +1,8 @@
 import os
 
-from cs50 import SQL
-from flask import Flask, flash, redirect, render_template, request, session
+from cs50 import SQL, eprint
+from flask import Flask, flash, redirect, render_template, request, session, url_for
+# url_for() added by me 201808112215 per Doug Lloyds flask video
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions
@@ -115,8 +116,46 @@ def quote():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    # return apology("TODO")
+
+    # Adapted from "/login" above
+    # Forget any user_id
+    session.clear()
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Ensure username was submitted
+        if not request.form.get("username"):
+            return apology("must provide username", 403)
+
+        # Ensure password was submitted
+        elif not request.form.get("password"):
+            return apology("must provide password", 403)
+
+        # Ensure confirmation was submitted
+        elif not request.form.get("confirmation"):
+            return apology("must provide password confirmation", 403)
+
+        # passed above tests so add name and password hash to database
+        username = request.form.get("username")
+        password = request.form.get("password")
+        eprint(username)
+        eprint(password)
+        print("144. " + username + password)
+
+        pw_hash = generate_password_hash(password)
+        print("147. " + pw_hash)
+
+        check_hash = check_password_hash(pw_hash, password)
+        print("150. " + str(check_hash))
+
+
+        #return apology("TODO")
     return render_template("register.html")
+    # return pw_hash
+    # dd == pbkdf2:sha256:50000$H6Foo5gv$033f9ddefbd5fd0cf0a4aefa176cc2f2c30df74dbad69646d83f2a6c9ee04fbe
+
+
 
 
 @app.route("/sell", methods=["GET", "POST"])
@@ -134,3 +173,16 @@ def errorhandler(e):
 # listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
+
+# source http://flask.pocoo.org/snippets/54/
+# class User(object):
+
+#     def __init__(self, username, password):
+#         self.username = username
+#         self.set_password(password)
+
+#     def set_password(self, password):
+#         self.pw_hash = generate_password_hash(password)
+
+#     def check_password(self, password):
+#         return check_password_hash(self.pw_hash, password)
