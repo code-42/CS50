@@ -49,7 +49,71 @@ def index():
 @login_required
 def buy():
     """Buy shares of stock"""
-    return apology("TODO")
+
+        # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Ensure symbol was submitted
+        if not request.form.get("symbol"):
+            return apology("must provide symbol", 403)
+
+        # Ensure number of shares was submitted
+        elif not request.form.get("shares"):
+            return apology("must provide number of shares", 403)
+
+        else:
+            for item in request.form:
+                session[item] = lookup(request.form.get("symbol"))
+                session["shares"] = int(request.form.get("shares"))
+                # session["trade"] = request.form.get("shares") * session[item].price
+
+            return render_template("confirm.html", quote=session)
+            # return render_template("index.html")
+
+        # Redirect user to home page
+        # return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("buy.html")
+
+    # return apology("TODO")
+    # return render_template("buy.html")
+
+@app.route("/confirm", methods=["GET", "POST"])
+@login_required
+def confirm():
+    """Buy shares of stock"""
+
+        # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Ensure symbol was submitted
+        # if not request.form.get("symbol"):
+        #     return apology("must provide symbol", 403)
+
+        # # Ensure number of shares was submitted
+        # elif not request.form.get("shares"):
+        #     return apology("must provide number of shares", 403)
+
+        # else:
+        # for item in request.form:
+            #     session[item] = lookup(request.form.get("symbol"))
+            #     session["shares"] = int(request.form.get("shares"))
+            # session["trade"] = request.form.get("shares") * session[item].price
+
+        return render_template("index.html", quote=session)
+            # return render_template("index.html")
+
+        # Redirect user to home page
+        # return redirect("/")
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("buy.html")
+
+    # return apology("TODO")
+    # return render_template("buy.html")
 
 
 @app.route("/history")
@@ -89,7 +153,7 @@ def login():
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/")
+        return redirect("/buy")  # change to / when finish testing /buy
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -125,9 +189,6 @@ def quote():
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("quote.html")
-
-    # return apology("TODO")
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():

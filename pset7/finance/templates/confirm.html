@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+
+<h1>Confirmation</h1>
+
+<p>
+    <form action="/confirm" method="post">
+        <div class="form-group">
+            You are about to buy <br>
+            {% for item in quote %}
+                {{ quote[item].symbol }}&nbsp;&nbsp;
+                {{ quote[item].name }}&nbsp;&nbsp;@&nbsp;&nbsp;
+                {{ quote[item].price }}<br>
+            {% endfor %}
+        </div>
+    <button class="btn btn-primary" type="submit">Confirm</button>
+</form>
+</p>
+
+<p>
+    <a href="/">Back to C$50 Finance Home</a>
+</p>
+
+{% endblock %}
