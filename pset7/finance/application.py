@@ -41,7 +41,8 @@ db = SQL("sqlite:///finance.db")
 @login_required
 def index():
     """Show portfolio of stocks"""
-    return apology("TODO")
+    # return apology("TODO")
+    return render_template("index.html")
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -117,7 +118,6 @@ def quote():
         if not request.form.get("symbol"):
             return apology("must provide symbol", 403)
         else:
-            #symbol = request.form.get("symbol")
             for item in request.form:
                 session[item] = lookup(request.form.get("symbol"))
             return render_template("quoted.html", quote=session)
