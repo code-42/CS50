@@ -110,7 +110,23 @@ def logout():
 @login_required
 def quote():
     """Get stock quote."""
-    return apology("TODO")
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+        # Ensure symbol was submitted
+        if not request.form.get("symbol"):
+            return apology("must provide symbol", 403)
+        else:
+            #symbol = request.form.get("symbol")
+            for item in request.form:
+                session[item] = lookup(request.form.get("symbol"))
+            return render_template("quoted.html", quote=session)
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("quote.html")
+
+    # return apology("TODO")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -168,7 +184,7 @@ def register():
         # Redirect user to home page
         return redirect("/")
 
-        #return apology("TODO")
+    #return apology("TODO")
     return render_template("register.html")
     # return hash
     # dd == pbkdf2:sha256:50000$H6Foo5gv$033f9ddefbd5fd0cf0a4aefa176cc2f2c30df74dbad69646d83f2a6c9ee04fbe

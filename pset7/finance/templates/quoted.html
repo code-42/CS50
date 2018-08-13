@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+
+<h1>Quote</h1>
+
+
+<p>
+{% for item in quote %}
+    {{ item }} : {{ quote[item] }}
+    <br/>
+{% endfor %}
+</p>
+
+<p>
+<!--{{ quote["quote_plus"] }}-->
+</p>
+
+<p>
+    <a href="/">Back to quotes</a>.
+</p>
+
+{% endblock %}
