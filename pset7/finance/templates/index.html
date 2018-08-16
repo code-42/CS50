@@ -17,7 +17,7 @@
                 		<th>Total</th>
                 	</tr>
 
-                	 loop over and print current users stock positions
+                	 <!--loop over and print current users stock positions-->
 
                     {% for row in table %}
                         <tr>
@@ -34,11 +34,11 @@
 
                 <p>
 
-                <!--{% for item in quote %}-->
-                <!--    {{ quote[item].symbol }}&nbsp;&nbsp;-->
-                <!--    {{ quote[item].name }}&nbsp;&nbsp;-->
-                <!--    {{ quote[item].price }}&nbsp;&nbsp;-->
-                <!--{% endfor %}-->
+                {% for item in quote %}
+                    {{ quote[item].symbol }}&nbsp;&nbsp;
+                    {{ quote[item].name }}&nbsp;&nbsp;
+                    {{ quote[item].price }}&nbsp;&nbsp;
+                {% endfor %}
                 </p>
             </div>
         </form>

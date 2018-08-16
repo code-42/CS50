@@ -47,11 +47,12 @@ def lookup(symbol):
     # Parse response
     try:
         quote = response.json()
-        # print(quote)
+        print(quote)
         return {
             "name": quote["companyName"],
             "price": float(quote["latestPrice"]),
-            "symbol": quote["symbol"]
+            "symbol": quote["symbol"],
+            "timestamp": quote["delayedPriceTime"]
         }
     except (KeyError, TypeError, ValueError):
         return None

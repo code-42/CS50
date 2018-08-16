@@ -6,17 +6,20 @@
 
 {% block main %}
 
-<h1>Confirmation</h1>
+<h1>Confirm</h1>
 
 <p>
     <form action="/confirm" method="post">
         <div class="form-group">
             You are about to buy <br>
-            {% for item in quote %}
-                {{ quote[item].symbol }}&nbsp;&nbsp;
-                {{ quote[item].name }}&nbsp;&nbsp;@&nbsp;&nbsp;
-                {{ quote[item].price }}<br>
-            {% endfor %}
+            {{ shares.shares }}&nbsp;
+            shares of&nbsp;
+            {{ symbol.symbol }}
+            @&nbsp;$&nbsp;
+            {{ quote.quote.price }}
+            &nbsp;USD&nbsp;at date&nbsp;
+            {{ quote.quote.timestamp }}
+
         </div>
     <button class="btn btn-primary" type="submit">Confirm</button>
 </form>

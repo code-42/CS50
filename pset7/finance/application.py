@@ -1,8 +1,9 @@
 import os
 
 from cs50 import SQL, eprint
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import Flask, flash, redirect, render_template, request, session, url_for, make_response
 # url_for() added by me 201808112215 per Doug Lloyds flask video
+# https://www.youtube.com/watch?v=0SQdkDpMzKE&list=PLXmMXHVSvS-CMpHUeyIeqzs3kl-tIG-8R
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions
@@ -50,7 +51,7 @@ def index():
 def buy():
     """Buy shares of stock"""
 
-        # User reached route via POST (as by submitting a form via POST)
+    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
         # Ensure symbol was submitted
@@ -62,59 +63,37 @@ def buy():
             return apology("must provide number of shares", 403)
 
         else:
-            for item in request.form:
-                session[item] = lookup(request.form.get("symbol"))
-                session["shares"] = int(request.form.get("shares"))
-                # session["trade"] = request.form.get("shares") * session[item].price
-
-            return render_template("confirm.html", quote=session)
-            # return render_template("index.html")
-
-        # Redirect user to home page
-        # return redirect("/")
+            session["quote"] = lookup(request.form.get("symbol"))
+            session["symbol"] = request.form.get("symbol")
+            session["shares"] = int(request.form.get("shares"))
+            print(session["quote"])
+            print(session["symbol"])
+            print(session["shares"])
+            return render_template("confirm.html", symbol=session, shares=session, quote=session)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("buy.html")
-
-    # return apology("TODO")
-    # return render_template("buy.html")
 
 @app.route("/confirm", methods=["GET", "POST"])
 @login_required
 def confirm():
-    """Buy shares of stock"""
+    """Confirm trade shares of stock"""
 
-        # User reached route via POST (as by submitting a form via POST)
+    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
-        # Ensure symbol was submitted
-        # if not request.form.get("symbol"):
-        #     return apology("must provide symbol", 403)
+        print("in confirm():")
+        shares = session.get('shares')
+        print(shares)
+        quote = session.get('quote')
+        print(quote)
 
-        # # Ensure number of shares was submitted
-        # elif not request.form.get("shares"):
-        #     return apology("must provide number of shares", 403)
-
-        # else:
-        # for item in request.form:
-            #     session[item] = lookup(request.form.get("symbol"))
-            #     session["shares"] = int(request.form.get("shares"))
-            # session["trade"] = request.form.get("shares") * session[item].price
-
-        return render_template("index.html", quote=session)
-            # return render_template("index.html")
-
-        # Redirect user to home page
-        # return redirect("/")
+        return render_template("index.html")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("buy.html")
-
-    # return apology("TODO")
-    # return render_template("buy.html")
-
 
 @app.route("/history")
 @login_required
