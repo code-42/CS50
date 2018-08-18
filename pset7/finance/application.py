@@ -42,7 +42,7 @@ db = SQL("sqlite:///finance.db")
 @login_required
 def index():
     """Show portfolio of stocks"""
-    # return apology("TODO")
+
     return render_template("index.html")
 
 
@@ -88,7 +88,7 @@ def confirm():
         print(shares)
         quote = session.get('quote')
         print(quote)
-
+        addTradeToDatabase(shares,quote)
         return render_template("index.html")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -226,10 +226,6 @@ def register():
 
     #return apology("TODO")
     return render_template("register.html")
-    # return hash
-    # dd == pbkdf2:sha256:50000$H6Foo5gv$033f9ddefbd5fd0cf0a4aefa176cc2f2c30df74dbad69646d83f2a6c9ee04fbe
-    # dd == pbkdf2:sha256:50000$7oDoMsF4$e55bab56c17f4614115ef6fdec9c52044339fa77c2f25e5ace1ed5e0cfd17d14
-
 
 
 @app.route("/sell", methods=["GET", "POST"])
@@ -247,3 +243,19 @@ def errorhandler(e):
 # listen for errors
 for code in default_exceptions:
     app.errorhandler(code)(errorhandler)
+
+
+# add transaction to atabase
+def addTradeToDatabase(shares,quote):
+
+    # extract values out of session object
+    user_id = session["user_id"]
+    symbol = quote["symbol"]
+    price = quote["price"]
+    timestamp = quote["timestamp"]
+
+    # add trade to portfolio
+    db.execute("INSERT INTO portfolio (user_id, shares, symbol, price, timestamp) \
+        VALUES(:user_id, :shares, :symbol, :price, :timestamp)", \
+        user_id=user_id,shares=shares,symbol=symbol,price=price,timestamp=timestamp)
+
