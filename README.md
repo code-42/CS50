@@ -1,12 +1,19 @@
 # This is CS50
 
-This repo contains notes and homework assignments for the 2017 - 2018 Harvard CS50x course I took while at CareerDevs in Providence, RI
+This repo contains notes and solutions for the 2017 - 2018 Harvard CS50 Problem Sets 
 
-![screenshot of mycs50 submissions](cs50.me.png)
+PSet 1: https://github.com/code-42/CS50/tree/master/pset1
 
-CS50 Instructor David Malan demonstrating Binary Search Algorithm
-![CS50 Instructor David Malan demonstrating Binary Search Algorithm](https://github.com/code-42/cs50/blob/master/demonstrating_Binary_Search_Algorithm.png)
+PSet 2: https://github.com/code-42/CS50/tree/master/pset2
 
-CS50 Lecture attended live at Harvard University with CareerDevs class on November 3, 2017
-![CS50 Lecture attended live with CareerDevs class on November 3, 2017](https://github.com/code-42/CS50/blob/master/ThisIsCS50.jpg)
+PSet 3: https://github.com/code-42/CS50/tree/master/pset3
 
+PSet 4: https://github.com/code-42/CS50/tree/master/pset4
+
+PSet 5: https://github.com/code-42/CS50/tree/master/pset5/speller
+
+PSet 6: https://github.com/code-42/CS50/tree/master/pset6
+
+PSet 7: https://github.com/code-42/CS50/tree/master/pset7/finance
+
+![screenshot of cs50 submissions](cs50.me.png)
