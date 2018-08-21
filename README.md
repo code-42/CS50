@@ -1,6 +1,6 @@
 # This is CS50
 
-This repo contains notes and solutions for the 2017 - 2018 Harvard CS50 Problem Sets 
+This repo contains my notes and solutions for the 2017 - 2018 Harvard CS50 Problem Sets 
 
 PSet 1: https://github.com/code-42/CS50/tree/master/pset1
 
