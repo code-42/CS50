@@ -14,12 +14,13 @@
             You are about to buy <br>
             {{ shares.shares }}&nbsp;
             shares of&nbsp;
-            {{ symbol.symbol }}
+            {{ quote.quote.name }}
+            (symbol:&nbsp;
+            {{ symbol.symbol.upper() }}) &nbsp;
             @&nbsp;$&nbsp;
             {{ quote.quote.price }}
             &nbsp;USD&nbsp;at date&nbsp;
             {{ quote.quote.timestamp }}
-
         </div>
     <button class="btn btn-primary" type="submit">Confirm</button>
 </form>

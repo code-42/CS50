@@ -66,9 +66,27 @@ def buy():
             session["quote"] = lookup(request.form.get("symbol"))
             session["symbol"] = request.form.get("symbol")
             session["shares"] = int(request.form.get("shares"))
+            print("in buy():")
             print(session["quote"])
             print(session["symbol"])
             print(session["shares"])
+
+            user_id = session["user_id"]
+            print(user_id)
+
+            cash = db.execute("SELECT cash FROM users WHERE id = :user_id",
+              user_id=session["user_id"])
+
+            session["cash"] = cash
+
+            cash = cash[0]["cash"]
+
+            fcash = float(cash)
+            print("fcash == " + str(fcash))
+
+            if(fcash <= 0):
+                return apology("Sorry, you don't have enough cash for this trade.", 403)
+
             return render_template("confirm.html", symbol=session, shares=session, quote=session)
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -88,7 +106,12 @@ def confirm():
         print(shares)
         quote = session.get('quote')
         print(quote)
-        addTradeToDatabase(shares,quote)
+        print(quote["symbol"])
+
+        user_id = session["user_id"]
+        print(user_id)
+
+        # addTradeToDatabase(shares,quote)
         return render_template("index.html")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -161,8 +184,14 @@ def quote():
         if not request.form.get("symbol"):
             return apology("must provide symbol", 403)
         else:
-            for item in request.form:
-                session[item] = lookup(request.form.get("symbol"))
+            session["quote"] = lookup(request.form.get("symbol"))
+            print("in quote():")
+            print(session["quote"])
+
+            if(session.get('quote') is None):
+                print("no such symbol")
+                return apology("invalid symbol", 403)
+
             return render_template("quoted.html", quote=session)
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -255,7 +284,9 @@ def addTradeToDatabase(shares,quote):
     timestamp = quote["timestamp"]
 
     # add trade to portfolio
-    db.execute("INSERT INTO portfolio (user_id, shares, symbol, price, timestamp) \
+    db.execute("INSERT INTO trades (user_id, shares, symbol, price, timestamp) \
         VALUES(:user_id, :shares, :symbol, :price, :timestamp)", \
         user_id=user_id,shares=shares,symbol=symbol,price=price,timestamp=timestamp)
 
+# create table for transactions
+# CREATE TABLE 'trades' ('user_id' TEXT NOT NULL,'shares' INTEGER NOT NULL,'symbol' TEXT NOT NULL,'price' REAL NOT NULL,'timestamp' DATETIME PRIMARY KEY NOT NULL);

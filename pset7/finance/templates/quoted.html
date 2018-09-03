@@ -8,11 +8,21 @@
 
 <h1>Quote</h1>
 <p>
-{% for item in quote %}
-    {{ quote[item].symbol }}&nbsp;&nbsp;
-    {{ quote[item].name }}&nbsp;&nbsp;
-    {{ quote[item].price }}<br>
-{% endfor %}
+<!--{% for item in quote %}-->
+<!--    {{ quote[item].symbol }}&nbsp;&nbsp;-->
+<!--    {{ quote[item].name }}&nbsp;&nbsp;-->
+<!--    {{ quote[item].price }}&nbsp;&nbsp;-->
+<!--    &nbsp;USD&nbsp;at date&nbsp;-->
+<!--    {{ quote[item].timestamp }}-->
+<!--{% endfor %}-->
+
+    {{ quote.quote.name }}&nbsp;&nbsp;
+    (symbol:&nbsp;
+    {{ quote.quote.symbol.upper() }})&nbsp;
+    $&nbsp;{{ quote.quote.price }}&nbsp;
+    &nbsp;USD&nbsp;at date&nbsp;
+    {{ quote.quote.timestamp }}
+
 </p>
 
 
