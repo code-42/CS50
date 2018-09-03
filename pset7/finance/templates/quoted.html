@@ -8,11 +8,11 @@
 
 <h1>Quote</h1>
 <p>
-    {{ quote.quote.name }}&nbsp;&nbsp;
-    (symbol:&nbsp;
-    {{ quote.quote.symbol.upper() }})&nbsp;
-    $&nbsp;{{ quote.quote.price }}&nbsp;
-    &nbsp;USD&nbsp;at date&nbsp;
+    A share of
+    {{ quote.quote.name }}&nbsp;
+    ({{ quote.quote.symbol.upper() }})&nbsp;
+    costs $&nbsp;{{ quote.quote.price }}&nbsp;
+    USD&nbsp;at date&nbsp;
     {{ quote.quote.timestamp }}
 </p>
 

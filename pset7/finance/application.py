@@ -43,6 +43,10 @@ db = SQL("sqlite:///finance.db")
 def index():
     """Show portfolio of stocks"""
 
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    # print("49. user_id == " + str(session["rows"]))
     return render_template("index.html")
 
 
@@ -118,8 +122,10 @@ def confirm():
         user_id = session["user_id"]
         print(user_id)
 
-        # addTradeToDatabase(shares,quote)
-        return render_template("index.html")
+        addTradeToDatabase(shares,quote)
+
+        rows = viewPortfolio()
+        return render_template("index.html", portfolio=rows)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -162,7 +168,7 @@ def login():
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/buy")  # change to / when finish testing /buy
+        return redirect("/")  # change to / when finish testing /buy
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -287,13 +293,26 @@ def addTradeToDatabase(shares,quote):
     # extract values out of session object
     user_id = session["user_id"]
     symbol = quote["symbol"]
+    company_name = quote["name"]
     price = quote["price"]
     timestamp = quote["timestamp"]
 
     # add trade to portfolio
-    db.execute("INSERT INTO trades (user_id, shares, symbol, price, timestamp) \
-        VALUES(:user_id, :shares, :symbol, :price, :timestamp)", \
-        user_id=user_id,shares=shares,symbol=symbol,price=price,timestamp=timestamp)
+    db.execute("INSERT INTO trades (user_id, shares, symbol, company_name, price, timestamp) \
+        VALUES(:user_id, :shares, :symbol, :company_name, :price, :timestamp)", \
+        user_id=user_id,shares=shares,symbol=symbol,company_name=company_name,price=price,timestamp=timestamp)
 
-# create table for transactions
-# CREATE TABLE 'trades' ('user_id' TEXT NOT NULL,'shares' INTEGER NOT NULL,'symbol' TEXT NOT NULL,'price' REAL NOT NULL,'timestamp' DATETIME PRIMARY KEY NOT NULL);
+
+# retrieve view from trades for display to index.html
+def viewPortfolio():
+
+        user_id = session["user_id"]
+
+        # Query database for view
+        rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
+                          user_id=user_id)
+
+        if len(rows) == 0:
+            return apology("sorry, you have no stocks", 403)
+
+        return rows
