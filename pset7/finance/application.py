@@ -87,6 +87,10 @@ def buy():
             if(fcash <= 0):
                 return apology("Sorry, you don't have enough cash for this trade.", 403)
 
+            if(session.get('quote') is None):
+                print("invalid symbol")
+                return apology("invalid symbol", 403)
+
             return render_template("confirm.html", symbol=session, shares=session, quote=session)
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -189,7 +193,7 @@ def quote():
             print(session["quote"])
 
             if(session.get('quote') is None):
-                print("no such symbol")
+                print("invalid symbol")
                 return apology("invalid symbol", 403)
 
             return render_template("quoted.html", quote=session)
