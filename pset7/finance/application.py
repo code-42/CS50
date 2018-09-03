@@ -73,25 +73,25 @@ def buy():
                 session["shares"] = int(request.form.get("shares"))
             except ValueError:
                 print("not an int")
-                return apology("Please enter a whole number of shares.", 403)
+                return apology("Please enter a positive integer number of shares.", 403)
 
             print("in buy():")
-            print(session["quote"])
+            print(session["quote"].get("price"))
             print(session["shares"])
 
-            user_id = session["user_id"]
+            price = session["quote"].get("price")
+            shares = session["shares"]
+            total = price * shares
+            print("total == " + str(total))
 
+            user_id = session["user_id"]
             cash = db.execute("SELECT cash FROM users WHERE id = :user_id",
               user_id=session["user_id"])
 
-            session["cash"] = cash
+            cash = float(cash[0]["cash"])
+            print("cash == " + str(cash))
 
-            cash = cash[0]["cash"]
-
-            fcash = float(cash)
-            print("fcash == " + str(fcash))
-
-            if(fcash <= 0):
+            if(cash < total):
                 return apology("Sorry, you don't have enough cash for this trade.", 403)
 
             return render_template("confirm.html", shares=session, quote=session)
