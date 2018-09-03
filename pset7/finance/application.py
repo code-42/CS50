@@ -64,15 +64,22 @@ def buy():
 
         else:
             session["quote"] = lookup(request.form.get("symbol"))
-            session["symbol"] = request.form.get("symbol")
-            session["shares"] = int(request.form.get("shares"))
+
+            if(session.get('quote') is None):
+                print("invalid symbol")
+                return apology("invalid symbol", 403)
+
+            try:
+                session["shares"] = int(request.form.get("shares"))
+            except ValueError:
+                print("not an int")
+                return apology("Please enter a whole number of shares.", 403)
+
             print("in buy():")
             print(session["quote"])
-            print(session["symbol"])
             print(session["shares"])
 
             user_id = session["user_id"]
-            print(user_id)
 
             cash = db.execute("SELECT cash FROM users WHERE id = :user_id",
               user_id=session["user_id"])
@@ -87,11 +94,7 @@ def buy():
             if(fcash <= 0):
                 return apology("Sorry, you don't have enough cash for this trade.", 403)
 
-            if(session.get('quote') is None):
-                print("invalid symbol")
-                return apology("invalid symbol", 403)
-
-            return render_template("confirm.html", symbol=session, shares=session, quote=session)
+            return render_template("confirm.html", shares=session, quote=session)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
