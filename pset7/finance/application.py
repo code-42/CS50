@@ -274,7 +274,45 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
-    return apology("TODO")
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Ensure symbol was submitted
+        if not request.form.get("symbol"):
+            return apology("must provide symbol", 403)
+
+        # Ensure number of shares was submitted
+        elif not request.form.get("shares"):
+            return apology("must provide number of shares", 403)
+
+        else:
+            session["quote"] = lookup(request.form.get("symbol"))
+
+            try:
+                session["shares"] = int(request.form.get("shares"))
+            except ValueError:
+                print("not an int")
+                return apology("Please enter a positive integer number of shares.", 403)
+
+            print("in sell():")
+            print(session["quote"].get("price"))
+            print(session["shares"])
+
+            price = session["quote"].get("price")
+            shares = session["shares"]
+            total = price * shares
+            print("total == " + str(total))
+
+            user_id = session["user_id"]
+
+            return render_template("confirm.html", shares=session, quote=session)
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        print("313. method = get")
+        rows = viewPortfolio()
+        return render_template("sell.html", portfolio=rows)
 
 
 def errorhandler(e):
