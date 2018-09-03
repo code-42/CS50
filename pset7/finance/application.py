@@ -46,8 +46,8 @@ def index():
     if(session["user_id"] is None):
         return render_template("login.html")
 
-    # print("49. user_id == " + str(session["rows"]))
-    return render_template("index.html")
+    rows = viewPortfolio()
+    return render_template("index.html", portfolio=rows)
 
 
 @app.route("/buy", methods=["GET", "POST"])
