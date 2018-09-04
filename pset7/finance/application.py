@@ -158,7 +158,8 @@ def confirm():
         addTradeToDatabase(shares,quote)
 
         rows = viewPortfolio()
-        return render_template("index.html", portfolio=rows)
+        # return render_template("index.html", portfolio=rows)
+        return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
