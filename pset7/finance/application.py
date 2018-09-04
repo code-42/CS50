@@ -46,8 +46,39 @@ def index():
     if(session["user_id"] is None):
         return render_template("login.html")
 
+    portfolio = {}
     rows = viewPortfolio()
-    return render_template("index.html", portfolio=rows)
+    for row in range(len(rows)):
+        session["quote"] = lookup(rows[row]["symbol"])
+        # company_name, sum(shares), sum(shares * price)
+        print("51. row == ")
+        print(rows[row]["symbol"])
+        print(rows[row]["company_name"])
+        print(rows[row]["sum(shares)"])
+        print(session["quote"].get("price"))
+        # price = session["quote"].get("price")
+        # print("60. price == " + str(price))
+        print(rows[row]["sum(shares * price)"])
+
+        table_row = (
+            rows[row]["symbol"],
+            rows[row]["company_name"],
+            rows[row]["sum(shares)"],
+            session["quote"].get("price"),
+            rows[row]["sum(shares * price)"]
+            )
+
+        print("70. table_row == ")
+        print(table_row)
+
+        portfolio[rows[row]["symbol"]] = table_row
+
+
+    print(portfolio)
+
+
+    # return render_template("index.html", portfolio=rows, price=session["quote"])
+    return render_template("index.html", portfolio=portfolio)
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -114,10 +145,15 @@ def confirm():
 
         print("in confirm():")
         shares = session.get('shares')
-        print(shares)
+        print("118. " + str(shares))
         quote = session.get('quote')
+        print("120. ")
         print(quote)
         print(quote["symbol"])
+
+        price = session.get('price')
+        print("124. " + str(price))
+        # print(quote["symbol"].get('price'))
 
         user_id = session["user_id"]
         print(user_id)
@@ -288,6 +324,8 @@ def sell():
 
         else:
             session["quote"] = lookup(request.form.get("symbol"))
+            print("296. ")
+            print(session["quote"].get("price"))
 
             try:
                 session["shares"] = int(request.form.get("shares")) * -1
