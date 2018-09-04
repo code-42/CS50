@@ -158,7 +158,8 @@ def confirm():
         addTradeToDatabase(shares,quote)
 
         rows = viewPortfolio()
-        return render_template("index.html", portfolio=rows)
+        # return render_template("index.html", portfolio=rows)
+        return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -168,7 +169,18 @@ def confirm():
 @login_required
 def history():
     """Show history of transactions"""
-    return apology("TODO")
+    # return apology("TODO")
+
+    user_id = session["user_id"]
+
+    # Query database for view
+    rows = db.execute("SELECT * FROM trades WHERE user_id = :user_id",
+                      user_id=user_id)
+
+    if len(rows) == 0:
+        return apology("sorry, you have no stocks", 403)
+
+    return render_template("history.html", trades=rows)
 
 
 @app.route("/login", methods=["GET", "POST"])
