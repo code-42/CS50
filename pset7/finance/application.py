@@ -290,7 +290,7 @@ def sell():
             session["quote"] = lookup(request.form.get("symbol"))
 
             try:
-                session["shares"] = int(request.form.get("shares"))
+                session["shares"] = int(request.form.get("shares")) * -1
             except ValueError:
                 print("not an int")
                 return apology("Please enter a positive integer number of shares.", 403)
@@ -328,6 +328,7 @@ for code in default_exceptions:
 # add transaction to atabase
 def addTradeToDatabase(shares,quote):
 
+    print("331. " + str(shares))
     # extract values out of session object
     user_id = session["user_id"]
     symbol = quote["symbol"]

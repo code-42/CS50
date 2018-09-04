@@ -11,8 +11,13 @@
 <p>
     <form action="/confirm" method="post">
         <div class="form-group">
-            You are about to trade <br>
-            {{ shares.shares }}&nbsp;
+            You are about to
+            {% if shares.shares < 0 %}
+                sell
+            {% elif shares.shares > 0 %}
+                buy
+            {% endif %}
+            {{ shares.shares|abs }}&nbsp;
             shares of&nbsp;
             {{ quote.quote.name }}
             (symbol:&nbsp;
