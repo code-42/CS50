@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Transactions History
+{% endblock %}
+
+{% block main %}
+<!-- trades_id, user_id, shares, symbol, company_name, price, timestamp -->
+    <p>
+        <div class="form-control">
+            <table class="table">
+                <thead>
+                	<tr>
+                	    <th>Date</th>
+                		<th>Symbol</th>
+                		<th>Name</th>
+                		<th class="rt">Shares</th>
+                		<th class="rt">Price</th>
+
+                	</tr>
+            	</thead>
+                <tbody>
+            	 <!--loop over and print current users stock positions-->
+
+
+                    {% for item in trades %}
+                        <tr>
+                    	    <td>{{ item["timestamp"] }}</td>
+                    	    <td>{{ item["symbol"] }}</td>
+                    	    <td>{{ item["company_name"] }}</td>
+                    	    <td class="rt">{{ '%0.2f' % item["shares"]|float }}</td>
+                            <td class="rt">{{ '%0.2f' % item["price"]|float }}</td>
+                	    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </p>
+
+{% endblock %}
