@@ -43,7 +43,11 @@ db = SQL("sqlite:///finance.db")
 def index():
     """Show portfolio of stocks"""
 
-    return render_template("index.html")
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    rows = viewPortfolio()
+    return render_template("index.html", portfolio=rows)
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -118,8 +122,10 @@ def confirm():
         user_id = session["user_id"]
         print(user_id)
 
-        # addTradeToDatabase(shares,quote)
-        return render_template("index.html")
+        addTradeToDatabase(shares,quote)
+
+        rows = viewPortfolio()
+        return render_template("index.html", portfolio=rows)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -162,7 +168,7 @@ def login():
         session["user_id"] = rows[0]["id"]
 
         # Redirect user to home page
-        return redirect("/buy")  # change to / when finish testing /buy
+        return redirect("/")  # change to / when finish testing /buy
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -268,7 +274,45 @@ def register():
 @login_required
 def sell():
     """Sell shares of stock"""
-    return apology("TODO")
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        # Ensure symbol was submitted
+        if not request.form.get("symbol"):
+            return apology("must provide symbol", 403)
+
+        # Ensure number of shares was submitted
+        elif not request.form.get("shares"):
+            return apology("must provide number of shares", 403)
+
+        else:
+            session["quote"] = lookup(request.form.get("symbol"))
+
+            try:
+                session["shares"] = int(request.form.get("shares")) * -1
+            except ValueError:
+                print("not an int")
+                return apology("Please enter a positive integer number of shares.", 403)
+
+            print("in sell():")
+            print(session["quote"].get("price"))
+            print(session["shares"])
+
+            price = session["quote"].get("price")
+            shares = session["shares"]
+            total = price * shares
+            print("total == " + str(total))
+
+            user_id = session["user_id"]
+
+            return render_template("confirm.html", shares=session, quote=session)
+
+    # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        print("313. method = get")
+        rows = viewPortfolio()
+        return render_template("sell.html", portfolio=rows)
 
 
 def errorhandler(e):
@@ -284,16 +328,30 @@ for code in default_exceptions:
 # add transaction to atabase
 def addTradeToDatabase(shares,quote):
 
+    print("331. " + str(shares))
     # extract values out of session object
     user_id = session["user_id"]
     symbol = quote["symbol"]
+    company_name = quote["name"]
     price = quote["price"]
     timestamp = quote["timestamp"]
 
     # add trade to portfolio
-    db.execute("INSERT INTO trades (user_id, shares, symbol, price, timestamp) \
-        VALUES(:user_id, :shares, :symbol, :price, :timestamp)", \
-        user_id=user_id,shares=shares,symbol=symbol,price=price,timestamp=timestamp)
+    db.execute("INSERT INTO trades (user_id, shares, symbol, company_name, price, timestamp) \
+        VALUES(:user_id, :shares, :symbol, :company_name, :price, :timestamp)", \
+        user_id=user_id,shares=shares,symbol=symbol,company_name=company_name,price=price,timestamp=timestamp)
 
-# create table for transactions
-# CREATE TABLE 'trades' ('user_id' TEXT NOT NULL,'shares' INTEGER NOT NULL,'symbol' TEXT NOT NULL,'price' REAL NOT NULL,'timestamp' DATETIME PRIMARY KEY NOT NULL);
+
+# retrieve view from trades for display to index.html
+def viewPortfolio():
+
+        user_id = session["user_id"]
+
+        # Query database for view
+        rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
+                          user_id=user_id)
+
+        if len(rows) == 0:
+            return apology("sorry, you have no stocks", 403)
+
+        return rows
