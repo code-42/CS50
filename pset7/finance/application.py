@@ -73,11 +73,8 @@ def index():
 
         portfolio[rows[row]["symbol"]] = table_row
 
-
     print(portfolio)
 
-
-    # return render_template("index.html", portfolio=rows, price=session["quote"])
     return render_template("index.html", portfolio=portfolio)
 
 
