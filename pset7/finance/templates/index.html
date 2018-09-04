@@ -13,9 +13,9 @@
                 	<tr>
                 		<th>Symbol</th>
                 		<th>Name</th>
-                		<th>Shares</th>
-                		<th>Price</th>
-                		<th>Total</th>
+                		<th class="rt">Shares</th>
+                		<th class="rt">Price</th>
+                		<th class="rt">Total</th>
                 	</tr>
             	</thead>
                 <tbody>
@@ -24,11 +24,11 @@
 
                     {% for k,v in portfolio.items() %}
                         <tr>
-                    	    <td>{{ v[0] }} </td>
-                    	    <td>{{ v[1] }} </td>
-                    	    <td>{{ v[2] }} </td>
-                    	    <td>{{ v[3] }} </td>
-                            <td>{{ '%0.2f' % v[4]|float }} </td>
+                    	    <td>{{ v[0] }}</td>
+                    	    <td>{{ v[1] }}</td>
+                    	    <td class="rt">{{ v[2] }}</td>
+                    	    <td class="rt">{{ '%0.2f' % v[3]|float }}</td>
+                            <td class="rt">{{ '%0.2f' % v[4]|float }}</td>
                 	    </tr>
                     {% endfor %}
                 </tbody>
