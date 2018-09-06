@@ -73,47 +73,32 @@ def buy():
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
-        # Ensure symbol was submitted
-        if not request.form.get("symbol"):
-            return apology("must provide symbol", 403)
+        # Returns apology page if input is not valid
+        isValidInput()
 
-        # Ensure number of shares was submitted
-        elif not request.form.get("shares"):
-            return apology("must provide number of shares", 403)
+        session["quote"] = lookup(request.form.get("symbol"))
+        session["shares"] = int(request.form.get("shares"))
 
-        else:
-            session["quote"] = lookup(request.form.get("symbol"))
+        if(session.get('quote') is None):
+            print("invalid symbol")
+            return apology("invalid symbol", 403)
 
-            if(session.get('quote') is None):
-                print("invalid symbol")
-                return apology("invalid symbol", 403)
+        user_id = session["user_id"]
+        cash = db.execute("SELECT cash FROM users WHERE id = :user_id",
+          user_id=session["user_id"])
 
-            try:
-                session["shares"] = int(request.form.get("shares"))
-            except ValueError:
-                print("not an int")
-                return apology("Please enter a positive integer number of shares.", 403)
+        cash = float(cash[0]["cash"])
+        print("cash == " + str(cash))
 
-            print("in buy():")
-            print(session["quote"].get("price"))
-            print(session["shares"])
+        price = session["quote"].get("price")
+        shares = session["shares"]
+        total = price * shares
+        print("total == " + str(total))
 
-            price = session["quote"].get("price")
-            shares = session["shares"]
-            total = price * shares
-            print("total == " + str(total))
+        if(cash < total):
+            return apology("Sorry, you don't have enough money for this trade.", 403)
 
-            user_id = session["user_id"]
-            cash = db.execute("SELECT cash FROM users WHERE id = :user_id",
-              user_id=session["user_id"])
-
-            cash = float(cash[0]["cash"])
-            print("cash == " + str(cash))
-
-            if(cash < total):
-                return apology("Sorry, you don't have enough cash for this trade.", 403)
-
-            return render_template("confirm.html", shares=session, quote=session)
+        return render_template("confirm.html", shares=session, quote=session)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -310,43 +295,17 @@ def sell():
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
-        # Ensure symbol was submitted
-        if not request.form.get("symbol"):
-            print("315. symbol == " + request.form.get("symbol"))
-            return apology("must provide symbol", 403)
+        # Returns apology page if input is not valid
+        isValidInput()
 
-        # Ensure number of shares was submitted
-        elif not request.form.get("shares"):
-            return apology("must provide number of shares", 403)
+        symbol = request.form.get("symbol")
+        session["quote"] = lookup(request.form.get("symbol"))
+        session["shares"] = int(request.form.get("shares")) * -1
 
-        else:
-            symbol = request.form.get("symbol")
-            session["quote"] = lookup(request.form.get("symbol"))
-            print("296. ")
-            print(session["quote"].get("price"))
+        if(getNumSharesOwned(symbol) < abs(session["shares"])):
+            return apology("Sorry, you don't have enough shares for this trade.", 403)
 
-            try:
-                session["shares"] = int(request.form.get("shares")) * -1
-            except ValueError:
-                print("not an int")
-                return apology("Please enter a positive integer number of shares.", 403)
-
-            print("in sell():")
-            print(session["quote"].get("price"))
-            print(session["shares"])
-
-            price = session["quote"].get("price")
-            shares = session["shares"]
-            total = price * shares
-            print("341. total == " + str(total))
-
-            print("343. symbol == " + symbol)
-            sharesAvailble = getShares(symbol)
-
-            if(shares < sharesAvailble):
-                return apology("Sorry, you don't have enough shares for this trade.", 403)
-
-            return render_template("confirm.html", shares=session, quote=session)
+        return render_template("confirm.html", shares=session, quote=session)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -431,13 +390,27 @@ def getCash():
     return cash
 
 # get number of shares in portfolio
-def getShares(symbol):
+def getNumSharesOwned(symbol):
 
     user_id = session["user_id"]
     numShares = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id and symbol = :symbol",
       user_id=session["user_id"], symbol=symbol)
 
-    shares = int(numShares[0]["sum(shares)"])
-    print("347. shares == " + str(shares))
+    numShares = int(numShares[0]["sum(shares)"])
+    print("347. numShares == " + str(numShares))
 
-    return shares
+    return numShares
+
+
+def isValidInput():
+
+        # Ensure symbol was submitted
+        if not request.form.get("symbol"):
+            print("315. symbol == " + request.form.get("symbol"))
+            return apology("must provide symbol", 403)
+
+        # Ensure number of shares was submitted
+        elif not request.form.get("shares"):
+            return apology("must provide number of shares", 403)
+
+        return True
