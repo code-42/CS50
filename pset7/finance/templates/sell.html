@@ -7,7 +7,7 @@
 {% block main %}
     <form action="/sell" method="post">
         <div class="form-group">
-            <select name="symbol">
+            <select name="symbol" autofocus>
                 {% for item in portfolio %}
                     <option value='{{ item["symbol"] }}'>{{ item["symbol"] }}</option>
                 {% endfor %}

@@ -312,6 +312,7 @@ def sell():
 
         # Ensure symbol was submitted
         if not request.form.get("symbol"):
+            print("315. symbol == " + request.form.get("value"))
             return apology("must provide symbol", 403)
 
         # Ensure number of shares was submitted
@@ -344,7 +345,6 @@ def sell():
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        print("313. method = get")
         rows = viewPortfolio()
         return render_template("sell.html", portfolio=rows)
 
