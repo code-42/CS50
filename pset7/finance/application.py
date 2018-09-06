@@ -48,19 +48,10 @@ def index():
 
     portfolio = {}
     rows = viewPortfolio()
-    for row in range(len(rows)):
-        session["quote"] = lookup(rows[row]["symbol"])
-        # company_name, sum(shares), sum(shares * price)
-        print("51. row == ")
-        print(rows[row]["symbol"])
-        print(rows[row]["company_name"])
-        print(rows[row]["sum(shares)"])
-        print(session["quote"].get("price"))
-        # price = session["quote"].get("price")
-        # print("60. price == " + str(price))
-        print(rows[row]["sum(shares * price)"])
 
-        table_row = (
+    for row in range(len(rows)):
+        session["quote"] = lookup(rows[row]["symbol"]) # get fresh data
+        portfolio[rows[row]["symbol"]] = (
             rows[row]["symbol"],
             rows[row]["company_name"],
             rows[row]["sum(shares)"],
@@ -68,14 +59,10 @@ def index():
             rows[row]["sum(shares * price)"]
             )
 
-        print("70. table_row == ")
-        print(table_row)
+    cash = getCash() - sumPortfolio()
+    sumTotal = cash + sumPortfolio()
 
-        portfolio[rows[row]["symbol"]] = table_row
-
-    print(portfolio)
-
-    return render_template("index.html", portfolio=portfolio)
+    return render_template("index.html", portfolio=portfolio, cash=cash, sumTotal=sumTotal)
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -389,16 +376,51 @@ def addTradeToDatabase(shares,quote):
         user_id=user_id,shares=shares,symbol=symbol,company_name=company_name,price=price,timestamp=timestamp)
 
 
-# retrieve view from trades for display to index.html
+# retrieve portfolio view for display to index.html
 def viewPortfolio():
 
-        user_id = session["user_id"]
+    user_id = session["user_id"]
 
-        # Query database for view
-        rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
-                          user_id=user_id)
+    # Query database for view
+    rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
+                      user_id=user_id)
 
-        if len(rows) == 0:
-            return apology("sorry, you have no stocks", 403)
+    if len(rows) == 0:
+        return apology("sorry, you have no stocks", 403)
 
-        return rows
+    return rows
+
+
+# add up the total of all positions
+def sumPortfolio():
+
+    user_id = session["user_id"]
+
+    # Query database for portfolio
+    rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
+                      user_id=user_id)
+
+    if len(rows) == 0:
+        return apology("sorry, you have no stocks", 403)
+
+    print("422. ")
+    sumStocks = 0
+    for row in range(len(rows)):
+        print(rows[row]["sum(shares * price)"])
+        sumStocks = sumStocks + rows[row]["sum(shares * price)"]
+
+    return sumStocks
+
+def getCash():
+
+    id = session["user_id"]
+
+    # Query database for cash
+    rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
+
+    if len(rows) == 0:
+        return apology("sorry, you have no cash", 403)
+
+    cash = rows[0]["cash"]
+
+    return cash
