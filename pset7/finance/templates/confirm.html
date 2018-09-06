@@ -17,8 +17,15 @@
             {% elif shares.shares > 0 %}
                 buy
             {% endif %}
-            {{ shares.shares|abs }}&nbsp;
-            shares of&nbsp;
+            &nbsp;
+            {{ shares.shares|abs }}
+            &nbsp;
+            {% if shares.shares|abs == 1 %}
+                share
+            {% elif shares.shares|abs > 1 %}
+                shares
+            {% endif %}
+            &nbsp;of&nbsp;
             {{ quote.quote.name }}
             (symbol:&nbsp;
             {{ quote.quote.symbol.upper() }}) &nbsp;

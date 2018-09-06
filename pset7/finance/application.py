@@ -46,9 +46,12 @@ def index():
     if(session["user_id"] is None):
         return render_template("login.html")
 
-    portfolio = {}
     rows = viewPortfolio()
+    if len(rows) == 0:
+        print("53. rows == " + str(len(rows)))
+        return apology("sorry, you have no stocks", 403)
 
+    portfolio = {}
     for row in range(len(rows)):
         session["quote"] = lookup(rows[row]["symbol"]) # get fresh data
         portfolio[rows[row]["symbol"]] = (
@@ -114,11 +117,12 @@ def confirm():
 
         print("in confirm():")
         shares = session.get('shares')
-        print("118. " + str(shares))
+        print("118. num shares" + str(session.get('shares')))
         quote = session.get('quote')
         print("120. ")
         print(quote)
         print(quote["symbol"])
+        print(quote["price"])
 
         price = session.get('price')
         print("124. " + str(price))
@@ -127,7 +131,7 @@ def confirm():
         user_id = session["user_id"]
         print(user_id)
 
-        addTradeToDatabase(shares,quote)
+        addTradeToDatabase(shares,quote,user_id)
 
         rows = viewPortfolio()
         # return render_template("index.html", portfolio=rows)
@@ -177,8 +181,12 @@ def login():
         rows = db.execute("SELECT * FROM users WHERE username = :username",
                           username=request.form.get("username"))
 
+        print("188. rows == " + str(len(rows)))
+        print(str(rows[0]["username"]))
+
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+            print("193. rows == " + str(len(rows)))
             return apology("invalid username and/or password", 403)
 
         # Remember which user has logged in
@@ -324,33 +332,41 @@ for code in default_exceptions:
 
 
 # add transaction to atabase
-def addTradeToDatabase(shares,quote):
+def addTradeToDatabase(shares,quote,user_id):
 
     print("331. " + str(shares))
     # extract values out of session object
-    user_id = session["user_id"]
+    # user_id = session["user_id"]
+    user_id=user_id
     symbol = quote["symbol"]
     company_name = quote["name"]
     price = quote["price"]
     timestamp = quote["timestamp"]
+
+    tradeTotal = shares * price
 
     # add trade to portfolio
     db.execute("INSERT INTO trades (user_id, shares, symbol, company_name, price, timestamp) \
         VALUES(:user_id, :shares, :symbol, :company_name, :price, :timestamp)", \
         user_id=user_id,shares=shares,symbol=symbol,company_name=company_name,price=price,timestamp=timestamp)
 
+    id = session["user_id"]
+    db.execute("UPDATE users SET cash = (cash - :tradeTotal) WHERE id = :id", \
+        id=id, tradeTotal=tradeTotal)
 
 # retrieve portfolio view for display to index.html
 def viewPortfolio():
 
     user_id = session["user_id"]
+    print("362. user_id == " + str(user_id))
 
     # Query database for view
     rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
                       user_id=user_id)
 
-    if len(rows) == 0:
-        return apology("sorry, you have no stocks", 403)
+    print(len(rows))
+    print("357. rows == " + str(len(rows)))
+    print(rows)
 
     return rows
 
@@ -372,6 +388,7 @@ def sumPortfolio():
     for row in range(len(rows)):
         print(rows[row]["sum(shares * price)"])
         sumStocks = sumStocks + rows[row]["sum(shares * price)"]
+        print(sumStocks)
 
     return sumStocks
 
@@ -414,3 +431,6 @@ def isValidInput():
             return apology("must provide number of shares", 403)
 
         return True
+
+
+
