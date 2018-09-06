@@ -319,10 +319,6 @@ def sell():
         elif not request.form.get("shares"):
             return apology("must provide number of shares", 403)
 
-        # Ensure number of shares submitted is a positive integer
-        elif int(request.form.get("shares")) < 1:
-            return apology("must provide positive number of shares", 403)
-
         else:
             symbol = request.form.get("symbol")
             session["quote"] = lookup(request.form.get("symbol"))
