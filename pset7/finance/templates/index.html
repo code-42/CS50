@@ -8,8 +8,9 @@
 
     <p>
         <div class="form-control">
-            <table class="table">
+            <table class="table table-striped">
                 <thead>
+                    <tr><h1>My Portfolio</h1></tr>
                 	<tr>
                 		<th>Symbol</th>
                 		<th>Name</th>
@@ -31,6 +32,13 @@
                             <td class="rt">{{ '%0.2f' % v[4]|float }}</td>
                 	    </tr>
                     {% endfor %}
+
+                    <tr>
+                        <td>Cash</td><td></td><td></td><td></td><td class="rt">{{ '%0.2f' % cash|float }}</td>
+                    </tr>
+                    <tr>
+                        <td>Total</td><td></td><td></td><td></td><td class="rt">{{ '%0.2f' % sumTotal|float }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
