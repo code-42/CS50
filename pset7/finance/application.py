@@ -312,7 +312,7 @@ def sell():
 
         # Ensure symbol was submitted
         if not request.form.get("symbol"):
-            print("315. symbol == " + request.form.get("value"))
+            print("315. symbol == " + request.form.get("symbol"))
             return apology("must provide symbol", 403)
 
         # Ensure number of shares was submitted
@@ -320,6 +320,7 @@ def sell():
             return apology("must provide number of shares", 403)
 
         else:
+            symbol = request.form.get("symbol")
             session["quote"] = lookup(request.form.get("symbol"))
             print("296. ")
             print(session["quote"].get("price"))
@@ -337,9 +338,13 @@ def sell():
             price = session["quote"].get("price")
             shares = session["shares"]
             total = price * shares
-            print("total == " + str(total))
+            print("341. total == " + str(total))
 
-            user_id = session["user_id"]
+            print("343. symbol == " + symbol)
+            sharesAvailble = getShares(symbol)
+
+            if(shares < sharesAvailble):
+                return apology("Sorry, you don't have enough shares for this trade.", 403)
 
             return render_template("confirm.html", shares=session, quote=session)
 
@@ -424,3 +429,15 @@ def getCash():
     cash = rows[0]["cash"]
 
     return cash
+
+# get number of shares in portfolio
+def getShares(symbol):
+
+    user_id = session["user_id"]
+    numShares = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id and symbol = :symbol",
+      user_id=session["user_id"], symbol=symbol)
+
+    shares = int(numShares[0]["sum(shares)"])
+    print("347. shares == " + str(shares))
+
+    return shares
