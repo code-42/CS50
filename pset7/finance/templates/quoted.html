@@ -11,7 +11,7 @@
     A share of
     {{ quote.quote.name }}&nbsp;
     ({{ quote.quote.symbol.upper() }})&nbsp;
-    costs $&nbsp;{{ quote.quote.price }}&nbsp;
+    costs $&nbsp;{{ '%0.2f' % quote.quote.price|float }}&nbsp;
     USD&nbsp;at date&nbsp;
     {{ quote.quote.timestamp }}
 </p>

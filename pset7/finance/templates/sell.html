@@ -5,17 +5,19 @@
 {% endblock %}
 
 {% block main %}
+
     <form action="/sell" method="post">
+        <span>Please select a stock you own from the drop down list<br>and enter the number of shares you wish to sell.</span><br><br>
         <div class="form-group">
-            <select name="symbol">
+            <select name="symbol" autofocus>
                 {% for item in portfolio %}
                     <option value='{{ item["symbol"] }}'>{{ item["symbol"] }}</option>
                 {% endfor %}
             </select>
-        </div>
-        <div class="form-group">
-            <input autocomplete="off" class="form-control" name="shares" placeholder="number of shares" type="text"/>
-        </div>
+
+            <input autocomplete="off" class="form-control" name="shares" placeholder="number of shares" type="number" min="1"/>
+
         <button class="btn btn-primary" type="submit">Sell</button>
+        </div>
     </form>
 {% endblock %}

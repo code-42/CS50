@@ -8,9 +8,11 @@
 <!-- trades_id, user_id, shares, symbol, company_name, price, timestamp -->
     <p>
         <div class="form-control">
-            <table class="table">
+            <table class="table table-striped">
                 <thead>
+                    <tr><h1>Transaction History</h1></tr>
                 	<tr>
+                	    <th>Buy/Sell</th>
                 	    <th>Date</th>
                 		<th>Symbol</th>
                 		<th>Name</th>
@@ -25,10 +27,17 @@
 
                     {% for item in trades %}
                         <tr>
+                    	    <td>
+                    	        {% if(item["shares"] < 0) -%}
+                    	        Sell
+                    	        {% elif(item["shares"] > 0) -%}
+                    	        Buy
+                    	        {%- endif %}
+                    	    </td>
                     	    <td>{{ item["timestamp"] }}</td>
                     	    <td>{{ item["symbol"] }}</td>
                     	    <td>{{ item["company_name"] }}</td>
-                    	    <td class="rt">{{ '%0.2f' % item["shares"]|float }}</td>
+                    	    <td class="rt">{{ item["shares"]|abs }}</td>
                             <td class="rt">{{ '%0.2f' % item["price"]|float }}</td>
                 	    </tr>
                     {% endfor %}

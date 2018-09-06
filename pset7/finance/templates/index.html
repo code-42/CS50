@@ -17,12 +17,11 @@
                 		<th class="rt">Shares</th>
                 		<th class="rt">Price</th>
                 		<th class="rt">Total</th>
+                		<th></th>
                 	</tr>
             	</thead>
                 <tbody>
-            	 <!--loop over and print current users stock positions-->
-
-
+            	    <!--loop over and print current users stock positions-->
                     {% for k,v in portfolio.items() %}
                         <tr>
                     	    <td>{{ v[0] }}</td>
@@ -30,6 +29,11 @@
                     	    <td class="rt">{{ v[2] }}</td>
                     	    <td class="rt">{{ '%0.2f' % v[3]|float }}</td>
                             <td class="rt">{{ '%0.2f' % v[4]|float }}</td>
+                            <td>
+                                <form action="sell" method="get">
+                                    <button class="btn btn-primary btn-sm" type="submit">Sell</button>
+                                </form>
+                            </td>
                 	    </tr>
                     {% endfor %}
 

@@ -23,7 +23,7 @@
             (symbol:&nbsp;
             {{ quote.quote.symbol.upper() }}) &nbsp;
             @&nbsp;$&nbsp;
-            {{ quote.quote.price }}
+            {{ '%0.2f' % quote.quote.price|float }}
             &nbsp;USD&nbsp;at date&nbsp;
             {{ quote.quote.timestamp }}
         </div>
