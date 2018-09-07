@@ -264,6 +264,13 @@ def register():
         password = request.form.get("password")
         print("144. " + username + password)
 
+        # Query database for username
+        rows = db.execute("SELECT * FROM users WHERE username = :username",
+            username=request.form.get("username"))
+
+        if len(rows) > 0:
+            return apology("Sorry, that username is already taken. Try again.", 403)
+
         # source https://docs.python.org/2/library/hashlib.html
         hash = generate_password_hash(password)
         print("147. " + hash)
@@ -334,15 +341,13 @@ for code in default_exceptions:
 # add transaction to atabase
 def addTradeToDatabase(shares,quote,user_id):
 
-    print("331. " + str(shares))
     # extract values out of session object
     # user_id = session["user_id"]
-    user_id=user_id
+
     symbol = quote["symbol"]
     company_name = quote["name"]
     price = quote["price"]
     timestamp = quote["timestamp"]
-
     tradeTotal = shares * price
 
     # add trade to portfolio
@@ -350,9 +355,21 @@ def addTradeToDatabase(shares,quote,user_id):
         VALUES(:user_id, :shares, :symbol, :company_name, :price, :timestamp)", \
         user_id=user_id,shares=shares,symbol=symbol,company_name=company_name,price=price,timestamp=timestamp)
 
+    # Query database for cash
+    id=user_id
+    rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
+
+    print("188. rows == " + str(len(rows)))
+
+    cash = rows[0]["cash"]
+    print("360. cash == " + str(cash))
+
+    cashBalance = cash - tradeTotal
+    print(cashBalance)
+
     id = session["user_id"]
-    db.execute("UPDATE users SET cash = (cash - :tradeTotal) WHERE id = :id", \
-        id=id, tradeTotal=tradeTotal)
+    db.execute("UPDATE users SET cash = :cashBalance WHERE id = :id", \
+        id=id, cashBalance=cashBalance)
 
 # retrieve portfolio view for display to index.html
 def viewPortfolio():
