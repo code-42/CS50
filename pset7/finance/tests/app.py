@@ -236,6 +236,10 @@ def quote():
     else:
         return render_template("quote.html")
 
+@app.route("/register_test", methods=["GET", "POST"])
+def register_test():
+    """Register user"""
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -260,17 +264,12 @@ def register():
         elif not request.form.get("confirmation"):
             return apology("must provide password confirmation", 403)
 
-        # Compare password and confirmation for equality
-        if not request.form.get("password") == request.form.get("confirmation"):
-            return apology("Sorry, passwords do not match.  Try again.", 403)
-
         # passed above tests so add name and password hash to database
         username = request.form.get("username")
         password = request.form.get("password")
         print("144. " + username + password)
 
-        # Query database for username used already
-        # NOTE: this can be accomplished with keyword UNIQUE in db schema
+        # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = :username",
             username=request.form.get("username"))
 
