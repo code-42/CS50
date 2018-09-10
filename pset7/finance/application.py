@@ -63,7 +63,7 @@ def index():
             rows[row]["sum(shares * price)"]
             )
 
-    cash = getCash() - sumPortfolio()
+    cash = getCashBalance() - sumPortfolio()
     sumTotal = cash + sumPortfolio()
 
     return render_template("index.html", portfolio=portfolio, cash=cash, sumTotal=sumTotal)
@@ -392,6 +392,9 @@ def viewPortfolio():
     rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
                       user_id=user_id)
 
+    if len(rows) == 0:
+        return apology("sorry, you have no stocks", 403)
+
     print(len(rows))
     print("357. rows == " + str(len(rows)))
     print(rows)
@@ -420,7 +423,7 @@ def sumPortfolio():
 
     return sumStocks
 
-def getCash():
+def getCashBalance():
 
     id = session["user_id"]
 
