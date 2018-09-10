@@ -34,7 +34,7 @@
                     	        Buy
                     	        {%- endif %}
                     	    </td>
-                    	    <td>{{ item["timestamp"] }}</td>
+                    	    <td>{{ format_date(item["timestamp"]) }}</td>
                     	    <td>{{ item["symbol"] }}</td>
                     	    <td>{{ item["company_name"] }}</td>
                     	    <td class="rt">{{ item["shares"]|abs }}</td>
@@ -47,3 +47,4 @@
     </p>
 
 {% endblock %}
+
