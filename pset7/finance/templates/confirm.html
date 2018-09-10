@@ -28,11 +28,11 @@
             &nbsp;of&nbsp;
             {{ quote.quote.name }}
             (symbol:&nbsp;
-            {{ quote.quote.symbol.upper() }}) &nbsp;
+            {{ quote.quote.symbol.upper() }})&nbsp;
             @&nbsp;$&nbsp;
             {{ '%0.2f' % quote.quote.price|float }}
-            &nbsp;USD&nbsp;at date&nbsp;
-            {{ quote.quote.timestamp }}
+            &nbsp;USD&nbsp;on date&nbsp;
+            {{ format_date(quote.quote.timestamp) }}
         </div>
     <button class="btn btn-primary" type="submit">Confirm</button>
 </form>

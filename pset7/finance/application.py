@@ -8,8 +8,9 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash, generate_password_hash
-
 from helpers import apology, login_required, lookup, usd
+# from datetime import datetime
+import datetime
 
 # Configure application
 app = Flask(__name__)
@@ -155,6 +156,10 @@ def history():
 
     if len(rows) == 0:
         return apology("sorry, you have no stocks", 403)
+
+    print("159. timestamp == ")
+    print(rows[6]["timestamp"])
+    # print(format_date(rows[6]["timestamp"]))
 
     return render_template("history.html", trades=rows)
 
@@ -456,4 +461,13 @@ def isValidInput():
         return True
 
 
+@app.context_processor
+def utility_processor():
+    def format_date(epoch):
+        fmt = "%m-%d-%Y @ %-I:%M %p"
+        t = datetime.datetime.fromtimestamp(float(epoch)/1000.)
+        print("469. j_date == ")
+        print(t.strftime(fmt))
+        return t.strftime(fmt)
+    return(dict(format_date=format_date))
 
