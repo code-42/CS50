@@ -118,16 +118,15 @@ def confirm():
 
         print("in confirm():")
         shares = session.get('shares')
-        print("118. num shares" + str(session.get('shares')))
+        print("118. num shares " + str(session.get('shares')))
         quote = session.get('quote')
         print("120. ")
         print(quote)
         print(quote["symbol"])
         print(quote["price"])
 
-        price = session.get('price')
-        print("124. " + str(price))
-        # print(quote["symbol"].get('price'))
+        print("124. " + str(session.get('quote').get('price')))
+        print("130. " + str(quote["price"]))
 
         user_id = session["user_id"]
         print(user_id)
@@ -360,22 +359,16 @@ def addTradeToDatabase(shares,quote,user_id):
     price = quote["price"]
     timestamp = quote["timestamp"]
     tradeTotal = shares * price
+    print("362. tradeTotal == " + str(tradeTotal))
 
     # add trade to portfolio
     db.execute("INSERT INTO trades (user_id, shares, symbol, company_name, price, timestamp) \
         VALUES(:user_id, :shares, :symbol, :company_name, :price, :timestamp)", \
         user_id=user_id,shares=shares,symbol=symbol,company_name=company_name,price=price,timestamp=timestamp)
 
-    # Query database for cash
-    id=user_id
-    rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
-
-    print("188. rows == " + str(len(rows)))
-
-    cash = rows[0]["cash"]
-    print("360. cash == " + str(cash))
-
-    cashBalance = cash - tradeTotal
+    # Query database for cash and caclulate cash balance after trade
+    cashBalance = getCashBalance() - tradeTotal
+    print("382. cashBal == ")
     print(cashBalance)
 
     id = session["user_id"]
@@ -436,6 +429,7 @@ def getCashBalance():
     cash = rows[0]["cash"]
 
     return cash
+
 
 # get number of shares in portfolio
 def getNumSharesOwned(symbol):
