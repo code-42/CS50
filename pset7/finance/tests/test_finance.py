@@ -1,28 +1,29 @@
+import os, sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 import unittest
-import application
-from flask import request
+from application import app
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 class TestFinance(unittest.TestCase):
 
+    def setUp(self):
+        self.driver = webdriver.Chrome("/usr/local/bin")
+
     def test_login(self):
-        with application.test_request_context('/login', method='POST'):
-            tester = application.login()
-            response = tester.get('/login', content_type='html/text')
-            self.assertEqual(response.status_code, 200)
+        driver.get("http://edwd42-cs50-code42.c9users.io:8080")
+        # username = driver.find_element_by_id("username")
+        # username.send_keys("ee")
+        # password = driver.find_element_by_id("password")
+        # password.send_keys("dd")
+        # submit_button = driver.find_element_by_id("submit")
+        # submit_button.click()
 
-    # def test_login_page_loads(self):
-    #     tester = application.register()
-    #     response = tester.get('/register', content_type='html/text')
-    #     self.assertTrue('Register' in response.data)
-
-    # def test_correct_login(self):
-    #     tester = application.login()
-    #     response = tester.post(
-    #         '/login',
-    #         data=dict(username="ee", password="dd"),
-    #         follow_redirects=True
-    #         )
-    #     self.assertIn(b'Login', response.data)
+    def tearDown(self):
+        self.driver.close()
+        self.driver.quit()
 
 if __name__ == '__main__':
     unittest.main()
