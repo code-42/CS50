@@ -10,10 +10,10 @@ from selenium.webdriver.common.keys import Keys
 class TestFinance(unittest.TestCase):
 
     def setUp(self):
-        self.driver = webdriver.Chrome("/usr/local/bin")
+        self.driver = webdriver.Chrome("/home/ubuntu/bin/chrome")
 
     def test_login(self):
-        driver.get("http://edwd42-cs50-code42.c9users.io:8080")
+        self.driver.get("http://edwd42-cs50-code42.c9users.io:8080")
         # username = driver.find_element_by_id("username")
         # username.send_keys("ee")
         # password = driver.find_element_by_id("password")
