@@ -1,0 +1,1000 @@
+ 1024  style50 dictionary.c
+ 1025  check50 cs50/2017/x/speller
+ 1026  git st
+ 1027  git add .
+ 1028  git ci -m 'edit for style50 and add questions.txt'
+ 1029  git push
+ 1030  git co master
+ 1031  git st
+ 1032  git merge dev
+ 1033  git push
+ 1034  style50 dictionary.c
+ 1035  check50 cs50/2017/x/speller
+ 1036  git st
+ 1037  git ci -m 'add check50 screenshot and edit README.md'
+ 1038  git add .
+ 1039  git ci -m 'add check50 screenshot and edit README.md'
+ 1040  git st
+ 1041  git push
+ 1042  cd cs50
+ 1043  cd pset6
+ 1044  ll
+ 1045  mkdir caesar
+ 1046  cd caesar/
+ 1047  ll
+ 1048  open caesar.py
+ 1049  python caesar.py
+ 1050  python caesar.py 2 hello
+ 1051  python caesar.py 2
+ 1052  python caesar.py 1
+ 1053  python caesar.py 13
+ 1054  python caesar.py k
+ 1055  python caesar.py 4
+ 1056  python caesar.py d
+ 1057  python caesar.py 3
+ 1058  python caesar.py d
+ 1059  python caesar.py 3
+ 1060  python caesar.py 0
+ 1061  python caesar.py -1
+ 1062  python caesar.py 3
+ 1063  python caesar.py -2
+ 1064  python caesar.py d
+ 1065  python caesar.py -2
+ 1066  python caesar.py 3
+ 1067  python caesar.py 3 3
+ 1068  python caesar.py
+ 1069  python caesar.py 1 2 3 4
+ 1070  python caesar.py
+ 1071  style50 caesar.py
+ 1072  check50 cs50/2018/x/sentimental/caesar
+ 1073  style50 caesar.py
+ 1074  check50 cs50/2018/x/sentimental/caesar
+ 1075  cd dev
+ 1076  ll
+ 1077  open index.html
+ 1078  cd bowling/
+ 1079  c9 bowling.c
+ 1080  c9 open bowling.c
+ 1081  make bowling
+ 1082  clang bowling.c -o bowling
+ 1083  ./bowling
+ 1084  echo bowling.c > 1.bowling.c.txt
+ 1085  ll
+ 1086  clang bowling.c -o bowling
+ 1087  ./bowling
+ 1088  clang bowling.c -o bowling
+ 1089  ./bowling
+ 1090  echo bowling.c > 2.bowling.c.txt
+ 1091  clang bowling.c -o bowling
+ 1092  echo bowling.c > 2.bowling.c.txt
+ 1093  cd cs50/pset7/finance/
+ 1094  flask run
+ 1095  cd cs50/pset7/finance/
+ 1096  ll
+ 1097  node start
+ 1098  python application.py 
+ 1099  python3 test_finance.py 
+ 1100  python3 application.py 
+ 1101  flask application.py
+ 1102  flask run
+ 1103  pip install pytest
+ 1104  git st
+ 1105  ll
+ 1106  mkdir pytoot
+ 1107  cd pytoot
+ 1108  git clone https://github.com/pallets/flask
+ 1109  ll
+ 1110  cd flask/
+ 1111  ll
+ 1112  git tag
+ 1113  git co 1.0.2
+ 1114  git st
+ 1115  git remote -v
+ 1116  git tag
+ 1117  git br -v
+ 1118  git co master
+ 1119  git st
+ 1120  ll
+ 1121  git remote add origin https://github.com/code-42/flaskr.git
+ 1122  git push -u origin master
+ 1123  git remote set-url https://github.com/code-42/flaskr.git
+ 1124  git remote set-url origin https://github.com/code-42/flaskr.git
+ 1125  git remote -v
+ 1126  git push -u origin master
+ 1127  git co 1.0.2
+ 1128  ll
+ 1129  cd examples/tutorial/
+ 1130  ll
+ 1131  git st
+ 1132  python3 -m venv venv
+ 1133  . venv/bin/activate
+ 1134  pip install -e .
+ 1135  pip install --upgrade pip
+ 1136  pip install -e .
+ 1137  export FLASK_APP=flaskr
+ 1138  export FLASK_ENV=development
+ 1139  flask run
+ 1140  pip install -e ../..
+ 1141  pip install -e .
+ 1142  flask run
+ 1143  ll
+ 1144  cd flaskr
+ 1145  flask run
+ 1146  ll
+ 1147  ..
+ 1148  ll
+ 1149  ll tests/
+ 1150  ll
+ 1151  cd venv/
+ 1152  ll
+ 1153  flask run
+ 1154  ..
+ 1155  ll
+ 1156  cd tutorial/
+ 1157  ll
+ 1158  exit
+ 1159  cd pytoot/
+ 1160  ll
+ 1161  cd flask/
+ 1162  ll
+ 1163  flask run
+ 1164  cd cs50/pset7/finance/
+ 1165  ll
+ 1166  setup.py
+ 1167  python3 setup
+ 1168  python3 setup.py
+ 1169  pip install -e .
+ 1170  cat /etc/os-release
+ 1171  ll
+ 1172  ll ..
+ 1173  ll Flask.egg-info/
+ 1174  python3 -m venv venv
+ 1175  . venv/bin/activate
+ 1176  ll
+ 1177  flask run
+ 1178  cd examples/tutorial/
+ 1179  ll
+ 1180  flask run
+ 1181  pip install -e .
+ 1182  export FLASK_APP=flaskr
+ 1183  export FLASK_ENV=development
+ 1184  flask init-db
+ 1185  flask run
+ 1186  ll
+ 1187  echo path
+ 1188  echo $PATH
+ 1189  ll flaskr
+ 1190  ll
+ 1191  flask run
+ 1192  ll
+ 1193  python -m flask run
+ 1194  deactivate
+ 1195  python -m flask run
+ 1196  cd cs50/pset7/finance/
+ 1197  flask run
+ 1198  python -m flask run
+ 1199  python3 -m flask run
+ 1200  virtualenv --version
+ 1201  sudo easy_install Flask
+ 1202  cd pytoot/
+ 1203  ll
+ 1204  cd flask
+ 1205  ll
+ 1206  sudo easy_install Flask
+ 1207  ll
+ 1208  cd examples/tutorial/
+ 1209  ll
+ 1210  flask run
+ 1211  pip install -e .
+ 1212  flask run
+ 1213  cd cs50/pset7/finance/
+ 1214  ll
+ 1215  cat test_finance.py 
+ 1216  history
+ 1217  jll
+ 1218  ll
+ 1219  c9 open schema.sql
+ 1220  grep -nr --color "finance" .
+ 1221  sqlite3 finance.db
+ 1222  cd cs50/pset7/finance/
+ 1223  ll
+ 1224  c9 open application.py 
+ 1225  ll templates/
+ 1226  open templates/confirm.html 
+ 1227  git st
+ 1228  git add .
+ 1229  git ci -m 'add error handling in /quote for invalid symbol'
+ 1230  git st
+ 1231  sqlite3 finance.db
+ 1232  git add .
+ 1233  git ci -m 'add error handling in /buy for invalid symbol'
+ 1234  git st
+ 1235  git add .
+ 1236  git ci -m 'add error handling in /buy if shares is not int'
+ 1237  git st
+ 1238  git add .
+ 1239  git ci -m 'compare cash to total in /buy and render apology if user cannot afford the number of shares at the current price'
+ 1240  git st
+ 1241  git push
+ 1242  git co master
+ 1243  git merge dev7
+ 1244  git push
+ 1245  git pull
+ 1246  git st
+ 1247  git merge dev7
+ 1248  git st
+ 1249  git push
+ 1250  git co dev7
+ 1251  git st
+ 1252  git hist
+ 1253  sqlite3 finance.db
+ 1254  git st
+ 1255  git hist
+ 1256  git st
+ 1257  git add .
+ 1258  git ci -m 'add database view to display data in index.html'
+ 1259  git st
+ 1260  git add .
+ 1261  git ci -m 'add portfollio data to homepage after login'
+ 1262  sqlite3 finance.db
+ 1263  ll
+ 1264  c9 open templates/sell.html
+ 1265  git st
+ 1266  git add .
+ 1267  git ci -m 'add sell.html with select menu of stocks in portfolio'
+ 1268  git st
+ 1269  sqlite3 finance.db
+ 1270  git st
+ 1271  git add .
+ 1272  git ci -m 'add if statement for buy/sell and abs filter to confirm.html' 
+ 1273  git st
+ 1274  git push
+ 1275  git co master
+ 1276  git merge dev7
+ 1277  git push
+ 1278  git co dev7
+ 1279  sqlite3 finance.db
+ 1280  git st
+ 1281  git add .
+ 1282  git hist
+ 1283  sqlite3 finance.db
+ 1284  git st
+ 1285  git add .
+ 1286  git hist
+ 1287  git ci -m 'add portfolio dict to index.html'
+ 1288  git st
+ 1289  git push
+ 1290  git co master
+ 1291  git st
+ 1292  git add .
+ 1293  git ci -m 'add portfolio dict to index.html'
+ 1294  git push
+ 1295  git co master
+ 1296  git merge dev7
+ 1297  git push
+ 1298  git co dev7
+ 1299  git st
+ 1300  git add .
+ 1301  git ci -m 'right-align numeric columns in index.html'
+ 1302  sqlite3 finance.db
+ 1303  git st
+ 1304  git add .
+ 1305  git st
+ 1306  git ci -m 'change /confirm return render_template() to return redirect("/") and let "/" handle the table of shares owned'
+ 1307  ll templates
+ 1308  c9 open templates/history.html
+ 1309  sqlite3 finance.db
+ 1310  git st
+ 1311  git add .
+ 1312  git st
+ 1313  git ci -m 'implement /history'
+ 1314  git st
+ 1315  git push
+ 1316  git co master
+ 1317  git st
+ 1318  git merge dev7
+ 1319  git push
+ 1320  git co dev7
+ 1321  git br -v
+ 1322  flask run
+ 1323  cd cs50/pset6
+ 1324  ll
+ 1325  git co master
+ 1326  ll
+ 1327  cd similarities/
+ 1328  ll
+ 1329  python3 compare
+ 1330  python3 compare LesMis1.txt LesMis2.txt
+ 1331  compare LesMis1.txt LesMis2.txt
+ 1332  flask run LesMis1.txt LesMis2.txt
+ 1333  flask run
+ 1334  ll
+ 1335  ll templates/
+ 1336  style50 application.py 
+ 1337  check50 application.py 
+ 1338  check50 cs50/2018/x/similarities/less
+ 1339  ll
+ 1340  cd ~/
+ 1341  ll
+ 1342  cd workspace/
+ 1343  ll
+ 1344  update50
+ 1345  cd cs50/pset7/finance/
+ 1346  ll
+ 1347  git st
+ 1348  c9 open application.py 
+ 1349  git st
+ 1350  git diff application.py
+ 1351  git stash
+ 1352  git st
+ 1353  git co dev7
+ 1354  git st
+ 1355  cd cs50/pset7/finance/
+ 1356  ll
+ 1357  cd cs50/pset7/finance/
+ 1358  git add .
+ 1359  git ci -m 'add cash and portfolio total to index.html'
+ 1360  git st
+ 1361  git push
+ 1362  git co master
+ 1363  git st
+ 1364  git merge dev7
+ 1365  git push
+ 1366  git co dev7
+ 1367  git hist
+ 1368  git st
+ 1369  git add .
+ 1370  git ci -m 'add buy/sell column to history.html'
+ 1371  git st
+ 1372  git add .
+ 1373  git ci -m 'add Sell button to index.html'
+ 1374  git st
+ 1375  git add .
+ 1376  git ci -m 'add handler for number of shares available to sell'
+ 1377  git st
+ 1378  git add .
+ 1379  git ci -m 'add handler for negative number of shares to sell'
+ 1380  git st
+ 1381  git add .
+ 1382  git ci -m 'add min attribute to buy/sell input field'
+ 1383  git st
+ 1384  git hist
+ 1385  git st
+ 1386  git add .
+ 1387  git ci -m 'move error handling to function isValidInput() in /buy and /sell routes'
+ 1388  git st
+ 1389  git push
+ 1390  git st
+ 1391  git co master
+ 1392  git st
+ 1393  git merge dev7
+ 1394  git push
+ 1395  git co dev7
+ 1396  flask run
+ 1397  sqlite3 finance.db
+ 1398  git st
+ 1399  git hist
+ 1400  git stash save "portfolio and history not in sync"
+ 1401  cd cs50/pset7/finance/
+ 1402  cd cs50/pset7/finance/
+ 1403  cd cs50/pset7/finance/
+ 1404  git st
+ 1405  flask run
+ 1406  git stash list
+ 1407  git stash pop stash@{0}
+ 1408  git st
+ 1409  git add .
+ 1410  git ci -m 'commit before applying stash'
+ 1411  git stash pop stash@{0}
+ 1412  sqlite3 finance.db
+ 1413  git st
+ 1414  git add .
+ 1415  git ci -m 'add single share / plural shares handling in confirm.html'
+ 1416  git st
+ 1417  git hist
+ 1418  git st
+ 1419  git add .
+ 1420  git ci -m 'add verification in route /register and return apology if username is already taken'
+ 1421  git st
+ 1422  git push
+ 1423  git st
+ 1424  git co master
+ 1425  git merge dev7
+ 1426  git push
+ 1427  git st
+ 1428  git co dev7
+ 1429  git st
+ 1430  ll
+ 1431  mkdir tests
+ 1432  mv test_finance.py tests/test_finance.py
+ 1433  cd tests/
+ 1434  ll
+ 1435  python test_finance.py 
+ 1436  mv test_finance.py ../test_finance.py
+ 1437  ..
+ 1438  ll
+ 1439  python3 test_finance.py 
+ 1440  mv test_finance.py tests/test_finance.py
+ 1441  cd tests
+ 1442  ll
+ 1443  python3 test_finance.py 
+ 1444  ll
+ 1445  python3 test_finance.py 
+ 1446  cp test_finance.py ../test_finance.py
+ 1447  ..
+ 1448  python3 test_finance.py 
+ 1449  python3 test_finance.py -v
+ 1450  ll
+ 1451  cd tests
+ 1452  ll
+ 1453  touch __init__.py
+ 1454  open __init__.py 
+ 1455  python3 -m unittest
+ 1456  ll
+ 1457  mv test_finance.py test_config.py
+ 1458  python3 -m unittest
+ 1459  ..
+ 1460  ll
+ 1461  cp application.py app.py
+ 1462  cd cs50/pset7/finance/
+ 1463  python3 -m unittest
+ 1464  cd tests
+ 1465  python3 -m unittest
+ 1466  .q
+ 1467  ll
+ 1468  ll test
+ 1469  ll tests
+ 1470  update50
+ 1471  cd cs50/pset7/finance/
+ 1472  ll
+ 1473  git st
+ 1474  ll
+ 1475  cd cs50/pset7/finance/
+ 1476  git st
+ 1477  git add .
+ 1478  git ci -m 'implement /registration passwords match or render apology'
+ 1479  git st
+ 1480  git push
+ 1481  git co master
+ 1482  git st
+ 1483  git merge dev7
+ 1484  git push
+ 1485  git co dev7
+ 1486  cd cs50/pset7/finance/
+ 1487  ll
+ 1488  git st
+ 1489  git add .
+ 1490  git ci -m 'add format_date() function and call from jinja template history.html'
+ 1491  git st
+ 1492  git add .
+ 1493  git ci -m 'add format_date() function call from jinja template in confirm.html'
+ 1494  git st
+ 1495  git push
+ 1496  git co master
+ 1497  git st
+ 1498  git merge dev7
+ 1499  git st
+ 1500  git add .
+ 1501  git ci -m 'add format_date() function call from jinja template in confirm.html'
+ 1502  git st
+ 1503  git push
+ 1504  git merge dev7
+ 1505  git st
+ 1506  git co master
+ 1507  git merge dev7
+ 1508  git push
+ 1509  git co dev7
+ 1510  ggit st
+ 1511  git st
+ 1512  cd cs50/pset7/finance/
+ 1513  git st
+ 1514  git add .
+ 1515  git ci -m 'rename function getCash() to getCashBalance()'
+ 1516  pip install pytest
+ 1517  git st
+ 1518  git hist
+ 1519  git st
+ 1520  git add .
+ 1521  git ci -m 'query database for cash and caclulate cash balance after trade'
+ 1522  git st
+ 1523  git push
+ 1524  git st
+ 1525  git co master
+ 1526  git st
+ 1527  git merge dev7
+ 1528  git push
+ 1529  git co dev7
+ 1530  cd tests/
+ 1531  ll
+ 1532  python3 test_finance.py 
+ 1533  ..
+ 1534  touch __init__.py
+ 1535  cd tests/
+ 1536  ll
+ 1537  python3 test_finance.py 
+ 1538  ll
+ 1539  mv test_finance.py test_finance_data.py
+ 1540  ll
+ 1541  python3 test_config.py 
+ 1542  pip install Flask-SQLAlchemy
+ 1543  python3 test_config.py 
+ 1544  python3 test_finance.py 
+ 1545  update50
+ 1546  cd tdd
+ 1547  wget http://cdn.cs50.net/2018/x/psets/7/finance/finance.zip
+ 1548  ll
+ 1549  unzip finance.zip
+ 1550  ll
+ 1551  cd finance/
+ 1552  ll
+ 1553  cd cd50/pset7/fin
+ 1554  cd cs50/pset7/finance/
+ 1555  ll
+ 1556  cd tests
+ 1557  ll
+ 1558  touch test_finance_data.py
+ 1559  open test_finance_data.py 
+ 1560  cd tests
+ 1561  ll
+ 1562  python3 test_finance.py 
+ 1563  update50
+ 1564  cd cs50
+ 1565  git st
+ 1566  git stash save "tdd err"
+ 1567  git st
+ 1568  git co master
+ 1569  ll
+ 1570  mkdir ~/workspace/pset8/
+ 1571  cd ~/workspace/pset8/
+ 1572  ll
+ 1573  wget http://cdn.cs50.net/2018/x/psets/8/mashup/mashup.zip
+ 1574  ll
+ 1575  unzip mashup.zip
+ 1576  ll
+ 1577  rm mashup.zip
+ 1578  ll
+ 1579  cd mashup
+ 1580  ll
+ 1581  wget http://cdn.cs50.net/2017/fall/psets/8/mashup/US.zip
+ 1582  unzip US.zip
+ 1583  ll
+ 1584  rm US.zip
+ 1585  ll
+ 1586  cd cs50/pset8
+ 1587  ll
+ 1588  cd cs50
+ 1589  ll
+ 1590  flask run
+ 1591  cd pset8
+ 1592  ll
+ 1593  cd mashup/
+ 1594  ll
+ 1595  cd cs50/pset8
+ 1596  cd mashup/
+ 1597  ll
+ 1598  flask run
+ 1599  ll
+ 1600  open schema.sql
+ 1601  sqlite3 mashup.db
+ 1602  git st
+ 1603  ..
+ 1604  git st
+ 1605  cd pset8
+ 1606  git st
+ 1607  git add .
+ 1608  git ci -m 'initial commit pset8'
+ 1609  git st
+ 1610  git push
+ 1611  git co -b dev8
+ 1612  git st
+ 1613  cd mashup/
+ 1614  ll
+ 1615  git st
+ 1616  open schema.sql
+ 1617  wc -l US.txt
+ 1618  git st
+ 1619  git add .
+ 1620  git ci -m 'add places table to mashup.db and file schema.sql'
+ 1621  git st
+ 1622  ll
+ 1623  mkdir tests
+ 1624  cd tests
+ 1625  open test_finance.py
+ 1626  ll
+ 1627  open test_mashup.py
+ 1628  python3 test_mashup.py 
+ 1629  cd cs50/pset7
+ 1630  ll
+ 1631  ..
+ 1632  cd pset8
+ 1633  ll
+ 1634  cd mashup/
+ 1635  ll
+ 1636  git st
+ 1637  git stash
+ 1638  git st
+ 1639  git co master
+ 1640  ..
+ 1641  cd pset7
+ 1642  ll
+ 1643  cd finance/
+ 1644  ll
+ 1645  echo $PATH
+ 1646  ll ~/workspace/cs50/pset7/finance/
+ 1647  export PATH=$PATH:~/workspace/cs50/pset7/finance/
+ 1648  echo $PATH
+ 1649  cd tests
+ 1650  git co dev7
+ 1651  echo $PATH
+ 1652  ll
+ 1653  python3 test_finance.py
+ 1654  open test_finance.py
+ 1655  python3 test_finance.py
+ 1656  echo $PATH
+ 1657  export PATH=$PATH:~/workspace/cs50/pset7/finance/finance.db
+ 1658  echo $PATH
+ 1659  python3 test_finance.py
+ 1660  cat ~/.profile
+ 1661  cat ~/.bash_profile
+ 1662  cat ~/.bashrc
+ 1663  cat ~/.bash_rc
+ 1664  source .
+ 1665  source ~/.bashrc
+ 1666  python3 test_finance.py
+ 1667  echo $PATH
+ 1668  cat ~/.profile
+ 1669  cat /usr/share/doc/bash/examples/startup-files
+ 1670  cat ~/usr/share/doc/bash/examples/startup-files
+ 1671  cat ~/.bash_profile
+ 1672  ll ~/
+ 1673  cat ~/.bash_aliases
+ 1674  cat ~/.bash_history
+ 1675  cat ~/.bash_aliases
+ 1676  history
+ 1677  cat ~/.bash_history
+ 1678  ll ~/
+ 1679  cat ~/.bashrc
+ 1680  ll /home/ubuntu/.cs50/prompt
+ 1681  cat /home/ubuntu/.cs50/prompt
+ 1682  cat ~/.profile
+ 1683  cat /etc/apache2/envvars
+ 1684  cat /etc/profile.d/cloud9.sh
+ 1685  cat /etc/profile.d/ide50.sh
+ 1686  python3
+ 1687  ll
+ 1688  python3 test_finance.py
+ 1689  echo $PATH
+ 1690  python3 test_finance.py
+ 1691  python3 test_finance_data.py
+ 1692  ll
+ 1693  python3 test_config.py 
+ 1694  python3 test_finance.py
+ 1695  python3 test_finance_data.py
+ 1696  python3 test_finance.py
+ 1697  python3 test_config.py 
+ 1698  python3 test_finance.py
+ 1699  cd cs50/pset7/finance/
+ 1700  git st
+ 1701  sudo pip install selenium
+ 1702  python3 test_finance.py
+ 1703  python -c "import sys; print(sys.path)"
+ 1704  python3 test_finance.py
+ 1705  https://chromedriver.storage.googleapis.com/index.html?path=2.41/
+ 1706  cd cs50
+ 1707  git stash save "installing chromedriver for selenium"
+ 1708  git co master
+ 1709  ll
+ 1710  mkdir selenium_chrome_driver
+ 1711  cd selenium_chrome_driver/
+ 1712  ll
+ 1713  unzip chromedriver_linux64.zip
+ 1714  ll
+ 1715  ll
+ 1716  rm chromedriver_linux64.zip 
+ 1717  ll
+ 1718  git st
+ 1719  git add .
+ 1720  git ci -m 'add chromedriver for selenium'
+ 1721  git push
+ 1722  git st
+ 1723  ..
+ 1724  cd pset7
+ 1725  ll
+ 1726  cd finance
+ 1727  git co pset7
+ 1728  git co dev7
+ 1729  git pull origin master
+ 1730  ll ..
+ 1731  ll ../..
+ 1732  ll ../../selenium_chrome_driver/
+ 1733  git st
+ 1734  git stash list
+ 1735  git stash apply stash@{0}
+ 1736  git st
+ 1737  cd selenium_chrome_driver/
+ 1738  python3 test_finance.py
+ 1739  ll
+ 1740  sudo apt install libgconf-2-4
+ 1741  git st
+ 1742  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+ 1743  sudo apt-get update
+ 1744  sudo dpkg -i google-chrome-stable_current_amd64.deb
+ 1745  sudo apt-get install fonts-liberation libappindicator1 xdg-utils
+ 1746  sudo apt-get install -f
+ 1747  ll /opt/google/chrome/chrome
+ 1748  export PATH="/opt/google/chrome/chrome":$PATH
+ 1749  echo $PATH
+ 1750  python3 test_finance.py
+ 1751  cd cs50/pset7/finance/tests
+ 1752  ll
+ 1753  python3 test_finance.py 
+ 1754  ll /opt/google/chrome/chrome
+ 1755  chmod a+x /opt/google/chrome/chrome
+ 1756  sudo chmod a+x /opt/google/chrome/chrome
+ 1757  ll /opt/google/chrome/chrome
+ 1758  python3 test_finance.py 
+ 1759  echo $PATH
+ 1760  sudo mv /opt/google/chrome/chrome /usr/local/bin/chrome
+ 1761  python3 test_finance.py 
+ 1762  ll /usr/local/bin/
+ 1763  chich chrome
+ 1764  which chrome
+ 1765  ll
+ 1766  ll selenium_chrome_driver/
+ 1767  history
+ 1768  ll
+ 1769  cd selenium_chrome_driver/
+ 1770  ll
+ 1771  sudo cp ~/workspace/cs50/selenium_chrome_driver/chromedriver /usr/local/bin/chromedriver
+ 1772  ll /usr/local/bin/chromedriver
+ 1773  sudo chmod a+x /usr/local/bin/chromedriver
+ 1774  ll /usr/local/bin/chromedriver
+ 1775  python3 test_finance.py 
+ 1776  sudo python3 test_finance.py 
+ 1777  ll /usr/local/bin
+ 1778  sudo chmod 755 /usr/local/bin/chromedriver
+ 1779  ll /usr/local/bin
+ 1780  python3 test_finance.py 
+ 1781  sudo python3 test_finance.py 
+ 1782  python3 test_finance.py 
+ 1783  id
+ 1784  git st
+ 1785  ..
+ 1786  git st
+ 1787  git add
+ 1788  git add .
+ 1789  git ci -m 'change path to db=SQL(full/path/to/db)'
+ 1790  git st
+ 1791  ll /etc/group
+ 1792  id
+ 1793  cat /etc/group
+ 1794  whoami
+ 1795  groups
+ 1796  grep root /etc/group
+ 1797  grep ubuntu /etc/group
+ 1798  id
+ 1799  history
+ 1800  ll /usr/local/bin
+ 1801  sudo chown ubuntu:ubuntu /usr/local/bin/chrome
+ 1802  ll /usr/local/bin
+ 1803  sudo chown ubuntu:ubuntu /usr/local/bin/chromedriver
+ 1804  ll /usr/local/bin
+ 1805  python3 test_finance.py
+ 1806  ll
+ 1807  cd tests
+ 1808  ll
+ 1809  python3 test_finance.py
+ 1810  ll /usr/local/
+ 1811  mkdir /usr/local/chrome
+ 1812  sudo mkdir /usr/local/chrome
+ 1813  sudo ll /usr/local/chrome
+ 1814  sudo chown ubuntu:ubuntu /usr/local/chrome
+ 1815  ll
+ 1816  sudo ll /usr/local/chrome
+ 1817  sudo ll /usr/local/bin
+ 1818  sudo mv /usr/local/bin/chrome /usr/local/chrome/chrome
+ 1819  sudo mv /usr/local/bin/chromedriver /usr/local/chrome/chromedriver
+ 1820  sudo ll /usr/local/chrome
+ 1821  history
+ 1822  python3 test_finance.py
+ 1823  sudo ll /usr/local/chrome
+ 1824  echo $PATH
+ 1825  export PATH="$PATH:/usr/local/chrome"
+ 1826  echo $PATH
+ 1827  python3 test_finance.py
+ 1828  chmod o+x /usr/local/chrome/chrome
+ 1829  chmod o+x /usr/local/chrome/chromedriver
+ 1830  python3 test_finance.py
+ 1831  chromedriver --help
+ 1832  ll
+ 1833  hist
+ 1834  history
+ 1835  sudo cp /usr/local/chrome/chrome
+ 1836  sudo cp /usr/local/chrome/chrome chrome
+ 1837  ll
+ 1838  sudo cp /usr/local/chrome/chromedriver chromedriver
+ 1839  ll
+ 1840  id
+ 1841  sudo chown ubuntu:ubuntu chrome
+ 1842  sudo chown ubuntu:ubuntu chromedriver
+ 1843  ll
+ 1844  history
+ 1845  python3 test_finance.py
+ 1846  export PATH="$PATH:~/workspace/cs50/pset7/finance/tests/"
+ 1847  echo $PATH
+ 1848  python3 test_finance.py
+ 1849  id
+ 1850  ll
+ 1851  whoami
+ 1852  python3 test_finance.py
+ 1853  ll
+ 1854  python3 test_finance.py
+ 1855  ll
+ 1856  python3 test_finance.py
+ 1857  ll
+ 1858  python3 test_finance.py
+ 1859  ll
+ 1860  python3 test_finance.py
+ 1861  echo $PATH
+ 1862  cwd
+ 1863  pwd
+ 1864  python3 test_finance.py
+ 1865  echo $PATH
+ 1866  ll /home/ubuntu/bin
+ 1867  ll
+ 1868  sudo mv chrome /home/ubuntu/bin/chrome
+ 1869  ll /home/ubuntu/bin
+ 1870  sudo mv chromedriver /home/ubuntu/bin/chromedriver
+ 1871  ll /home/ubuntu/bin
+ 1872  python3 test_finance.py
+ 1873  ll /home/ubuntu/bin/chrome
+ 1874  cd /home/ubuntu/bin/chrome
+ 1875  cd /home/ubuntu/bin
+ 1876  ll
+ 1877  cd ~
+ 1878  cd ~/
+ 1879  cd home
+ 1880  cd ~/workspace/
+ 1881  ll
+ 1882  cd cs50/pset7/finance/
+ 1883  ll
+ 1884  cd tests
+ 1885  ll
+ 1886  python3 test_finance.py 
+ 1887  ll /home/ubuntu/bin/chrome
+ 1888  ll /home/ubuntu/bin
+ 1889  ll /home/ubuntu/bin/
+ 1890  chrome
+ 1891  browser
+ 1892  update50
+ 1893  cd cs50/pset7/finance/
+ 1894  echo $PATH
+ 1895  ll /home/ubuntu/bin
+ 1896  ll
+ 1897  ll tests
+ 1898  python3 tests/test_finance.py
+ 1899  cd tests/
+ 1900  ll
+ 1901  python3 tests/test_finance.py
+ 1902  python3 ./test_finance.py
+ 1903  ll
+ 1904  which chromedriver
+ 1905  cd pset7/finance/
+ 1906  cd tests/
+ 1907  ll
+ 1908  curl -XPOST http://localhost:9515/session -d '{"desiredCapabilities":{"browserName":"chrome"}}'
+ 1909  /home/ubuntu/bin/chromedriver --verbose
+ 1910  python3 ./test_finance.py
+ 1911  ll /home/ubuntu/bin/chromedriver
+ 1912  ll /home/ubuntu/bin
+ 1913  python3 ./test_finance.py
+ 1914  git st
+ 1915  git stash
+ 1916  git co master
+ 1917  sudo pip install selenium
+ 1918  sudo -H pip install selenium
+ 1919  python3 ./test_finance.py
+ 1920  ..
+ 1921  pwd
+ 1922  ll
+ 1923  rm app.py
+ 1924  ll
+ 1925  python3 ./test_finance.py
+ 1926  ll
+ 1927  python3 ./test_finance.py
+ 1928  sudo pip install requests
+ 1929  sudo -H pip install requests
+ 1930  sudo yum install libX11 Gconf2 fontconfig
+ 1931  sudo apt install libX11 Gconf2 fontconfig
+ 1932  sudo apt install libnss3
+ 1933  sudo apt install Gconf2 fontconfig
+ 1934  git st
+ 1935  python3 ./test_finance.py
+ 1936  python3 test_finance.py
+ 1937  ll
+ 1938  git st
+ 1939  git stash
+ 1940  git st
+ 1941  git co dev7
+ 1942  git st
+ 1943  git diff
+ 1944  git st
+ 1945  ll /usr/local/bin
+ 1946  ll
+ 1947  which chrome
+ 1948  python3 ./test_finance.py
+ 1949  ll /home/ubuntu/bin/chrome
+ 1950  ll /home/ubuntu/bin
+ 1951  python3 test_finance.py
+ 1952  sudo apt-get install chromium-browser
+ 1953  sudo apt install chromium-browser
+ 1954  python3 ./test_finance.py
+ 1955  which chromium-browser
+ 1956  ll /usr/bin/chromium-browser
+ 1957  ll /usr/bin/
+ 1958  which chrome
+ 1959  ll /home/ubuntu/bin
+ 1960  sudo mv /usr/bin/chromium-browser /home/ubuntu/bin/chromium-browser
+ 1961  ll /home/ubuntu/bin
+ 1962  python3 ./test_finance.py
+ 1963  sudo chown ubuntu:ubuntu /home/ubuntu/bin/chromium-browser
+ 1964  ll /home/ubuntu/bin
+ 1965  python3 ./test_finance.py
+ 1966  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+ 1967  dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
+ 1968  sudo dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
+ 1969  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+ 1970  cd cs50/pset7
+ 1971  git st
+ 1972  cd finance/
+ 1973  ll
+ 1974  git st
+ 1975  git add .
+ 1976  git ci -m 'add path to chrome for driver'
+ 1977  git co master
+ 1978  git st
+ 1979  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+ 1980  sudo dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
+ 1981  ll /var/lib/dpkg/
+ 1982  ll /var/lib/dpkg/lock
+ 1983  cat /var/lib/dpkg/lock
+ 1984  sudo cat /var/lib/dpkg/lock
+ 1985  sudo rm /var/lib/dpkg/lock
+ 1986  ll /var/lib/dpkg
+ 1987  sudo dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
+ 1988  update50
+ 1989  cd cs50/pset7/finance/
+ 1990  ll
+ 1991  git st
+ 1992  cd tests
+ 1993  ll
+ 1994  git st
+ 1995  ll /var/lib/dpkg
+ 1996  history
+ 1997  sudo rm /var/lib/dpkg/lock
+ 1998  sudo apt-get update
+ 1999  update50
+ 2000  cd cs50/pset7/finance/
+ 2001  cd tests
+ 2002  ll
+ 2003  git st
+ 2004  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+ 2005  sudo dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
+ 2006  ll /var/lib/dpkg/
+ 2007  sudo rm /var/lib/dpkg/lock
+ 2008  ll /var/lib/dpkg/
+ 2009  sudo rm /var/lib/dpkg/lock
+ 2010  ll /var/lib/dpkg/
+ 2011  sudo dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
+ 2012  ll
+ 2013  python3 test_finance.py 
+ 2014  git co dev7
+ 2015  git st
+ 2016  git stash
+ 2017  git co dev7
+ 2018  git st
+ 2019  git diff
+ 2020  hist
+ 2021  git hist
+ 2022  history
+ 2023  history > history.txt
