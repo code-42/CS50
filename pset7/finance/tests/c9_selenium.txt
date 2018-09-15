@@ -1,0 +1,11 @@
+ C.UTF-8: not a valid language tag
+https://github.com/uncss/uncss/issues/166
+LC_ALL=C
+
+export MOZ_CRASHREPORTER_SHUTDOWN=1
+
+
+http://edwd42-cs50-code42.c9users.io:8080/
+
+xvfb-run firefox -screenshot https://developer.mozilla.com
+

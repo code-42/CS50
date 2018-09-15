@@ -10,3 +10,5 @@
 *.ko
 *.elf
 
+# log files
+# *log*
