@@ -459,7 +459,7 @@ def isValidInput():
 
         return True
 
-
+# source http://flask.pocoo.org/docs/0.12/templating/#context-processors
 @app.context_processor
 def utility_processor():
     def format_date(epoch):
