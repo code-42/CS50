@@ -1,11 +1,24 @@
- C.UTF-8: not a valid language tag
+NOTES getting selenium working on Cloud9
+
+sudo apt-get install firefox xvfb
+xvfb-run firefox -screenshot https://developer.mozilla.com
+xvfb-run python3 test_finance.py
+
+C.UTF-8: not a valid language tag
 https://github.com/uncss/uncss/issues/166
 LC_ALL=C
 
 export MOZ_CRASHREPORTER_SHUTDOWN=1
 
+https://askubuntu.com/questions/746413/trying-to-install-java-8-unable-to-locate-package-openjdk-8-jre
+java -jar /home/ubuntu/bin/selenium-server-standalone-2.51.0.jar
 
 http://edwd42-cs50-code42.c9users.io:8080/
 
-xvfb-run firefox -screenshot https://developer.mozilla.com
+# app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)))
+
+
+
+
+
 

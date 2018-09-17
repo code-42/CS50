@@ -9,7 +9,6 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import apology, login_required, lookup, usd
-# from datetime import datetime
 import datetime
 
 # Configure application

@@ -1,0 +1,105 @@
+1537144923017	geckodriver	INFO	geckodriver 0.21.0
+1537144923023	geckodriver	INFO	Listening on 127.0.0.1:36399
+1537144924027	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.c3WOBLEwImDU"
+*** You are running in headless mode.
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1537144926655	Marionette	INFO	Listening on port 42817
+1537144926690	Marionette	WARN	TLS certificate errors will be ignored for this session
+1537144926797	Marionette	DEBUG	[2147483649] Frame script loaded
+1537144926808	Marionette	DEBUG	[2147483649] Frame script registered
+1537144926882	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for about:blank
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1537144927585	Marionette	DEBUG	[2147483649] Received DOM event pagehide for about:blank
+1537144927598	Marionette	DEBUG	[2147483649] Received DOM event pageshow for https://edwd42-cs50-code42.c9users.io:8080/
+1537144927642	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for https://edwd42-cs50-code42.c9users.io:8080/
+1537144927648	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for https://edwd42-cs50-code42.c9users.io:8080/
+1537144927666	Marionette	DEBUG	[2147483649] Received DOM event unload for https://edwd42-cs50-code42.c9users.io:8080/
+1537144927675	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for https://edwd42-cs50-code42.c9users.io:8080/
+1537144927715	Marionette	DEBUG	[2147483649] Received DOM event pageshow for https://edwd42-cs50-code42.c9users.io:8080/
+1537144927732	Marionette	INFO	Stopped listening on port 42817
+[Parent 3629, Gecko_IOThread] WARNING: pipe error (62): Connection reset by peer: file /build/firefox-xSCEJa/firefox-62.0+build2/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+1537144979836	geckodriver	INFO	geckodriver 0.21.0
+1537144979842	geckodriver	INFO	Listening on 127.0.0.1:48339
+1537144980846	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.LpMqnKdywejF"
+*** You are running in headless mode.
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1537144983098	Marionette	INFO	Listening on port 46311
+1537144983195	Marionette	WARN	TLS certificate errors will be ignored for this session
+1537144983252	Marionette	DEBUG	[2147483649] Frame script loaded
+1537144983258	Marionette	DEBUG	[2147483649] Frame script registered
+1537144983388	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for about:blank
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1537144984061	Marionette	DEBUG	[2147483649] Received DOM event pagehide for about:blank
+1537144984073	Marionette	DEBUG	[2147483649] Received DOM event pageshow for https://edwd42-cs50-code42.c9users.io:8080/
+1537144984125	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for https://edwd42-cs50-code42.c9users.io:8080/
+1537144984131	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for https://edwd42-cs50-code42.c9users.io:8080/
+1537144984157	Marionette	DEBUG	[2147483649] Received DOM event unload for https://edwd42-cs50-code42.c9users.io:8080/
+1537144984164	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for https://edwd42-cs50-code42.c9users.io:8080/
+1537144984213	Marionette	DEBUG	[2147483649] Received DOM event pageshow for https://edwd42-cs50-code42.c9users.io:8080/
+1537144984262	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for https://edwd42-cs50-code42.c9users.io:8080/
+1537144984398	Marionette	DEBUG	[2147483649] Received DOM event pagehide for https://edwd42-cs50-code42.c9users.io:8080/
+1537144984399	Marionette	DEBUG	[2147483649] Received DOM event unload for https://edwd42-cs50-code42.c9users.io:8080/
+1537144986077	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for http://edwd42-cs50-code42.c9users.io:8080/login
+1537144986088	Marionette	DEBUG	[2147483649] Received DOM event pageshow for http://edwd42-cs50-code42.c9users.io:8080/login
+1537144989206	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for http://edwd42-cs50-code42.c9users.io:8080/login
+1537144994411	Marionette	DEBUG	[2147483649] Canceled page load listener because no navigation has been detected
+1537145004444	Marionette	INFO	Stopped listening on port 46311
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+[Parent 3953, Gecko_IOThread] WARNING: pipe error (70): Connection reset by peer: file /build/firefox-xSCEJa/firefox-62.0+build2/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+1537145084275	geckodriver	INFO	geckodriver 0.21.0
+1537145084280	geckodriver	INFO	Listening on 127.0.0.1:43805
+1537145085285	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.O5PsBgfEfd0G"
+*** You are running in headless mode.
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1537145087833	Marionette	INFO	Listening on port 41315
+1537145087906	Marionette	WARN	TLS certificate errors will be ignored for this session
+1537145088001	Marionette	DEBUG	[2147483649] Frame script loaded
+1537145088015	Marionette	DEBUG	[2147483649] Frame script registered
+1537145088092	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for about:blank
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1537145088740	Marionette	DEBUG	[2147483649] Received DOM event pagehide for about:blank
+1537145089392	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for https://www.facebook.com/
+1537145092790	Marionette	DEBUG	[2147483649] Received DOM event pageshow for https://www.facebook.com/
+1537145093061	Marionette	INFO	Stopped listening on port 41315
+1537145094100	geckodriver	INFO	geckodriver 0.21.0
+1537145094108	geckodriver	INFO	Listening on 127.0.0.1:48933
+1537145095134	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.zRf6eN9dTalM"
+*** You are running in headless mode.
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1537145097436	Marionette	INFO	Listening on port 42017
+1537145097496	Marionette	WARN	TLS certificate errors will be ignored for this session
+1537145097588	Marionette	DEBUG	[2147483649] Frame script loaded
+1537145097593	Marionette	DEBUG	[2147483649] Frame script registered
+1537145097656	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for about:blank
+1537145097912	Marionette	DEBUG	[2147483649] Received DOM event pagehide for about:blank
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1537145098213	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for https://www.google.com/?gws_rd=ssl
+1537145098805	Marionette	DEBUG	[2147483649] Received DOM event pageshow for https://www.google.com/?gws_rd=ssl
+1537145100214	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for https://www.google.com/?gws_rd=ssl
+1537145100283	Marionette	DEBUG	[2147483649] Received DOM event pagehide for https://www.google.com/?gws_rd=ssl
+1537145100286	Marionette	DEBUG	[2147483649] Received DOM event unload for https://www.google.com/?gws_rd=ssl
+1537145100892	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for https://www.google.com/search?source=hp&ei=CfmeW4i-M5DGaZ6KmuAB&q=python&btnK=Google+Search&oq=python&gs_l=psy-ab.3..0l10.395.544..1734...0.0..0.157.510.0j4....3..0....1..gws-wiz.......0i131.b1TLuFRKgKM
+1537145101826	Marionette	DEBUG	[2147483649] Received DOM event pageshow for https://www.google.com/search?source=hp&ei=CfmeW4i-M5DGaZ6KmuAB&q=python&btnK=Google+Search&oq=python&gs_l=psy-ab.3..0l10.395.544..1734...0.0..0.157.510.0j4....3..0....1..gws-wiz.......0i131.b1TLuFRKgKM
+1537145102852	Marionette	INFO	Stopped listening on port 42017
+1537145103576	geckodriver	INFO	geckodriver 0.21.0
+1537145103582	geckodriver	INFO	Listening on 127.0.0.1:46101
+1537145104585	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.tEGTsy1siapv"
+*** You are running in headless mode.
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1537145107999	Marionette	INFO	Listening on port 35985
+1537145108116	Marionette	WARN	TLS certificate errors will be ignored for this session
+1537145108208	Marionette	DEBUG	[2147483649] Frame script loaded
+1537145108226	Marionette	DEBUG	[2147483649] Frame script registered
+1537145108251	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for about:blank
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1537145108797	Marionette	DEBUG	[2147483649] Received DOM event pagehide for about:blank
+1537145109078	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for https://www.python.org/
+1537145109882	Marionette	DEBUG	[2147483649] Received DOM event pageshow for https://www.python.org/
+1537145109977	Marionette	INFO	Stopped listening on port 35985
