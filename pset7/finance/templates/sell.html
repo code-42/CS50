@@ -11,7 +11,11 @@
         <div class="form-group">
             <select name="symbol" autofocus>
                 {% for item in portfolio %}
+                {% if item["symbol"] == request.args.get('symbol') %}
+                    <option value='{{ item["symbol"] }}' selected>{{ item["symbol"] }}</option>
+                    {% else %}
                     <option value='{{ item["symbol"] }}'>{{ item["symbol"] }}</option>
+                {% endif %}
                 {% endfor %}
             </select>
 

@@ -353,6 +353,8 @@ def sell():
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         rows = viewPortfolio()
+        # print("\n356. symbol == ")
+        print("\n357. symbol == " + request.args.get('symbol'))
         return render_template("sell.html", portfolio=rows)
 
 
