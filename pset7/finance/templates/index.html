@@ -24,7 +24,7 @@
             	    <!--loop over and print current users stock positions-->
                     {% for k,v in portfolio.items() %}
                         <tr>
-                    	    <td>{{ v[0] }}</td>
+                    	    <td id="symbol">{{ v[0] }}</td>
                     	    <td>{{ v[1] }}</td>
                     	    <td class="rt">{{ v[2] }}</td>
                     	    <td class="rt">{{ '%0.2f' % v[3]|float }}</td>
