@@ -78,7 +78,12 @@ def buy():
     if request.method == "POST":
 
         # Returns apology page if input is not valid
-        isValidInput()
+        # isValidInput()
+        if not request.form.get("symbol"):
+            return apology("must provide symbol", 403)
+
+        if not request.form.get("shares"):
+            return apology("must provide number of shares", 403)
 
         session["quote"] = lookup(request.form.get("symbol"))
         session["shares"] = int(request.form.get("shares"))
@@ -331,7 +336,7 @@ def sell():
 
         symbol = request.form.get("symbol")
         session["quote"] = lookup(request.form.get("symbol"))
-        print("334. shares == " + request.form.get("shares"))
+        # multiply shares sold by -1 reduces logic complications
         session["shares"] = int(request.form.get("shares")) * -1
 
 
@@ -459,6 +464,8 @@ def getNumSharesOwned(symbol):
 
 def isValidInput():
 
+        print("\n462. inside isValidInput()")
+
         # Ensure symbol was submitted
         if not request.form.get("symbol"):
             print("464. symbol == " + request.form.get("symbol"))
@@ -466,7 +473,7 @@ def isValidInput():
 
         # Ensure number of shares was submitted
         if not request.form.get("shares"):
-            print("469. symbol == " + request.form.get("shares"))
+            # print("469. shares == " + request.form.get("shares"))
             return apology("must provide number of shares", 403)
 
         return True
