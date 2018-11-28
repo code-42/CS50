@@ -3732,3 +3732,67 @@ Fontconfig warning: ignoring C.UTF-8: not a valid language tag
 1543332745452	Marionette	DEBUG	[2147483649] Received DOM event pageshow for http://edwd42-cs50-code42.c9users.io:8080/quote
 1543332745476	Marionette	INFO	Stopped listening on port 35191
 [Parent 23238, Gecko_IOThread] WARNING: pipe error (62): Connection reset by peer: file /build/firefox-xSCEJa/firefox-62.0+build2/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+1543369837387	geckodriver	INFO	geckodriver 0.21.0
+1543369837398	geckodriver	INFO	Listening on 127.0.0.1:54159
+1543369838381	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.7fNomOzP5ta9"
+*** You are running in headless mode.
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1543369842128	Marionette	INFO	Listening on port 34165
+1543369842213	Marionette	WARN	TLS certificate errors will be ignored for this session
+1543369842333	Marionette	DEBUG	[2147483649] Frame script loaded
+1543369842354	Marionette	DEBUG	[2147483649] Frame script registered
+1543369842493	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for about:blank
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1543369843708	Marionette	DEBUG	[2147483649] Received DOM event pagehide for about:blank
+1543369843739	Marionette	DEBUG	[2147483649] Received DOM event pageshow for https://edwd42-cs50-code42.c9users.io:8080/
+1543369843804	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for https://edwd42-cs50-code42.c9users.io:8080/
+1543369843816	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for https://edwd42-cs50-code42.c9users.io:8080/
+1543369843848	Marionette	DEBUG	[2147483649] Received DOM event unload for https://edwd42-cs50-code42.c9users.io:8080/
+1543369843871	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for https://edwd42-cs50-code42.c9users.io:8080/
+1543369843916	Marionette	DEBUG	[2147483649] Received DOM event pageshow for https://edwd42-cs50-code42.c9users.io:8080/
+1543369843990	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for https://edwd42-cs50-code42.c9users.io:8080/
+1543369844105	Marionette	DEBUG	[2147483649] Received DOM event pagehide for https://edwd42-cs50-code42.c9users.io:8080/
+1543369844107	Marionette	DEBUG	[2147483649] Received DOM event unload for https://edwd42-cs50-code42.c9users.io:8080/
+1543369847613	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for http://edwd42-cs50-code42.c9users.io:8080/login
+1543369847625	Marionette	DEBUG	[2147483649] Received DOM event pageshow for http://edwd42-cs50-code42.c9users.io:8080/login
+1543369847833	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for http://edwd42-cs50-code42.c9users.io:8080/login
+1543369853039	Marionette	DEBUG	[2147483649] Canceled page load listener because no navigation has been detected
+1543369853064	Marionette	INFO	Stopped listening on port 34165
+1543369853815	geckodriver	INFO	geckodriver 0.21.0
+1543369853822	geckodriver	INFO	Listening on 127.0.0.1:51857
+1543369854825	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "--headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.wW74JvuYAz3U"
+*** You are running in headless mode.
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1543369857687	Marionette	INFO	Listening on port 37145
+1543369857748	Marionette	WARN	TLS certificate errors will be ignored for this session
+1543369857840	Marionette	DEBUG	[2147483649] Frame script loaded
+1543369857854	Marionette	DEBUG	[2147483649] Frame script registered
+1543369857985	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for about:blank
+1543369858481	Marionette	DEBUG	[2147483649] Received DOM event pagehide for about:blank
+Fontconfig warning: ignoring C.UTF-8: not a valid language tag
+1543369858630	Marionette	DEBUG	[2147483649] Received DOM event pageshow for https://edwd42-cs50-code42.c9users.io:8080/
+1543369858756	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for https://edwd42-cs50-code42.c9users.io:8080/
+1543369858762	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for https://edwd42-cs50-code42.c9users.io:8080/
+1543369858823	Marionette	DEBUG	[2147483649] Received DOM event unload for https://edwd42-cs50-code42.c9users.io:8080/
+1543369858832	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for https://edwd42-cs50-code42.c9users.io:8080/
+1543369858887	Marionette	DEBUG	[2147483649] Received DOM event pageshow for https://edwd42-cs50-code42.c9users.io:8080/
+1543369858970	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for https://edwd42-cs50-code42.c9users.io:8080/
+1543369859854	Marionette	DEBUG	[2147483649] Received DOM event pagehide for https://edwd42-cs50-code42.c9users.io:8080/
+1543369859855	Marionette	DEBUG	[2147483649] Received DOM event unload for https://edwd42-cs50-code42.c9users.io:8080/
+1543369864517	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for http://edwd42-cs50-code42.c9users.io:8080/login
+1543369864545	Marionette	DEBUG	[2147483649] Received DOM event pageshow for http://edwd42-cs50-code42.c9users.io:8080/login
+1543369864729	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for http://edwd42-cs50-code42.c9users.io:8080/login
+1543369869936	Marionette	DEBUG	[2147483649] Canceled page load listener because no navigation has been detected
+1543369873308	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for http://edwd42-cs50-code42.c9users.io:8080/
+1543369873472	Marionette	DEBUG	[2147483649] Received DOM event pagehide for http://edwd42-cs50-code42.c9users.io:8080/
+1543369873475	Marionette	DEBUG	[2147483649] Received DOM event unload for http://edwd42-cs50-code42.c9users.io:8080/
+1543369873667	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for http://edwd42-cs50-code42.c9users.io:8080/quote
+1543369873673	Marionette	DEBUG	[2147483649] Received DOM event pageshow for http://edwd42-cs50-code42.c9users.io:8080/quote
+1543369873851	Marionette	DEBUG	[2147483649] Received DOM event beforeunload for http://edwd42-cs50-code42.c9users.io:8080/quote
+1543369874698	Marionette	DEBUG	[2147483649] Received DOM event pagehide for http://edwd42-cs50-code42.c9users.io:8080/quote
+1543369874700	Marionette	DEBUG	[2147483649] Received DOM event unload for http://edwd42-cs50-code42.c9users.io:8080/quote
+1543369874809	Marionette	DEBUG	[2147483649] Received DOM event DOMContentLoaded for http://edwd42-cs50-code42.c9users.io:8080/quote
+1543369874816	Marionette	DEBUG	[2147483649] Received DOM event pageshow for http://edwd42-cs50-code42.c9users.io:8080/quote
+1543369874842	Marionette	INFO	Stopped listening on port 37145

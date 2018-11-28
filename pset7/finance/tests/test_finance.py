@@ -82,6 +82,10 @@ class TestFinance(unittest.TestCase):
             self.driver.close()
             self.driver.quit()
 
+    def test_deposit(self):
+        print("86. inside test_deposit(self)")
+        self.deposit(55)
+
     def tearDown(self):
         print("\n102. inside tearDown()")
         self.driver.close()

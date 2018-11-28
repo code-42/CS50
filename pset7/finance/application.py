@@ -487,8 +487,31 @@ def utility_processor():
     def format_date(epoch):
         fmt = "%m-%d-%Y @ %-I:%M %p"
         t = datetime.datetime.fromtimestamp(float(epoch)/1000.)
-        print("469. j_date == ")
+        print("490. j_date == ")
         print(t.strftime(fmt))
         return t.strftime(fmt)
     return(dict(format_date=format_date))
 
+@app.route("/deposit", methods=["GET", "POST"])
+@login_required
+def deposit(amount):
+
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        print("in confirm():")
+        id = session["user_id"]
+        deposit = session.get('amount')
+
+        # Query database for cash
+        rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
+
+        if len(rows) == 0:
+            return apology("sorry, you have no cash", 403)
+
+        cash = rows[0]["cash"]
+
+        print("\n515. " + deposit)
+
+    return cash
