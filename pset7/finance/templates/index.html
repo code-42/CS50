@@ -30,11 +30,16 @@
                     	    <td class="rt">{{ '%0.2f' % v[3]|float }}</td>
                             <td class="rt">{{ '%0.2f' % v[4]|float }}</td>
                             <td>
-                                <a href="sell?symbol={{ v[0] }}">
-                                    <button class="btn btn-primary btn-sm" type="button">Sell</button>
-                                </a>
-                            </td>
 
+                                                                           <a href="buy?symbol={{ v[0] }}">
+                                    <button class="btn btn-primary btn-sm" type="button">Buy More</button>
+                                </a>
+
+                                                                           <a href="sell?symbol={{ v[0] }}">
+                                    <button class="btn btn-primary btn-sm" type="button">Sell Some</button>
+                                </a>
+
+                            </td>
                 	    </tr>
                     {% endfor %}
 

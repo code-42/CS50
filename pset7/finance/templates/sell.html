@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Buy
+    Sell
 {% endblock %}
 
 {% block main %}
@@ -9,7 +9,7 @@
     <form action="/sell" method="POST">
         <span>Please select a stock you own from the drop down list<br>and enter the number of shares you wish to sell.</span><br><br>
         <div class="form-group">
-            <select name="symbol" autofocus>
+            <select name="symbol">
                 {% for item in portfolio %}
                 {% if item["symbol"] == request.args.get('symbol') %}
                     <option value='{{ item["symbol"] }}' selected>{{ item["symbol"] }}</option>
@@ -19,7 +19,7 @@
                 {% endfor %}
             </select>
 
-            <input autocomplete="off" class="form-control" name="shares" placeholder="number of shares" type="number" min="1"/>
+            <input autofocus autocomplete="off" class="form-control" name="shares" placeholder="number of shares" type="number" min="1"/>
 
         <button class="btn btn-primary" type="submit">Sell</button>
         </div>
