@@ -9,7 +9,6 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import apology, login_required, lookup, usd
-# from datetime import datetime
 import datetime
 
 # Configure application
@@ -36,7 +35,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///finance.db")
+# db = SQL("sqlite:///finance.db")
+db = SQL("sqlite:////home/ubuntu/workspace/cs50/pset7/finance/finance.db")
 
 
 @app.route("/")
@@ -78,7 +78,12 @@ def buy():
     if request.method == "POST":
 
         # Returns apology page if input is not valid
-        isValidInput()
+        # isValidInput()
+        if not request.form.get("symbol"):
+            return apology("must provide symbol", 403)
+
+        if not request.form.get("shares"):
+            return apology("must provide number of shares", 403)
 
         session["quote"] = lookup(request.form.get("symbol"))
         session["shares"] = int(request.form.get("shares"))
@@ -167,6 +172,8 @@ def history():
 def login():
     """Log user in"""
 
+    print("170. inside /login")
+
     # Forget any user_id
     session.clear()
 
@@ -185,13 +192,15 @@ def login():
         rows = db.execute("SELECT * FROM users WHERE username = :username",
                           username=request.form.get("username"))
 
-        print("188. rows == " + str(len(rows)))
-        print(str(rows[0]["username"]))
+        print("\n190. rows == " + str(len(rows)))
+
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
             print("193. rows == " + str(len(rows)))
             return apology("invalid username and/or password", 403)
+
+        print(str(rows[0]["username"]))
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -271,7 +280,7 @@ def register():
         # passed above tests so add name and password hash to database
         username = request.form.get("username")
         password = request.form.get("password")
-        print("144. " + username + password)
+        print("278. " + username + password)
 
         # Query database for username used already
         # NOTE: this can be accomplished with keyword UNIQUE in db schema
@@ -283,12 +292,12 @@ def register():
 
         # source https://docs.python.org/2/library/hashlib.html
         hash = generate_password_hash(password)
-        print("147. " + hash)
+        print("290. " + hash)
 
         check_hash = check_password_hash(hash, password)
-        print("150. " + str(check_hash))
+        print("293. " + str(check_hash))
 
-        # source Zamylas walkthrough video 2
+        # source Zamylas walkthrough video 2 @ 2:27
         db.execute("INSERT INTO users (username, hash) \
         VALUES(:username, :hash)", \
         username=request.form.get("username"), \
@@ -321,20 +330,31 @@ def sell():
     if request.method == "POST":
 
         # Returns apology page if input is not valid
-        isValidInput()
+        # isValidInput()
+        if not request.form.get("shares"):
+            return apology("must provide number of shares", 403)
 
         symbol = request.form.get("symbol")
         session["quote"] = lookup(request.form.get("symbol"))
+        # multiply shares sold by -1 reduces logic complications
         session["shares"] = int(request.form.get("shares")) * -1
+
 
         if(getNumSharesOwned(symbol) < abs(session["shares"])):
             return apology("Sorry, you don't have enough shares for this trade.", 403)
+
+        # Ensure number of shares was submitted
+        # elif not request.form.get("shares"):
+        if request.form.get("shares") == " ":
+            return apology("must provide number of shares", 403)
 
         return render_template("confirm.html", shares=session, quote=session)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         rows = viewPortfolio()
+        # print("\n356. symbol == ")
+        print("\n357. symbol == " + request.args.get('symbol'))
         return render_template("sell.html", portfolio=rows)
 
 
@@ -359,7 +379,7 @@ def addTradeToDatabase(shares,quote,user_id):
     price = quote["price"]
     timestamp = quote["timestamp"]
     tradeTotal = shares * price
-    print("362. tradeTotal == " + str(tradeTotal))
+    print("366. tradeTotal == " + str(tradeTotal))
 
     # add trade to portfolio
     db.execute("INSERT INTO trades (user_id, shares, symbol, company_name, price, timestamp) \
@@ -368,7 +388,7 @@ def addTradeToDatabase(shares,quote,user_id):
 
     # Query database for cash and caclulate cash balance after trade
     cashBalance = getCashBalance() - tradeTotal
-    print("382. cashBal == ")
+    print("375. cashBal == ")
     print(cashBalance)
 
     id = session["user_id"]
@@ -379,7 +399,7 @@ def addTradeToDatabase(shares,quote,user_id):
 def viewPortfolio():
 
     user_id = session["user_id"]
-    print("362. user_id == " + str(user_id))
+    print("386. user_id == " + str(user_id))
 
     # Query database for view
     rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
@@ -389,7 +409,7 @@ def viewPortfolio():
         return apology("sorry, you have no stocks", 403)
 
     print(len(rows))
-    print("357. rows == " + str(len(rows)))
+    print("396. rows == " + str(len(rows)))
     print(rows)
 
     return rows
@@ -446,25 +466,52 @@ def getNumSharesOwned(symbol):
 
 def isValidInput():
 
+        print("\n462. inside isValidInput()")
+
         # Ensure symbol was submitted
         if not request.form.get("symbol"):
-            print("315. symbol == " + request.form.get("symbol"))
+            print("464. symbol == " + request.form.get("symbol"))
             return apology("must provide symbol", 403)
 
         # Ensure number of shares was submitted
-        elif not request.form.get("shares"):
+        if not request.form.get("shares"):
+            # print("469. shares == " + request.form.get("shares"))
             return apology("must provide number of shares", 403)
 
         return True
 
-
+# source http://flask.pocoo.org/docs/0.12/templating/#context-processors
+# video https://www.youtube.com/watch?v=8qDdbcWmzCg
 @app.context_processor
 def utility_processor():
     def format_date(epoch):
         fmt = "%m-%d-%Y @ %-I:%M %p"
         t = datetime.datetime.fromtimestamp(float(epoch)/1000.)
-        print("469. j_date == ")
+        print("490. j_date == ")
         print(t.strftime(fmt))
         return t.strftime(fmt)
     return(dict(format_date=format_date))
 
+@app.route("/deposit", methods=["GET", "POST"])
+@login_required
+def deposit(amount):
+
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        print("in confirm():")
+        id = session["user_id"]
+        deposit = session.get('amount')
+
+        # Query database for cash
+        rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
+
+        if len(rows) == 0:
+            return apology("sorry, you have no cash", 403)
+
+        cash = rows[0]["cash"]
+
+        print("\n515. " + deposit)
+
+    return cash
