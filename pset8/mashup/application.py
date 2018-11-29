@@ -31,16 +31,25 @@ def index():
 def articles():
     """Look up articles for geo"""
 
-    # source http://flask.pocoo.org/docs/1.0/api/#module-flask.json
     # TODO
+    # return jsonify([])
+
+    # source http://flask.pocoo.org/docs/1.0/api/#module-flask.json
     return jsonify(lookup(request.args.get('geo'))[:5])
 
 @app.route("/search")
 def search():
     """Search for places that match query"""
 
+    print("\n44. inside search()")
+
     # TODO
-    return jsonify([])
+    # return jsonify([])
+
+    # source https://docs.cs50.net/2018/x/psets/8/mashup/mashup.html
+    q = request.args.get("q") + "%"
+    data = db.execute("SELECT * FROM places WHERE postal_code LIKE :q", q=q)
+    return jsonify(data[:5])
 
 
 @app.route("/update")
