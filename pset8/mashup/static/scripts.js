@@ -94,7 +94,7 @@ function configure()
     },
     {
         display: function(suggestion) { return null; },
-        limit: 10,
+        limit: 5000,
         source: search,
         templates: {
             suggestion: Handlebars.compile(

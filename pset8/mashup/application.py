@@ -48,8 +48,12 @@ def search():
 
     # source https://docs.cs50.net/2018/x/psets/8/mashup/mashup.html
     q = request.args.get("q") + "%"
-    data = db.execute("SELECT * FROM places WHERE postal_code LIKE :q", q=q)
-    return jsonify(data[:5])
+    data = db.execute("SELECT * FROM places \
+        WHERE place_name LIKE :q \
+        OR admin_code1 LIKE :q \
+        OR admin_name1 LIKE :q \
+        OR postal_code LIKE :q", q=q)
+    return jsonify(data)
 
 
 @app.route("/update")
