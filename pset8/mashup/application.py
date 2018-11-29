@@ -31,9 +31,9 @@ def index():
 def articles():
     """Look up articles for geo"""
 
+    # source http://flask.pocoo.org/docs/1.0/api/#module-flask.json
     # TODO
-    return jsonify([])
-
+    return jsonify(lookup(request.args.get('geo'))[:5])
 
 @app.route("/search")
 def search():
