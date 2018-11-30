@@ -5,7 +5,7 @@ let map;
 let markers = [];
 
 // Info window
-let info = new google.maps.InfoWindow();
+let info = new google.maps.InfoWindow(); // see line 91 and 187
 
 
 // Execute when the DOM is fully loaded
@@ -73,6 +73,10 @@ function addMarker(place)
       position: myLatLng,
       map: map
     });
+    marker.addListener('click', function() {
+        info.open(map, marker);
+    });
+
 
     console.log("80. marker: ", marker);
     // console.log(marker);
