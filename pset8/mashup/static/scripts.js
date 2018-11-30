@@ -65,6 +65,20 @@ $(document).ready(function() {
 function addMarker(place)
 {
     // TODO
+    // https://developers.google.com/maps/documentation/javascript/markers
+    console.log("68. inside addMarker(place) == ", place);
+
+    var myLatLng = new google.maps.LatLng(place.latitude, place.longitude);
+
+    var marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map
+    });
+
+    console.log("80. marker: ", marker);
+    // console.log(marker);
+    markers.push(marker);
+
 }
 
 
@@ -129,6 +143,7 @@ function configure()
     }, true);
 
     // Update UI
+    console.log("\n134. about to call update()...");
     update();
 
     // Give focus to text box
@@ -140,6 +155,7 @@ function configure()
 function removeMarkers()
 {
     // TODO
+
 }
 
 
@@ -151,6 +167,9 @@ function search(query, syncResults, asyncResults)
         q: query
     };
     $.getJSON("/search", parameters, function(data, textStatus, jqXHR) {
+        console.log("158. data == ", data); // data[] is empty hmmm
+        console.log("159. textStatus == " + textStatus);
+        console.log("160. jqXHR == ", jqXHR);
 
         // Call typeahead's callback with search results (i.e., places)
         asyncResults(data);
@@ -187,10 +206,13 @@ function showInfo(marker, content)
 // Update UI's markers
 function update()
 {
+    console.log("\n194. inside update()");
+
     // Get map's bounds
     let bounds = map.getBounds();
     let ne = bounds.getNorthEast();
     let sw = bounds.getSouthWest();
+    console.log("\n200. inside update().bounds" + bounds);
 
     // Get places within bounds (asynchronously)
     let parameters = {
@@ -198,15 +220,29 @@ function update()
         q: $("#q").val(),
         sw: `${sw.lat()},${sw.lng()}`
     };
+    console.log(parameters);
     $.getJSON("/update", parameters, function(data, textStatus, jqXHR) {
 
        // Remove old markers from map
-       removeMarkers();
+        removeMarkers();
+        console.log("223. parameters == ", parameters);
+        console.log("224. data == ", data.length); // data[] is empty hmmm
+        console.log("225. textStatus == " + textStatus);
+        console.log("226. jqXHR == ", jqXHR);
+
 
        // Add new markers to map
        for (let i = 0; i < data.length; i++)
        {
+           console.log("212. inside update()", data[i]);
            addMarker(data[i]);
        }
+
+        console.log("245. markers.length == " +  markers.length);
+        for (let i = 0; i < markers.length; i++)
+        {
+           console.log("248. inside markers[]", markers[i]);
+        }
     });
-};
+
+}

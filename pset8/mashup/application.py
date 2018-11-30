@@ -48,11 +48,17 @@ def search():
 
     # source https://docs.cs50.net/2018/x/psets/8/mashup/mashup.html
     q = request.args.get("q") + "%"
-    data = db.execute("SELECT * FROM places \
-        WHERE place_name LIKE :q \
-        OR admin_code1 LIKE :q \
-        OR admin_name1 LIKE :q \
-        OR postal_code LIKE :q", q=q)
+    # data = db.execute("SELECT * FROM places \
+    #     WHERE place_name LIKE :q \
+    #     OR admin_code1 LIKE :q \
+    #     OR admin_name1 LIKE :q \
+    #     OR postal_code LIKE :q", q=q)
+    data = db.execute("""SELECT * FROM places
+        WHERE place_name LIKE :q
+        OR admin_code1 LIKE :q
+        OR admin_name1 LIKE :q
+        OR postal_code LIKE :q""", q=q)
+    print("61. data == ", data[0])
     return jsonify(data)
 
 
@@ -60,6 +66,7 @@ def search():
 def update():
     """Find up to 10 places within view"""
 
+    print("63. inside update()...")
     # Ensure parameters are present
     if not request.args.get("sw"):
         raise RuntimeError("missing sw")
@@ -74,23 +81,25 @@ def update():
 
     # Explode southwest corner into two variables
     sw_lat, sw_lng = map(float, request.args.get("sw").split(","))
+    print(sw_lat, sw_lng)
 
     # Explode northeast corner into two variables
     ne_lat, ne_lng = map(float, request.args.get("ne").split(","))
+    print(ne_lat, ne_lng)
 
     # Find 10 cities within view, pseudorandomly chosen if more within view
     if sw_lng <= ne_lng:
-
+        print("sw_lng <= ne_lng")
         # Doesn't cross the antimeridian
         rows = db.execute("""SELECT * FROM places
-                          WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng <= longitude AND longitude <= :ne_lng)
+                          WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng >= longitude AND longitude >= :ne_lng)
                           GROUP BY country_code, place_name, admin_code1
                           ORDER BY RANDOM()
                           LIMIT 10""",
                           sw_lat=sw_lat, ne_lat=ne_lat, sw_lng=sw_lng, ne_lng=ne_lng)
 
     else:
-
+        print("sw_lng !<= ne_lng")
         # Crosses the antimeridian
         rows = db.execute("""SELECT * FROM places
                           WHERE :sw_lat <= latitude AND latitude <= :ne_lat AND (:sw_lng <= longitude OR longitude <= :ne_lng)
@@ -100,4 +109,7 @@ def update():
                           sw_lat=sw_lat, ne_lat=ne_lat, sw_lng=sw_lng, ne_lng=ne_lng)
 
     # Output places as JSON
+    print("\n103. ")
+    print(jsonify(rows))
+    # print(rows)
     return jsonify(rows)
