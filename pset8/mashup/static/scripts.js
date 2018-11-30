@@ -66,7 +66,6 @@ function addMarker(place)
 {
     // TODO
     // https://developers.google.com/maps/documentation/javascript/markers
-    console.log("68. inside addMarker(place) == ", place);
 
     var myLatLng = new google.maps.LatLng(place.latitude, place.longitude);
 
@@ -155,6 +154,13 @@ function configure()
 function removeMarkers()
 {
     // TODO
+    // https://developers.google.com/maps/documentation/javascript/examples/marker-remove
+
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setMap(null);
+    }
+
+    markers = [];
 
 }
 
