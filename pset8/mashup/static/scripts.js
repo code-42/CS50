@@ -85,11 +85,17 @@ function addMarker(place)
         let parameters = {geo: place.postal_code};
         let content = "";
 
+        // http://www.ajaxload.info/
+        // add spinning icon until getJSON() is ready
+        content = "<img alt='loading' src='/static/ajax-loader.gif'/>";
+        showInfo(marker, content);
+
         // Get articles matching geo (asynchronously)
         // geo is passed to /articles as a GET parameter
         // $.getJSON("/articles?geo="+place.postal_code)
         $.getJSON("/articles", parameters)
         .done(function(data, textStatus, jqXHR) {
+            content = "";
             $.each(data, function(i){
                 content += "<ul><li><a href=" + data[i].link + " target=\"_blank\">" + data[i].title + "</a></li></ul>";
                 showInfo(marker, content);
