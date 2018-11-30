@@ -5,8 +5,8 @@ let map;
 let markers = [];
 
 // Info window
-let info = new google.maps.InfoWindow(); // see line 91 and 187
-
+// https://developers.google.com/maps/documentation/javascript/infowindows
+let info = new google.maps.InfoWindow();
 
 // Execute when the DOM is fully loaded
 $(document).ready(function() {
@@ -66,22 +66,36 @@ function addMarker(place)
 {
     // TODO
     // https://developers.google.com/maps/documentation/javascript/markers
-
     var myLatLng = new google.maps.LatLng(place.latitude, place.longitude);
-
     var marker = new google.maps.Marker({
       position: myLatLng,
       map: map
     });
-    marker.addListener('click', function() {
-        info.open(map, marker);
-    });
 
-
-    console.log("80. marker: ", marker);
-    // console.log(marker);
+    // add this marker to the markers array
     markers.push(marker);
 
+    // show info window with ul when marker is clicked
+
+    // https://developers.google.com/maps/documentation/javascript/events
+    marker.addListener('click', function() {
+        info.open(map, marker);
+
+        // https://developers.google.com/maps/documentation/javascript/infowindows
+        let parameters = {geo: place.postal_code};
+        let content = "";
+
+        // Get articles matching geo (asynchronously)
+        // geo is passed to /articles as a GET parameter
+        // $.getJSON("/articles?geo="+place.postal_code)
+        $.getJSON("/articles", parameters)
+        .done(function(data, textStatus, jqXHR) {
+            $.each(data, function(i){
+                content += "<ul><li><a href=" + data[i].link + " target=\"_blank\">" + data[i].title + "</a></li></ul>";
+                showInfo(marker, content);
+            });
+        });
+    });
 }
 
 
@@ -92,11 +106,20 @@ function configure()
     google.maps.event.addListener(map, "dragend", function() {
 
         // If info window isn't open
-        // http://stackoverflow.com/a/12410385
+        // http://stackoverflow.com/a/12410385 - this so from 2012
         if (!info.getMap || !info.getMap())
         {
             update();
         }
+
+        // If info window is open
+        // popup new markers when dragend
+        // call addMarker(place)
+        // but the open info window is blocking new markers
+        // dont hide info window when dragend
+        // marker.setMap(null);
+        // but its not in the specs do dont spend time on it
+
     });
 
     // Update UI after zoom level changes
@@ -107,7 +130,7 @@ function configure()
     // Configure typeahead
     $("#q").typeahead({
         highlight: false,
-        minLength: 1
+        minLength: 2
     },
     {
         display: function(suggestion) { return null; },
@@ -177,9 +200,6 @@ function search(query, syncResults, asyncResults)
         q: query
     };
     $.getJSON("/search", parameters, function(data, textStatus, jqXHR) {
-        console.log("158. data == ", data); // data[] is empty hmmm
-        console.log("159. textStatus == " + textStatus);
-        console.log("160. jqXHR == ", jqXHR);
 
         // Call typeahead's callback with search results (i.e., places)
         asyncResults(data);
@@ -216,8 +236,6 @@ function showInfo(marker, content)
 // Update UI's markers
 function update()
 {
-    console.log("\n194. inside update()");
-
     // Get map's bounds
     let bounds = map.getBounds();
     let ne = bounds.getNorthEast();
@@ -235,11 +253,6 @@ function update()
 
        // Remove old markers from map
         removeMarkers();
-        console.log("223. parameters == ", parameters);
-        console.log("224. data == ", data.length); // data[] is empty hmmm
-        console.log("225. textStatus == " + textStatus);
-        console.log("226. jqXHR == ", jqXHR);
-
 
        // Add new markers to map
        for (let i = 0; i < data.length; i++)
