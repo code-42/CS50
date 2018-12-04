@@ -47,15 +47,17 @@ def index():
     if(session["user_id"] is None):
         return render_template("login.html")
 
+    username = session["username"]
+    eprint("\n51. " + str(username))
+
     portfolio = {}
     rows = viewPortfolio()
-    print("52. rows == " + str(len(rows)))
+    eprint("\n55. rows == " + str(len(rows)))
     if len(rows) == 0:
-        print("53. rows == " + str(len(rows)))
+        print("\n57. rows == " + str(len(rows)))
         # return apology("sorry, you have no stocks", 403)
         cash = getCashBalance()
         sumTotal = cash
-        return render_template("index.html", portfolio=portfolio, cash=cash, sumTotal=sumTotal)
     else:
         for row in range(len(rows)):
             session["quote"] = lookup(rows[row]["symbol"]) # get fresh data
@@ -70,7 +72,7 @@ def index():
         cash = getCashBalance() - sumPortfolio()
         sumTotal = cash + sumPortfolio()
 
-    return render_template("index.html", portfolio=portfolio, cash=cash, sumTotal=sumTotal)
+    return render_template("index.html", portfolio=portfolio, cash=cash, sumTotal=sumTotal, username=username)
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -176,7 +178,7 @@ def history():
 def login():
     """Log user in"""
 
-    print("170. inside /login")
+    print("\n170. inside /login")
 
     # Forget any user_id
     session.clear()
@@ -204,10 +206,13 @@ def login():
             print("193. rows == " + str(len(rows)))
             return apology("invalid username and/or password", 403)
 
-        print(str(rows[0]["username"]))
+        print("\n216. username == " + str(rows[0]["username"]))
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
+        session["username"] = rows[0]["username"]
+
+        print("\n222. username == " + session["username"])
 
         # Redirect user to home page
         return redirect("/")  # change to / when finish testing /buy
