@@ -47,8 +47,9 @@ def index():
     if(session["user_id"] is None):
         return render_template("login.html")
 
+    user_id = session["user_id"]
     username = session["username"]
-    eprint("\n51. " + str(username))
+    eprint("\n52. " + str(username) + " " + str(user_id))
 
     portfolio = {}
     rows = viewPortfolio()
@@ -72,13 +73,25 @@ def index():
         cash = getCashBalance() - sumPortfolio()
         sumTotal = cash + sumPortfolio()
 
-    return render_template("index.html", portfolio=portfolio, cash=cash, sumTotal=sumTotal, username=username)
+    return render_template("index.html",
+        portfolio=portfolio,
+        cash=cash,
+        sumTotal=sumTotal,
+        username=username,
+        user_id=user_id)
 
 
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
     """Buy shares of stock"""
+
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    user_id = session["user_id"]
+    username = session["username"]
+    eprint("\n94. " + str(username) + " " + str(user_id))
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -113,19 +126,32 @@ def buy():
         if(cash < total):
             return apology("Sorry, you don't have enough money for this trade.", 403)
 
-        return render_template("confirm.html", shares=session, quote=session)
+        return render_template("confirm.html",
+            shares=session,
+            quote=session,
+            username=username,
+            user_id=user_id)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("buy.html")
+        return render_template("buy.html",
+            username=username,
+            user_id=user_id)
 
 @app.route("/confirm", methods=["GET", "POST"])
 @login_required
 def confirm():
     """Confirm trade shares of stock"""
 
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
+
+        user_id = session["user_id"]
+        username = session["username"]
+        eprint("\n52. " + str(username) + " " + str(user_id))
 
         print("in confirm():")
         shares = session.get('shares')
@@ -158,6 +184,13 @@ def history():
     """Show history of transactions"""
     # return apology("TODO")
 
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    user_id = session["user_id"]
+    username = session["username"]
+    eprint("\n52. " + str(username) + " " + str(user_id))
+
     user_id = session["user_id"]
 
     # Query database for view
@@ -171,7 +204,10 @@ def history():
     print(rows[6]["timestamp"])
     # print(format_date(rows[6]["timestamp"]))
 
-    return render_template("history.html", trades=rows)
+    return render_template("history.html",
+        trades=rows,
+        username=username,
+        user_id=user_id)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -238,6 +274,13 @@ def logout():
 def quote():
     """Get stock quote."""
 
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    user_id = session["user_id"]
+    username = session["username"]
+    eprint("\n379. " + str(username) + " " + str(user_id))
+
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
         # Ensure symbol was submitted
@@ -252,11 +295,16 @@ def quote():
                 print("invalid symbol")
                 return apology("invalid symbol", 403)
 
-            return render_template("quoted.html", quote=session)
+            return render_template("quoted.html", 
+                quote=session,
+                username=username,
+                user_id=user_id)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("quote.html")
+        return render_template("quote.html",
+            username=username,
+            user_id=user_id)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -335,6 +383,13 @@ def register():
 def sell():
     """Sell shares of stock"""
 
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    user_id = session["user_id"]
+    username = session["username"]
+    eprint("\n379. " + str(username) + " " + str(user_id))
+
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
@@ -357,14 +412,19 @@ def sell():
         if request.form.get("shares") == " ":
             return apology("must provide number of shares", 403)
 
-        return render_template("confirm.html", shares=session, quote=session)
+        return render_template("confirm.html",
+            shares=session,
+            quote=session,
+            username=username,
+            user_id=user_id)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         rows = viewPortfolio()
-        # print("\n356. symbol == ")
-        print("\n357. symbol == " + request.args.get('symbol'))
-        return render_template("sell.html", portfolio=rows)
+        return render_template("sell.html",
+            portfolio=rows,
+            username=username,
+            user_id=user_id)
 
 
 def errorhandler(e):
@@ -457,11 +517,8 @@ def getCashBalance():
     # Query database for cash
     rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
 
-    # if len(rows) == 0:
-    #     return apology("sorry, you have no cash", 403)
-
     cash = rows[0]["cash"]
-    print("455. " + str(cash))
+    print("\n455. " + str(cash))
 
     return cash
 
@@ -474,7 +531,7 @@ def getNumSharesOwned(symbol):
       user_id=session["user_id"], symbol=symbol)
 
     numShares = int(numShares[0]["sum(shares)"])
-    print("347. numShares == " + str(numShares))
+    eprint("\n474. numShares == " + str(numShares))
 
     return numShares
 
