@@ -47,24 +47,28 @@ def index():
     if(session["user_id"] is None):
         return render_template("login.html")
 
+    portfolio = {}
     rows = viewPortfolio()
+    print("52. rows == " + str(len(rows)))
     if len(rows) == 0:
         print("53. rows == " + str(len(rows)))
-        return apology("sorry, you have no stocks", 403)
+        # return apology("sorry, you have no stocks", 403)
+        cash = getCashBalance()
+        sumTotal = cash
+        return render_template("index.html", portfolio=portfolio, cash=cash, sumTotal=sumTotal)
+    else:
+        for row in range(len(rows)):
+            session["quote"] = lookup(rows[row]["symbol"]) # get fresh data
+            portfolio[rows[row]["symbol"]] = (
+                rows[row]["symbol"],
+                rows[row]["company_name"],
+                rows[row]["sum(shares)"],
+                session["quote"].get("price"),
+                rows[row]["sum(shares * price)"]
+                )
 
-    portfolio = {}
-    for row in range(len(rows)):
-        session["quote"] = lookup(rows[row]["symbol"]) # get fresh data
-        portfolio[rows[row]["symbol"]] = (
-            rows[row]["symbol"],
-            rows[row]["company_name"],
-            rows[row]["sum(shares)"],
-            session["quote"].get("price"),
-            rows[row]["sum(shares * price)"]
-            )
-
-    cash = getCashBalance() - sumPortfolio()
-    sumTotal = cash + sumPortfolio()
+        cash = getCashBalance() - sumPortfolio()
+        sumTotal = cash + sumPortfolio()
 
     return render_template("index.html", portfolio=portfolio, cash=cash, sumTotal=sumTotal)
 
@@ -386,9 +390,11 @@ def addTradeToDatabase(shares,quote,user_id):
         VALUES(:user_id, :shares, :symbol, :company_name, :price, :timestamp)", \
         user_id=user_id,shares=shares,symbol=symbol,company_name=company_name,price=price,timestamp=timestamp)
 
+    print("\n389. getCashBalance() == " + str(getCashBalance()))
+
     # Query database for cash and caclulate cash balance after trade
     cashBalance = getCashBalance() - tradeTotal
-    print("375. cashBal == ")
+    print("\n393. cashBal == ")
     print(cashBalance)
 
     id = session["user_id"]
@@ -405,8 +411,10 @@ def viewPortfolio():
     rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
                       user_id=user_id)
 
-    if len(rows) == 0:
-        return apology("sorry, you have no stocks", 403)
+    # crashes if no user_id in portfolio - sorry, you have no stocks
+    # if len(rows) == 0:
+    # if(! rows):
+    #     return apology("sorry, you have no stocks", 403)
 
     print(len(rows))
     print("396. rows == " + str(len(rows)))
@@ -427,13 +435,14 @@ def sumPortfolio():
     if len(rows) == 0:
         return apology("sorry, you have no stocks", 403)
 
-    print("422. ")
+    print("\n422. ")
     sumStocks = 0
     for row in range(len(rows)):
         print(rows[row]["sum(shares * price)"])
         sumStocks = sumStocks + rows[row]["sum(shares * price)"]
         print(sumStocks)
 
+    print("\n422. " + str(sumStocks))
     return sumStocks
 
 def getCashBalance():
@@ -443,10 +452,11 @@ def getCashBalance():
     # Query database for cash
     rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
 
-    if len(rows) == 0:
-        return apology("sorry, you have no cash", 403)
+    # if len(rows) == 0:
+    #     return apology("sorry, you have no cash", 403)
 
     cash = rows[0]["cash"]
+    print("455. " + str(cash))
 
     return cash
 
