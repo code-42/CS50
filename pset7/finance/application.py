@@ -147,9 +147,9 @@ def confirm():
         shares = session.get('shares')
         quote = session.get('quote')
 
-        eprint("num shares " + shares)
+        eprint("num shares " + str(shares))
         eprint(quote)
-        eprint(shares * quote)
+        eprint(shares * quote["price"])
         eprint(quote["symbol"])
         eprint(quote["price"])
 
@@ -449,17 +449,17 @@ def addTradeToDatabase(shares,quote,user_id):
     eprint("tradeTotal == " + str(tradeTotal))
 
     # Query database for cash and caclulate cash balance after trade
-    cashBalance = getCashBalance() - tradeTotal
-    eprint("cashBalance == " + cashBalance)
+    cash = getCashBalance() - tradeTotal
+    eprint("cashBalance == " + str(cash))
 
     # add trade to portfolio
     db.execute("INSERT INTO trades (user_id, shares, symbol, company_name, price, timestamp) \
         VALUES(:user_id, :shares, :symbol, :company_name, :price, :timestamp)", \
         user_id=user_id,shares=shares,symbol=symbol,company_name=company_name,price=price,timestamp=timestamp)
 
-    # id = session["user_id"]
-    db.execute("UPDATE users SET cash = :cashBalance WHERE id = :user_id", \
-        id=user_id, cash=cashBalance)
+    id = session["user_id"]
+    db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
+        id=id, cash=cash)
 
 # retrieve portfolio view for display to index.html
 @login_required
@@ -579,24 +579,105 @@ def utility_processor():
 
 @app.route("/deposit", methods=["GET", "POST"])
 @login_required
-def deposit(amount):
+def deposit():
+    eprint("\nin deposit():")
 
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    id = session["user_id"]
+    username = session["username"]
+    eprint(str(username) + " " + str(id))
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
+        # Ensure amount was submitted
+        if not request.form.get("amount"):
+            return apology("must provide amount", 403)
+        else:
+            session["amount"] = request.form.get("amount")
+            eprint(session["amount"])
 
-        print("in deposit():")
-        id = session["user_id"]
-        deposit = session.get('amount')
+            deposit = session.get('amount')
+            eprint(deposit)
 
-        # Query database for cash
-        rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
+            # # Query database for cash
+            rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
 
-        if len(rows) == 0:
-            return apology("sorry, you have no cash", 403)
+            # # if len(rows) == 0:
+            # #     return apology("sorry, you have no cash", 403)
 
-        cash = rows[0]["cash"]
+            cash = rows[0]["cash"]
+            eprint(cash)
+            eprint(deposit)
+            eprint(cash + float(deposit))
+            cash = cash + float(deposit)
+            eprint(cash)
 
-        print("\n515. " + deposit)
+            db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
+                id=id, cash=cash)
 
-    return cash
+            # return render_template("/",
+            #     username=username,
+            #     user_id=id)
+
+            return redirect("/")
+
+        # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("deposit.html",
+            username=username,
+            user_id=id)
+
+
+@app.route("/withdraw", methods=["GET", "POST"])
+@login_required
+def withdraw():
+    eprint("\nin withdraw():")
+
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    id = session["user_id"]
+    username = session["username"]
+    eprint(str(username) + " " + str(id))
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+        # Ensure amount was submitted
+        if not request.form.get("amount"):
+            return apology("must provide amount", 403)
+        else:
+            session["amount"] = request.form.get("amount")
+            eprint(session["amount"])
+
+            withdraw = session.get('amount')
+            eprint(withdraw)
+
+            # # Query database for cash
+            rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
+
+            # # if len(rows) == 0:
+            # #     return apology("sorry, you have no cash", 403)
+
+            cash = rows[0]["cash"]
+            eprint(cash)
+            eprint(withdraw)
+            eprint(cash + float(withdraw))
+            cash = cash - float(withdraw)
+            eprint(cash)
+
+            db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
+                id=id, cash=cash)
+
+            # return render_template("/",
+            #     username=username,
+            #     user_id=id)
+
+            return redirect("/")
+
+        # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("withdraw.html",
+            username=username,
+            user_id=id)
