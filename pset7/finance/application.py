@@ -51,25 +51,15 @@ def index():
     username = session["username"]
     eprint("\n52. " + str(username) + " " + str(user_id))
 
-    portfolio = {}
-    rows = viewPortfolio()
-    eprint("\n55. rows == " + str(len(rows)))
-    if len(rows) == 0:
-        print("\n57. rows == " + str(len(rows)))
-        # return apology("sorry, you have no stocks", 403)
+    # portfolio = {}
+    portfolio = viewPortfolio()
+    eprint(" len(portfolio) == " + str(len(portfolio)))
+    eprint(viewPortfolio())
+    eprint(portfolio)
+    if len(portfolio) == 0:
         cash = getCashBalance()
         sumTotal = cash
     else:
-        for row in range(len(rows)):
-            session["quote"] = lookup(rows[row]["symbol"]) # get fresh data
-            portfolio[rows[row]["symbol"]] = (
-                rows[row]["symbol"],
-                rows[row]["company_name"],
-                rows[row]["sum(shares)"],
-                session["quote"].get("price"),
-                rows[row]["sum(shares * price)"]
-                )
-
         cash = getCashBalance() - sumPortfolio()
         sumTotal = cash + sumPortfolio()
 
@@ -151,22 +141,20 @@ def confirm():
 
         user_id = session["user_id"]
         username = session["username"]
-        eprint("\n52. " + str(username) + " " + str(user_id))
+        eprint(str(username) + " " + str(user_id))
 
-        print("in confirm():")
+        eprint("in confirm():")
         shares = session.get('shares')
-        print("118. num shares " + str(session.get('shares')))
         quote = session.get('quote')
-        print("120. ")
-        print(quote)
-        print(quote["symbol"])
-        print(quote["price"])
 
-        print("124. " + str(session.get('quote').get('price')))
-        print("130. " + str(quote["price"]))
+        eprint("num shares " + shares)
+        eprint(quote)
+        eprint(shares * quote)
+        eprint(quote["symbol"])
+        eprint(quote["price"])
 
-        user_id = session["user_id"]
-        print(user_id)
+        eprint(str(session.get('quote').get('price')))
+        eprint(str(quote["price"]))
 
         addTradeToDatabase(shares,quote,user_id)
 
@@ -198,11 +186,7 @@ def history():
                       user_id=user_id)
 
     if len(rows) == 0:
-        return apology("sorry, you have no stocks", 403)
-
-    print("159. timestamp == ")
-    print(rows[6]["timestamp"])
-    # print(format_date(rows[6]["timestamp"]))
+        return apology("sorry, you have't bought or sold any stocks yet", 403)
 
     return render_template("history.html",
         trades=rows,
@@ -214,7 +198,7 @@ def history():
 def login():
     """Log user in"""
 
-    print("\n170. inside /login")
+    eprint("\n\n213. ******************* inside /login()")
 
     # Forget any user_id
     session.clear()
@@ -234,21 +218,21 @@ def login():
         rows = db.execute("SELECT * FROM users WHERE username = :username",
                           username=request.form.get("username"))
 
-        print("\n190. rows == " + str(len(rows)))
+        eprint("\n233. rows == " + str(len(rows)))
 
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            print("193. rows == " + str(len(rows)))
+            eprint("\n238. rows == " + str(len(rows)))
             return apology("invalid username and/or password", 403)
 
-        print("\n216. username == " + str(rows[0]["username"]))
+        eprint("\n241. username == " + str(rows[0]["username"]))
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
         session["username"] = rows[0]["username"]
 
-        print("\n222. username == " + session["username"])
+        eprint("\n247. username == " + session["username"])
 
         # Redirect user to home page
         return redirect("/")  # change to / when finish testing /buy
@@ -295,7 +279,7 @@ def quote():
                 print("invalid symbol")
                 return apology("invalid symbol", 403)
 
-            return render_template("quoted.html", 
+            return render_template("quoted.html",
                 quote=session,
                 username=username,
                 user_id=user_id)
@@ -388,7 +372,7 @@ def sell():
 
     user_id = session["user_id"]
     username = session["username"]
-    eprint("\n379. " + str(username) + " " + str(user_id))
+    eprint(str(username) + " " + str(user_id))
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -398,19 +382,18 @@ def sell():
         if not request.form.get("shares"):
             return apology("must provide number of shares", 403)
 
+       # Ensure number of shares was submitted
+        # elif not request.form.get("shares"):
+        if request.form.get("shares") == " ":
+            return apology("must provide number of shares", 403)
+
         symbol = request.form.get("symbol")
         session["quote"] = lookup(request.form.get("symbol"))
         # multiply shares sold by -1 reduces logic complications
         session["shares"] = int(request.form.get("shares")) * -1
 
-
         if(getNumSharesOwned(symbol) < abs(session["shares"])):
             return apology("Sorry, you don't have enough shares for this trade.", 403)
-
-        # Ensure number of shares was submitted
-        # elif not request.form.get("shares"):
-        if request.form.get("shares") == " ":
-            return apology("must provide number of shares", 403)
 
         return render_template("confirm.html",
             shares=session,
@@ -420,9 +403,21 @@ def sell():
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        rows = viewPortfolio()
+        rows = {}
+        portfolio = []
+
+        # Query database for portfolio view
+        rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
+            user_id=user_id)
+
+        eprint("len(rows) == " + str(len(rows)))
+        eprint(rows)
+        for row in range(len(rows)):
+            portfolio.append(rows[row]["symbol"])
+            eprint(portfolio)
+
         return render_template("sell.html",
-            portfolio=rows,
+            portfolio=portfolio,
             username=username,
             user_id=user_id)
 
@@ -438,54 +433,70 @@ for code in default_exceptions:
 
 
 # add transaction to atabase
+@login_required
 def addTradeToDatabase(shares,quote,user_id):
 
     # extract values out of session object
-    # user_id = session["user_id"]
+    user_id = session["user_id"]
 
     symbol = quote["symbol"]
     company_name = quote["name"]
     price = quote["price"]
     timestamp = quote["timestamp"]
     tradeTotal = shares * price
-    print("366. tradeTotal == " + str(tradeTotal))
+
+    eprint("getCashBalance() == " + str(getCashBalance()))
+    eprint("tradeTotal == " + str(tradeTotal))
+
+    # Query database for cash and caclulate cash balance after trade
+    cashBalance = getCashBalance() - tradeTotal
+    eprint("cashBalance == " + cashBalance)
 
     # add trade to portfolio
     db.execute("INSERT INTO trades (user_id, shares, symbol, company_name, price, timestamp) \
         VALUES(:user_id, :shares, :symbol, :company_name, :price, :timestamp)", \
         user_id=user_id,shares=shares,symbol=symbol,company_name=company_name,price=price,timestamp=timestamp)
 
-    print("\n389. getCashBalance() == " + str(getCashBalance()))
-
-    # Query database for cash and caclulate cash balance after trade
-    cashBalance = getCashBalance() - tradeTotal
-    print("\n393. cashBal == ")
-    print(cashBalance)
-
-    id = session["user_id"]
-    db.execute("UPDATE users SET cash = :cashBalance WHERE id = :id", \
-        id=id, cashBalance=cashBalance)
+    # id = session["user_id"]
+    db.execute("UPDATE users SET cash = :cashBalance WHERE id = :user_id", \
+        id=user_id, cash=cashBalance)
 
 # retrieve portfolio view for display to index.html
+@login_required
 def viewPortfolio():
 
     user_id = session["user_id"]
-    print("386. user_id == " + str(user_id))
+    eprint("\n469. user_id == " + str(user_id))
 
-    # Query database for view
+    portfolio = {}
+
+    # Query database for portfolio view
     rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
                       user_id=user_id)
 
-    # crashes if no user_id in portfolio - sorry, you have no stocks
-    # if len(rows) == 0:
-    # if(! rows):
-    #     return apology("sorry, you have no stocks", 403)
+    eprint(len(rows))
+    eprint(rows) # prints an array of objects
 
-    print(len(rows))
-    print("396. rows == " + str(len(rows)))
-    print(rows)
+    if len(rows) == 0:
+        eprint("\n rows == " + str(len(rows)))
 
-    return rows
+    else:
+        eprint("len(rows) == " + str(len(rows)))
+        for row in range(len(rows)):
+            session["quote"] = lookup(rows[row]["symbol"]) # get fresh data
+            portfolio[rows[row]["symbol"]] = (
+                rows[row]["symbol"],
+                rows[row]["company_name"],
+                rows[row]["sum(shares)"],
+                session["quote"].get("price"),
+                rows[row]["sum(shares * price)"]
+                )
+            eprint(portfolio[rows[row]["symbol"]])
+
+    eprint(portfolio) # prints a dict of lists
+    eprint(portfolio["G"][1]) # key, index
+    # return rows
+    return portfolio
 
 
 # add up the total of all positions
@@ -497,17 +508,19 @@ def sumPortfolio():
     rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
                       user_id=user_id)
 
-    if len(rows) == 0:
-        return apology("sorry, you have no stocks", 403)
+    eprint(rows)
+    # if len(rows) == 0:
+    #     return apology("sorry, you have no stocks", 403)
 
-    print("\n422. ")
+    eprint(str(len(rows)))
     sumStocks = 0
-    for row in range(len(rows)):
-        print(rows[row]["sum(shares * price)"])
-        sumStocks = sumStocks + rows[row]["sum(shares * price)"]
-        print(sumStocks)
+    if (len(rows) > 0):
+        for row in range(len(rows)):
+            eprint(rows[row]["sum(shares * price)"])
+            sumStocks += rows[row]["sum(shares * price)"]
+            eprint(sumStocks)
 
-    print("\n422. " + str(sumStocks))
+    eprint(str(sumStocks))
     return sumStocks
 
 def getCashBalance():
@@ -518,7 +531,7 @@ def getCashBalance():
     rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
 
     cash = rows[0]["cash"]
-    print("\n455. " + str(cash))
+    eprint(cash)
 
     return cash
 
@@ -572,7 +585,7 @@ def deposit(amount):
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
-        print("in confirm():")
+        print("in deposit():")
         id = session["user_id"]
         deposit = session.get('amount')
 
