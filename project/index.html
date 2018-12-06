@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" type="text/css" href="./src/index.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="./dist/main.js"></script>
+        <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        <title>BrooKlyN ToKeN</title>
+    </head>
+    <body>
+
+        <nav class="navbar navbar-light bg-light">
+            <span class="navbar-brand mb-0 h1">Welcome to the Brooklyn Token Ethereum dApp</span>
+        </nav>
+
+        <p>
+            You must have MetaMask installed in your Chrome Firefox or Opera browser for this blockchain app to work.
+            There are others, but MetaMask is by far the most popular and the one I recommend. 
+            So if you don't have MetaMask installed, head on over to <a href="https://metamask.io/" target="_blank">MetaMask.io</a>
+            <br><br>
+            This is a small simple app (dApp) that transfers tokens from one blockchain address to another.
+            It doesn't do much else yet, but it's the beginning of my blockchain programming journey.
+            Thinking long term, an app like this could be used to pay your bills with onLine banking, 
+            or send money (Ether) to another person or entity, or engage in some online gambling or lottery tickets, and have an immutable record of that transaction. 
+            The front end you see here is written in ReactJS, and the back end is written in Solidity.
+            The back end is a verified contract hosted on the <a href="https://ropsten.etherscan.io/address/0xd74a0f3606dbc4ad636760a751ecacbbc294d288#code" target="_blank">Ropsten Etherscan TestNet</a>
+        </p>
+        Token Name: <span id="tokenName"></span><br>
+        Token Symbol: <span id="tokenSymbol"></span><br>
+        Total Supply: <span id="initialSupply"></span><br>
+        
+        <br>
+        <form>
+            <!-- https://getbootstrap.com/docs/4.0/components/forms/ -->
+            <div class="form-inline">
+                <label class="sr-only" for="transfer_amount">Transfer amounts</label>
+                <input type="number" id="transfer_amount" class="form-control" placeholder="amount" required />
+                <label class="sr-only" for="to_address">Transfer to address</label>
+                <div class="col-8"><input type="text" id="to_address" class="form-control" placeholder="Transfer to address: 0x..." required pattern="0x" /></div>
+            </div>    
+            <button type="submit" class="btn btn-primary mb-2" id="transfer">Transfer</button>
+            &nbsp;
+            <button type="reset" class="btn btn-primary mb-2" id="clear">Clear</button>
+        </form>
+        
+
+        <p>After you submit the transfer, Metamask will ask for confirmation.
+            <br>
+            It takes several seconds to return because the transaction
+            has to be approved.  That's just the way the blockchain works.
+        </p>
+
+        <div id="message""></div>
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    </body>
+</html>

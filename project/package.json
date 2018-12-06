@@ -1,0 +1,33 @@
+{
+  "name": "brooklyntoken",
+  "version": "1.0.0",
+  "description": "Web ui for Tim Wheelers BrooklynToken Ethereum Smart Contract",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/code-42/BrooklynToken.git"
+  },
+  "keywords": [
+    "Ethereum",
+    "Solidity",
+    "blockchain"
+  ],
+  "author": "ED",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/code-42/BrooklynToken/issues"
+  },
+  "homepage": "https://github.com/code-42/BrooklynToken#readme",
+  "devDependencies": {
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "web3": "^1.0.0-beta.36",
+    "web3-provider-engine": "^14.1.0"
+  }
+}
