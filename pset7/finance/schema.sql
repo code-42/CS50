@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS 'cashInOut' (
 */
 DROP VIEW IF EXISTS portfolio;
 CREATE VIEW IF NOT EXISTS portfolio AS
-SELECT user_id, symbol, company_name, sum(shares), sum(shares * price)
+SELECT user_id, symbol, company_name, sum(shares)
 FROM trades
 GROUP BY symbol;
 

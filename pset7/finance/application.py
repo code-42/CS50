@@ -51,20 +51,24 @@ def index():
     username = session["username"]
     eprint("\n52. " + str(username) + " " + str(user_id))
 
-    # portfolio = {}
     portfolio = viewPortfolio()
     eprint(" len(portfolio) == " + str(len(portfolio)))
     eprint(viewPortfolio())
     eprint(portfolio)
+    eprint("*** len(portfolio) == " + str(len(portfolio)))
     if len(portfolio) == 0:
+        sumOfStocks = sumStocks()
         cash = getCashBalance()
         sumTotal = cash
-    else:
-        cash = getCashBalance()
-        sumOfStocks = sumStocks()
-        sumTotal = cash + sumOfStocks
-        eprint(cash)
         eprint(sumOfStocks)
+        eprint(cash)
+        eprint(sumTotal)
+    else:
+        sumOfStocks = sumStocks()
+        cash = getCashBalance()
+        sumTotal = cash + sumOfStocks
+        eprint(sumOfStocks)
+        eprint(cash)
         eprint(sumTotal)
 
     return render_template("index.html",
@@ -164,6 +168,7 @@ def confirm():
         addTradeToDatabase(shares,quote,user_id)
 
         rows = viewPortfolio()
+        eprint(rows)
         # return render_template("index.html", portfolio=rows)
         return redirect("/")
 
@@ -638,14 +643,6 @@ def deposit():
             amount = float(session.get('amount'))
             eprint(amount)
 
-    # add trade to portfolio
-    # db.execute("INSERT INTO trades (user_id, shares, symbol, company_name, price, timestamp) \
-    #     VALUES(:user_id, :shares, :symbol, :company_name, :price, :timestamp)", \
-    #     user_id=user_id,shares=shares,symbol=symbol,company_name=company_name,price=price,timestamp=timestamp)
-
-
-            # db.execute("INSERT INTO cashInOut SET amount = :amount WHERE user_id = :user_id", \
-
             # add deposit to cashInOut
             db.execute("INSERT INTO cashInOut (user_id, amount, timestamp) \
                 VALUES (:user_id, :amount, :timestamp)", \
@@ -667,10 +664,6 @@ def deposit():
             db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
                 id=id, cash=cash)
 
-            # return render_template("/",
-            #     username=username,
-            #     user_id=id)
-
             return redirect("/")
 
         # User reached route via GET (as by clicking a link or via redirect)
@@ -689,8 +682,12 @@ def withdraw():
         return render_template("login.html")
 
     id = session["user_id"]
+    user_id = id
     username = session["username"]
     eprint(str(username) + " " + str(id))
+
+    timestamp = datetime.datetime.now().timestamp()
+    eprint(timestamp)
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -701,28 +698,30 @@ def withdraw():
             session["amount"] = request.form.get("amount")
             eprint(session["amount"])
 
-            withdraw = session.get('amount')
-            eprint(withdraw)
+            amount = float(session.get('amount'))
+            amount = amount * -1
+            eprint(amount)
 
-            # # Query database for cash
+            # add deposit to cashInOut
+            db.execute("INSERT INTO cashInOut (user_id, amount, timestamp) \
+                VALUES (:user_id, :amount, :timestamp)", \
+                user_id=user_id, amount=amount, timestamp=timestamp)
+
+            # Query database for cash
             rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
 
-            # # if len(rows) == 0:
-            # #     return apology("sorry, you have no cash", 403)
+            # if len(rows) == 0:
+            #     return apology("sorry, you have no cash", 403)
 
             cash = rows[0]["cash"]
             eprint(cash)
-            eprint(withdraw)
-            eprint(cash - float(withdraw))
-            cash = cash - float(withdraw)
+            eprint(amount)
+            eprint(cash + float(amount))
+            cash = cash + float(amount)
             eprint(cash)
 
             db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
                 id=id, cash=cash)
-
-            # return render_template("/",
-            #     username=username,
-            #     user_id=id)
 
             return redirect("/")
 
