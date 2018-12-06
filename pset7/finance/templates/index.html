@@ -30,19 +30,19 @@
                     	    <td class="rt">{{ '%0.2f' % v[3]|float }}</td>
                             <td class="rt">{{ '%0.2f' % v[4]|float }}</td>
                             <td>
-
-                                                                           <a href="buy?symbol={{ v[0] }}">
+                                <a href="buy?symbol={{ v[0] }}">
                                     <button class="btn btn-primary btn-sm" type="button">Buy More</button>
                                 </a>
-
-                                                                           <a href="sell?symbol={{ v[0] }}">
+                                <a href="sell?symbol={{ v[0] }}">
                                     <button class="btn btn-primary btn-sm" type="button">Sell Some</button>
                                 </a>
-
                             </td>
                 	    </tr>
                     {% endfor %}
 
+                    <tr>
+                        <td>Stocks</td><td></td><td></td><td></td><td class="rt">{{ '%0.2f' % sumOfStocks|float }}</td>
+                    </tr>
                     <tr>
                         <td>Cash</td><td></td><td></td><td></td><td class="rt">{{ '%0.2f' % cash|float }}</td>
                     </tr>

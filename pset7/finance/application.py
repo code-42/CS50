@@ -51,20 +51,29 @@ def index():
     username = session["username"]
     eprint("\n52. " + str(username) + " " + str(user_id))
 
-    # portfolio = {}
     portfolio = viewPortfolio()
     eprint(" len(portfolio) == " + str(len(portfolio)))
     eprint(viewPortfolio())
     eprint(portfolio)
+    eprint("*** len(portfolio) == " + str(len(portfolio)))
     if len(portfolio) == 0:
+        sumOfStocks = sumStocks()
         cash = getCashBalance()
         sumTotal = cash
+        eprint(sumOfStocks)
+        eprint(cash)
+        eprint(sumTotal)
     else:
-        cash = getCashBalance() - sumPortfolio()
-        sumTotal = cash + sumPortfolio()
+        sumOfStocks = sumStocks()
+        cash = getCashBalance()
+        sumTotal = cash + sumOfStocks
+        eprint(sumOfStocks)
+        eprint(cash)
+        eprint(sumTotal)
 
     return render_template("index.html",
         portfolio=portfolio,
+        sumOfStocks=sumOfStocks,
         cash=cash,
         sumTotal=sumTotal,
         username=username,
@@ -159,6 +168,7 @@ def confirm():
         addTradeToDatabase(shares,quote,user_id)
 
         rows = viewPortfolio()
+        eprint(rows)
         # return render_template("index.html", portfolio=rows)
         return redirect("/")
 
@@ -294,6 +304,7 @@ def quote():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
+    eprint("\n\n297. ******************* inside /register()")
 
     # Adapted from "/login" above
     # Forget any user_id
@@ -321,7 +332,7 @@ def register():
         # passed above tests so add name and password hash to database
         username = request.form.get("username")
         password = request.form.get("password")
-        print("278. " + username + password)
+        eprint(username + password)
 
         # Query database for username used already
         # NOTE: this can be accomplished with keyword UNIQUE in db schema
@@ -333,10 +344,10 @@ def register():
 
         # source https://docs.python.org/2/library/hashlib.html
         hash = generate_password_hash(password)
-        print("290. " + hash)
+        eprint(hash)
 
         check_hash = check_password_hash(hash, password)
-        print("293. " + str(check_hash))
+        eprint(check_hash)
 
         # source Zamylas walkthrough video 2 @ 2:27
         db.execute("INSERT INTO users (username, hash) \
@@ -354,6 +365,7 @@ def register():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
+        session["username"] = rows[0]["username"]
 
         # Redirect user to home page
         return redirect("/")
@@ -466,7 +478,7 @@ def addTradeToDatabase(shares,quote,user_id):
 def viewPortfolio():
 
     user_id = session["user_id"]
-    eprint("\n469. user_id == " + str(user_id))
+    eprint(user_id)
 
     portfolio = {}
 
@@ -484,43 +496,71 @@ def viewPortfolio():
         eprint("len(rows) == " + str(len(rows)))
         for row in range(len(rows)):
             session["quote"] = lookup(rows[row]["symbol"]) # get fresh data
+            price = session["quote"].get("price")
+            shares = rows[row]["sum(shares)"]
+            eprint(shares)
+            eprint(price)
             portfolio[rows[row]["symbol"]] = (
                 rows[row]["symbol"],
                 rows[row]["company_name"],
-                rows[row]["sum(shares)"],
-                session["quote"].get("price"),
-                rows[row]["sum(shares * price)"]
+                shares,
+                price,
+                shares * price
                 )
             eprint(portfolio[rows[row]["symbol"]])
 
     eprint(portfolio) # prints a dict of lists
-    eprint(portfolio["G"][1]) # key, index
-    # return rows
     return portfolio
 
 
 # add up the total of all positions
-def sumPortfolio():
+def sumStocks():
 
+    sumStocks = 0
     user_id = session["user_id"]
 
     # Query database for portfolio
-    rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
-                      user_id=user_id)
+    trades = db.execute("SELECT * FROM trades WHERE user_id = :user_id",
+        user_id=user_id)
+    eprint(str(len(trades)))
+    eprint(trades)
 
-    eprint(rows)
-    # if len(rows) == 0:
-    #     return apology("sorry, you have no stocks", 403)
+    portfolio = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
+        user_id=user_id)
+    eprint(str(len(portfolio)))
+    eprint(portfolio)
 
-    eprint(str(len(rows)))
-    sumStocks = 0
-    if (len(rows) > 0):
-        for row in range(len(rows)):
-            eprint(rows[row]["sum(shares * price)"])
-            sumStocks += rows[row]["sum(shares * price)"]
+    if (len(trades) > 0):
+        for row in range(len(trades)):
+            # eprint(rows[row]["sum(shares * price)"])
+            # sumStocks += rows[row]["sum(shares * price)"]
+            # eprint(sumStocks)
+
+            session["quote"] = lookup(trades[row]["symbol"])  # get fresh data
+            price = session["quote"].get("price")
+            eprint(price)
+
+            shares = trades[row]["shares"]
+            # price = trades[row]["price"]
+            # eprint(rows[row]["sum(shares * price)"])
+            eprint(shares * price)
+            sumStocks += shares * price
             eprint(sumStocks)
 
-    eprint(str(sumStocks))
+    # if (len(portfolio) > 0):
+    #     for row in range(len(portfolio)):
+    #         # eprint(rows[row]["sum(shares * price)"])
+    #         # sumStocks += rows[row]["sum(shares * price)"]
+    #         # eprint(sumStocks)
+
+    #         shares = portfolio[row]["shares"]
+    #         price = portfolio[row]["price"]
+    #         # eprint(rows[row]["sum(shares * price)"])
+    #         eprint(shares * price)
+    #         sumStocks += shares * price
+    #         eprint(sumStocks)
+
+    # eprint(str(sumStocks))
     return sumStocks
 
 def getCashBalance():
@@ -544,7 +584,7 @@ def getNumSharesOwned(symbol):
       user_id=session["user_id"], symbol=symbol)
 
     numShares = int(numShares[0]["sum(shares)"])
-    eprint("\n474. numShares == " + str(numShares))
+    eprint("numShares == " + str(numShares))
 
     return numShares
 
@@ -555,12 +595,10 @@ def isValidInput():
 
         # Ensure symbol was submitted
         if not request.form.get("symbol"):
-            print("464. symbol == " + request.form.get("symbol"))
             return apology("must provide symbol", 403)
 
         # Ensure number of shares was submitted
         if not request.form.get("shares"):
-            # print("469. shares == " + request.form.get("shares"))
             return apology("must provide number of shares", 403)
 
         return True
@@ -586,8 +624,12 @@ def deposit():
         return render_template("login.html")
 
     id = session["user_id"]
+    user_id = id
     username = session["username"]
     eprint(str(username) + " " + str(id))
+
+    timestamp = datetime.datetime.now().timestamp()
+    eprint(timestamp)
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -598,28 +640,29 @@ def deposit():
             session["amount"] = request.form.get("amount")
             eprint(session["amount"])
 
-            deposit = session.get('amount')
-            eprint(deposit)
+            amount = float(session.get('amount'))
+            eprint(amount)
 
-            # # Query database for cash
+            # add deposit to cashInOut
+            db.execute("INSERT INTO cashInOut (user_id, amount, timestamp) \
+                VALUES (:user_id, :amount, :timestamp)", \
+                user_id=user_id, amount=amount, timestamp=timestamp)
+
+            # Query database for cash
             rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
 
-            # # if len(rows) == 0:
-            # #     return apology("sorry, you have no cash", 403)
+            # if len(rows) == 0:
+            #     return apology("sorry, you have no cash", 403)
 
             cash = rows[0]["cash"]
             eprint(cash)
-            eprint(deposit)
-            eprint(cash + float(deposit))
-            cash = cash + float(deposit)
+            eprint(amount)
+            eprint(cash + float(amount))
+            cash = cash + float(amount)
             eprint(cash)
 
             db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
                 id=id, cash=cash)
-
-            # return render_template("/",
-            #     username=username,
-            #     user_id=id)
 
             return redirect("/")
 
@@ -639,8 +682,12 @@ def withdraw():
         return render_template("login.html")
 
     id = session["user_id"]
+    user_id = id
     username = session["username"]
     eprint(str(username) + " " + str(id))
+
+    timestamp = datetime.datetime.now().timestamp()
+    eprint(timestamp)
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -651,28 +698,30 @@ def withdraw():
             session["amount"] = request.form.get("amount")
             eprint(session["amount"])
 
-            withdraw = session.get('amount')
-            eprint(withdraw)
+            amount = float(session.get('amount'))
+            amount = amount * -1
+            eprint(amount)
 
-            # # Query database for cash
+            # add deposit to cashInOut
+            db.execute("INSERT INTO cashInOut (user_id, amount, timestamp) \
+                VALUES (:user_id, :amount, :timestamp)", \
+                user_id=user_id, amount=amount, timestamp=timestamp)
+
+            # Query database for cash
             rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
 
-            # # if len(rows) == 0:
-            # #     return apology("sorry, you have no cash", 403)
+            # if len(rows) == 0:
+            #     return apology("sorry, you have no cash", 403)
 
             cash = rows[0]["cash"]
             eprint(cash)
-            eprint(withdraw)
-            eprint(cash - float(withdraw))
-            cash = cash - float(withdraw)
+            eprint(amount)
+            eprint(cash + float(amount))
+            cash = cash + float(amount)
             eprint(cash)
 
             db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
                 id=id, cash=cash)
-
-            # return render_template("/",
-            #     username=username,
-            #     user_id=id)
 
             return redirect("/")
 
