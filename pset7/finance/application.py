@@ -663,7 +663,7 @@ def withdraw():
             cash = rows[0]["cash"]
             eprint(cash)
             eprint(withdraw)
-            eprint(cash + float(withdraw))
+            eprint(cash - float(withdraw))
             cash = cash - float(withdraw)
             eprint(cash)
 
