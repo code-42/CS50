@@ -18,12 +18,15 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Ensure responses aren't cached
+
+
 @app.after_request
 def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
+
 
 # Custom filter
 app.jinja_env.filters["usd"] = usd
@@ -35,8 +38,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-# db = SQL("sqlite:///finance.db")
-db = SQL("sqlite:////home/ubuntu/workspace/cs50/pset7/finance/finance.db")
+db = SQL("sqlite:///finance.db")
+# db = SQL("sqlite:////home/ubuntu/workspace/cs50/pset7/finance/finance.db")
 
 
 @app.route("/")
@@ -72,12 +75,12 @@ def index():
         eprint(sumTotal)
 
     return render_template("index.html",
-        portfolio=portfolio,
-        sumOfStocks=sumOfStocks,
-        cash=cash,
-        sumTotal=sumTotal,
-        username=username,
-        user_id=user_id)
+                           portfolio=portfolio,
+                           sumOfStocks=sumOfStocks,
+                           cash=cash,
+                           sumTotal=sumTotal,
+                           username=username,
+                           user_id=user_id)
 
 
 @app.route("/buy", methods=["GET", "POST"])
@@ -112,7 +115,7 @@ def buy():
 
         user_id = session["user_id"]
         cash = db.execute("SELECT cash FROM users WHERE id = :user_id",
-          user_id=session["user_id"])
+                          user_id=session["user_id"])
 
         cash = float(cash[0]["cash"])
         print("cash == " + str(cash))
@@ -126,16 +129,17 @@ def buy():
             return apology("Sorry, you don't have enough money for this trade.", 403)
 
         return render_template("confirm.html",
-            shares=session,
-            quote=session,
-            username=username,
-            user_id=user_id)
+                               shares=session,
+                               quote=session,
+                               username=username,
+                               user_id=user_id)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("buy.html",
-            username=username,
-            user_id=user_id)
+                               username=username,
+                               user_id=user_id)
+
 
 @app.route("/confirm", methods=["GET", "POST"])
 @login_required
@@ -165,7 +169,7 @@ def confirm():
         eprint(str(session.get('quote').get('price')))
         eprint(str(quote["price"]))
 
-        addTradeToDatabase(shares,quote,user_id)
+        addTradeToDatabase(shares, quote, user_id)
 
         rows = viewPortfolio()
         eprint(rows)
@@ -175,6 +179,7 @@ def confirm():
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("buy.html")
+
 
 @app.route("/history")
 @login_required
@@ -199,9 +204,9 @@ def history():
         return apology("sorry, you have't bought or sold any stocks yet", 403)
 
     return render_template("history.html",
-        trades=rows,
-        username=username,
-        user_id=user_id)
+                           trades=rows,
+                           username=username,
+                           user_id=user_id)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -229,7 +234,6 @@ def login():
                           username=request.form.get("username"))
 
         eprint("\n233. rows == " + str(len(rows)))
-
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
@@ -290,15 +294,15 @@ def quote():
                 return apology("invalid symbol", 403)
 
             return render_template("quoted.html",
-                quote=session,
-                username=username,
-                user_id=user_id)
+                                   quote=session,
+                                   username=username,
+                                   user_id=user_id)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("quote.html",
-            username=username,
-            user_id=user_id)
+                               username=username,
+                               user_id=user_id)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -337,7 +341,7 @@ def register():
         # Query database for username used already
         # NOTE: this can be accomplished with keyword UNIQUE in db schema
         rows = db.execute("SELECT * FROM users WHERE username = :username",
-            username=request.form.get("username"))
+                          username=request.form.get("username"))
 
         if len(rows) > 0:
             return apology("Sorry, that username is already taken. Try again.", 403)
@@ -351,13 +355,11 @@ def register():
 
         # source Zamylas walkthrough video 2 @ 2:27
         db.execute("INSERT INTO users (username, hash) \
-        VALUES(:username, :hash)", \
-        username=request.form.get("username"), \
-        hash=hash)
+        VALUES(:username, :hash)", username=request.form.get("username"), hash=hash)
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = :username",
-            username=request.form.get("username"))
+                          username=request.form.get("username"))
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
@@ -370,7 +372,7 @@ def register():
         # Redirect user to home page
         return redirect("/")
 
-    #return apology("TODO")
+    # return apology("TODO")
     return render_template("register.html")
 
 
@@ -408,10 +410,10 @@ def sell():
             return apology("Sorry, you don't have enough shares for this trade.", 403)
 
         return render_template("confirm.html",
-            shares=session,
-            quote=session,
-            username=username,
-            user_id=user_id)
+                               shares=session,
+                               quote=session,
+                               username=username,
+                               user_id=user_id)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
@@ -420,7 +422,7 @@ def sell():
 
         # Query database for portfolio view
         rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
-            user_id=user_id)
+                          user_id=user_id)
 
         eprint("len(rows) == " + str(len(rows)))
         eprint(rows)
@@ -429,9 +431,9 @@ def sell():
             eprint(portfolio)
 
         return render_template("sell.html",
-            portfolio=portfolio,
-            username=username,
-            user_id=user_id)
+                               portfolio=portfolio,
+                               username=username,
+                               user_id=user_id)
 
 
 def errorhandler(e):
@@ -446,7 +448,7 @@ for code in default_exceptions:
 
 # add transaction to atabase
 @login_required
-def addTradeToDatabase(shares,quote,user_id):
+def addTradeToDatabase(shares, quote, user_id):
 
     # extract values out of session object
     user_id = session["user_id"]
@@ -466,14 +468,14 @@ def addTradeToDatabase(shares,quote,user_id):
 
     # add trade to portfolio
     db.execute("INSERT INTO trades (user_id, shares, symbol, company_name, price, timestamp) \
-        VALUES(:user_id, :shares, :symbol, :company_name, :price, :timestamp)", \
-        user_id=user_id,shares=shares,symbol=symbol,company_name=company_name,price=price,timestamp=timestamp)
+        VALUES(:user_id, :shares, :symbol, :company_name, :price, :timestamp)", user_id=user_id, shares=shares, symbol=symbol, company_name=company_name, price=price, timestamp=timestamp)
 
     id = session["user_id"]
-    db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
-        id=id, cash=cash)
+    db.execute("UPDATE users SET cash = :cash WHERE id = :id", id=id, cash=cash)
 
 # retrieve portfolio view for display to index.html
+
+
 @login_required
 def viewPortfolio():
 
@@ -487,7 +489,7 @@ def viewPortfolio():
                       user_id=user_id)
 
     eprint(len(rows))
-    eprint(rows) # prints an array of objects
+    eprint(rows)  # prints an array of objects
 
     if len(rows) == 0:
         eprint("\n rows == " + str(len(rows)))
@@ -495,7 +497,7 @@ def viewPortfolio():
     else:
         eprint("len(rows) == " + str(len(rows)))
         for row in range(len(rows)):
-            session["quote"] = lookup(rows[row]["symbol"]) # get fresh data
+            session["quote"] = lookup(rows[row]["symbol"])  # get fresh data
             price = session["quote"].get("price")
             shares = rows[row]["sum(shares)"]
             eprint(shares)
@@ -505,11 +507,10 @@ def viewPortfolio():
                 rows[row]["company_name"],
                 shares,
                 price,
-                shares * price
-                )
+                shares * price)
             eprint(portfolio[rows[row]["symbol"]])
 
-    eprint(portfolio) # prints a dict of lists
+    eprint(portfolio)  # prints a dict of lists
     return portfolio
 
 
@@ -521,21 +522,17 @@ def sumStocks():
 
     # Query database for portfolio
     trades = db.execute("SELECT * FROM trades WHERE user_id = :user_id",
-        user_id=user_id)
+                        user_id=user_id)
     eprint(str(len(trades)))
     eprint(trades)
 
     portfolio = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
-        user_id=user_id)
+                           user_id=user_id)
     eprint(str(len(portfolio)))
     eprint(portfolio)
 
     if (len(trades) > 0):
         for row in range(len(trades)):
-            # eprint(rows[row]["sum(shares * price)"])
-            # sumStocks += rows[row]["sum(shares * price)"]
-            # eprint(sumStocks)
-
             session["quote"] = lookup(trades[row]["symbol"])  # get fresh data
             price = session["quote"].get("price")
             eprint(price)
@@ -547,21 +544,9 @@ def sumStocks():
             sumStocks += shares * price
             eprint(sumStocks)
 
-    # if (len(portfolio) > 0):
-    #     for row in range(len(portfolio)):
-    #         # eprint(rows[row]["sum(shares * price)"])
-    #         # sumStocks += rows[row]["sum(shares * price)"]
-    #         # eprint(sumStocks)
-
-    #         shares = portfolio[row]["shares"]
-    #         price = portfolio[row]["price"]
-    #         # eprint(rows[row]["sum(shares * price)"])
-    #         eprint(shares * price)
-    #         sumStocks += shares * price
-    #         eprint(sumStocks)
-
     # eprint(str(sumStocks))
     return sumStocks
+
 
 def getCashBalance():
 
@@ -581,7 +566,7 @@ def getNumSharesOwned(symbol):
 
     user_id = session["user_id"]
     numShares = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id and symbol = :symbol",
-      user_id=session["user_id"], symbol=symbol)
+                           user_id=session["user_id"], symbol=symbol)
 
     numShares = int(numShares[0]["sum(shares)"])
     eprint("numShares == " + str(numShares))
@@ -591,20 +576,22 @@ def getNumSharesOwned(symbol):
 
 def isValidInput():
 
-        print("\n462. inside isValidInput()")
+    print("\n462. inside isValidInput()")
 
-        # Ensure symbol was submitted
-        if not request.form.get("symbol"):
-            return apology("must provide symbol", 403)
+    # Ensure symbol was submitted
+    if not request.form.get("symbol"):
+        return apology("must provide symbol", 403)
 
-        # Ensure number of shares was submitted
-        if not request.form.get("shares"):
-            return apology("must provide number of shares", 403)
+    # Ensure number of shares was submitted
+    if not request.form.get("shares"):
+        return apology("must provide number of shares", 403)
 
-        return True
+    return True
 
 # source http://flask.pocoo.org/docs/0.12/templating/#context-processors
 # video https://www.youtube.com/watch?v=8qDdbcWmzCg
+
+
 @app.context_processor
 def utility_processor():
     def format_date(epoch):
@@ -614,6 +601,7 @@ def utility_processor():
         print(t.strftime(fmt))
         return t.strftime(fmt)
     return(dict(format_date=format_date))
+
 
 @app.route("/deposit", methods=["GET", "POST"])
 @login_required
@@ -645,8 +633,7 @@ def deposit():
 
             # add deposit to cashInOut
             db.execute("INSERT INTO cashInOut (user_id, amount, timestamp) \
-                VALUES (:user_id, :amount, :timestamp)", \
-                user_id=user_id, amount=amount, timestamp=timestamp)
+                VALUES (:user_id, :amount, :timestamp)", user_id=user_id, amount=amount, timestamp=timestamp)
 
             # Query database for cash
             rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
@@ -661,16 +648,15 @@ def deposit():
             cash = cash + float(amount)
             eprint(cash)
 
-            db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
-                id=id, cash=cash)
+            db.execute("UPDATE users SET cash = :cash WHERE id = :id", id=id, cash=cash)
 
             return redirect("/")
 
         # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("deposit.html",
-            username=username,
-            user_id=id)
+                               username=username,
+                               user_id=id)
 
 
 @app.route("/withdraw", methods=["GET", "POST"])
@@ -704,8 +690,7 @@ def withdraw():
 
             # add deposit to cashInOut
             db.execute("INSERT INTO cashInOut (user_id, amount, timestamp) \
-                VALUES (:user_id, :amount, :timestamp)", \
-                user_id=user_id, amount=amount, timestamp=timestamp)
+                VALUES (:user_id, :amount, :timestamp)", user_id=user_id, amount=amount, timestamp=timestamp)
 
             # Query database for cash
             rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
@@ -720,13 +705,12 @@ def withdraw():
             cash = cash + float(amount)
             eprint(cash)
 
-            db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
-                id=id, cash=cash)
+            db.execute("UPDATE users SET cash = :cash WHERE id = :id", id=id, cash=cash)
 
             return redirect("/")
 
         # User reached route via GET (as by clicking a link or via redirect)
     else:
         return render_template("withdraw.html",
-            username=username,
-            user_id=id)
+                               username=username,
+                               user_id=id)
