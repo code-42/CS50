@@ -123,7 +123,7 @@ def buy():
         price = session["quote"].get("price")
         shares = session["shares"]
         total = price * shares
-        print("total == " + str(total))
+        eprint("total == " + str(total))
 
         if(cash < total):
             return apology("Sorry, you don't have enough money for this trade.", 403)
@@ -502,13 +502,14 @@ def viewPortfolio():
             shares = rows[row]["sum(shares)"]
             eprint(shares)
             eprint(price)
-            portfolio[rows[row]["symbol"]] = (
-                rows[row]["symbol"],
-                rows[row]["company_name"],
-                shares,
-                price,
-                shares * price)
-            eprint(portfolio[rows[row]["symbol"]])
+            if(int(shares) > 0):
+                portfolio[rows[row]["symbol"]] = (
+                    rows[row]["symbol"],
+                    rows[row]["company_name"],
+                    shares,
+                    price,
+                    shares * price)
+                eprint(portfolio[rows[row]["symbol"]])
 
     eprint(portfolio)  # prints a dict of lists
     return portfolio
