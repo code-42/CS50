@@ -11,11 +11,11 @@
         <div class="form-group">
             <select name="symbol">
                 {% for item in portfolio %}
-                {% if item["symbol"] == request.args.get('symbol') %}
-                    <option value='{{ item["symbol"] }}' selected>{{ item["symbol"] }}</option>
+                    {% if item == request.args.get('symbol') %}
+                        <option value='{{ item }}' selected>{{ item }}</option>
                     {% else %}
-                    <option value='{{ item["symbol"] }}'>{{ item["symbol"] }}</option>
-                {% endif %}
+                        <option value='{{ item }}'>{{ item }}</option>
+                    {% endif %}
                 {% endfor %}
             </select>
 

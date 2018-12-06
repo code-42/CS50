@@ -47,32 +47,41 @@ def index():
     if(session["user_id"] is None):
         return render_template("login.html")
 
-    rows = viewPortfolio()
-    if len(rows) == 0:
-        print("53. rows == " + str(len(rows)))
-        return apology("sorry, you have no stocks", 403)
+    user_id = session["user_id"]
+    username = session["username"]
+    eprint("\n52. " + str(username) + " " + str(user_id))
 
-    portfolio = {}
-    for row in range(len(rows)):
-        session["quote"] = lookup(rows[row]["symbol"]) # get fresh data
-        portfolio[rows[row]["symbol"]] = (
-            rows[row]["symbol"],
-            rows[row]["company_name"],
-            rows[row]["sum(shares)"],
-            session["quote"].get("price"),
-            rows[row]["sum(shares * price)"]
-            )
+    # portfolio = {}
+    portfolio = viewPortfolio()
+    eprint(" len(portfolio) == " + str(len(portfolio)))
+    eprint(viewPortfolio())
+    eprint(portfolio)
+    if len(portfolio) == 0:
+        cash = getCashBalance()
+        sumTotal = cash
+    else:
+        cash = getCashBalance() - sumPortfolio()
+        sumTotal = cash + sumPortfolio()
 
-    cash = getCashBalance() - sumPortfolio()
-    sumTotal = cash + sumPortfolio()
-
-    return render_template("index.html", portfolio=portfolio, cash=cash, sumTotal=sumTotal)
+    return render_template("index.html",
+        portfolio=portfolio,
+        cash=cash,
+        sumTotal=sumTotal,
+        username=username,
+        user_id=user_id)
 
 
 @app.route("/buy", methods=["GET", "POST"])
 @login_required
 def buy():
     """Buy shares of stock"""
+
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    user_id = session["user_id"]
+    username = session["username"]
+    eprint("\n94. " + str(username) + " " + str(user_id))
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -107,34 +116,45 @@ def buy():
         if(cash < total):
             return apology("Sorry, you don't have enough money for this trade.", 403)
 
-        return render_template("confirm.html", shares=session, quote=session)
+        return render_template("confirm.html",
+            shares=session,
+            quote=session,
+            username=username,
+            user_id=user_id)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("buy.html")
+        return render_template("buy.html",
+            username=username,
+            user_id=user_id)
 
 @app.route("/confirm", methods=["GET", "POST"])
 @login_required
 def confirm():
     """Confirm trade shares of stock"""
 
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
-        print("in confirm():")
-        shares = session.get('shares')
-        print("118. num shares " + str(session.get('shares')))
-        quote = session.get('quote')
-        print("120. ")
-        print(quote)
-        print(quote["symbol"])
-        print(quote["price"])
-
-        print("124. " + str(session.get('quote').get('price')))
-        print("130. " + str(quote["price"]))
-
         user_id = session["user_id"]
-        print(user_id)
+        username = session["username"]
+        eprint(str(username) + " " + str(user_id))
+
+        eprint("in confirm():")
+        shares = session.get('shares')
+        quote = session.get('quote')
+
+        eprint("num shares " + str(shares))
+        eprint(quote)
+        eprint(shares * quote["price"])
+        eprint(quote["symbol"])
+        eprint(quote["price"])
+
+        eprint(str(session.get('quote').get('price')))
+        eprint(str(quote["price"]))
 
         addTradeToDatabase(shares,quote,user_id)
 
@@ -152,6 +172,13 @@ def history():
     """Show history of transactions"""
     # return apology("TODO")
 
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    user_id = session["user_id"]
+    username = session["username"]
+    eprint("\n52. " + str(username) + " " + str(user_id))
+
     user_id = session["user_id"]
 
     # Query database for view
@@ -159,20 +186,19 @@ def history():
                       user_id=user_id)
 
     if len(rows) == 0:
-        return apology("sorry, you have no stocks", 403)
+        return apology("sorry, you have't bought or sold any stocks yet", 403)
 
-    print("159. timestamp == ")
-    print(rows[6]["timestamp"])
-    # print(format_date(rows[6]["timestamp"]))
-
-    return render_template("history.html", trades=rows)
+    return render_template("history.html",
+        trades=rows,
+        username=username,
+        user_id=user_id)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
 
-    print("170. inside /login")
+    eprint("\n\n213. ******************* inside /login()")
 
     # Forget any user_id
     session.clear()
@@ -192,18 +218,21 @@ def login():
         rows = db.execute("SELECT * FROM users WHERE username = :username",
                           username=request.form.get("username"))
 
-        print("\n190. rows == " + str(len(rows)))
+        eprint("\n233. rows == " + str(len(rows)))
 
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            print("193. rows == " + str(len(rows)))
+            eprint("\n238. rows == " + str(len(rows)))
             return apology("invalid username and/or password", 403)
 
-        print(str(rows[0]["username"]))
+        eprint("\n241. username == " + str(rows[0]["username"]))
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
+        session["username"] = rows[0]["username"]
+
+        eprint("\n247. username == " + session["username"])
 
         # Redirect user to home page
         return redirect("/")  # change to / when finish testing /buy
@@ -229,6 +258,13 @@ def logout():
 def quote():
     """Get stock quote."""
 
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    user_id = session["user_id"]
+    username = session["username"]
+    eprint("\n379. " + str(username) + " " + str(user_id))
+
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
         # Ensure symbol was submitted
@@ -243,11 +279,16 @@ def quote():
                 print("invalid symbol")
                 return apology("invalid symbol", 403)
 
-            return render_template("quoted.html", quote=session)
+            return render_template("quoted.html",
+                quote=session,
+                username=username,
+                user_id=user_id)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        return render_template("quote.html")
+        return render_template("quote.html",
+            username=username,
+            user_id=user_id)
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -326,6 +367,13 @@ def register():
 def sell():
     """Sell shares of stock"""
 
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    user_id = session["user_id"]
+    username = session["username"]
+    eprint(str(username) + " " + str(user_id))
+
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
@@ -334,28 +382,44 @@ def sell():
         if not request.form.get("shares"):
             return apology("must provide number of shares", 403)
 
+       # Ensure number of shares was submitted
+        # elif not request.form.get("shares"):
+        if request.form.get("shares") == " ":
+            return apology("must provide number of shares", 403)
+
         symbol = request.form.get("symbol")
         session["quote"] = lookup(request.form.get("symbol"))
         # multiply shares sold by -1 reduces logic complications
         session["shares"] = int(request.form.get("shares")) * -1
 
-
         if(getNumSharesOwned(symbol) < abs(session["shares"])):
             return apology("Sorry, you don't have enough shares for this trade.", 403)
 
-        # Ensure number of shares was submitted
-        # elif not request.form.get("shares"):
-        if request.form.get("shares") == " ":
-            return apology("must provide number of shares", 403)
-
-        return render_template("confirm.html", shares=session, quote=session)
+        return render_template("confirm.html",
+            shares=session,
+            quote=session,
+            username=username,
+            user_id=user_id)
 
     # User reached route via GET (as by clicking a link or via redirect)
     else:
-        rows = viewPortfolio()
-        # print("\n356. symbol == ")
-        print("\n357. symbol == " + request.args.get('symbol'))
-        return render_template("sell.html", portfolio=rows)
+        rows = {}
+        portfolio = []
+
+        # Query database for portfolio view
+        rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
+            user_id=user_id)
+
+        eprint("len(rows) == " + str(len(rows)))
+        eprint(rows)
+        for row in range(len(rows)):
+            portfolio.append(rows[row]["symbol"])
+            eprint(portfolio)
+
+        return render_template("sell.html",
+            portfolio=portfolio,
+            username=username,
+            user_id=user_id)
 
 
 def errorhandler(e):
@@ -369,50 +433,70 @@ for code in default_exceptions:
 
 
 # add transaction to atabase
+@login_required
 def addTradeToDatabase(shares,quote,user_id):
 
     # extract values out of session object
-    # user_id = session["user_id"]
+    user_id = session["user_id"]
 
     symbol = quote["symbol"]
     company_name = quote["name"]
     price = quote["price"]
     timestamp = quote["timestamp"]
     tradeTotal = shares * price
-    print("366. tradeTotal == " + str(tradeTotal))
+
+    eprint("getCashBalance() == " + str(getCashBalance()))
+    eprint("tradeTotal == " + str(tradeTotal))
+
+    # Query database for cash and caclulate cash balance after trade
+    cash = getCashBalance() - tradeTotal
+    eprint("cashBalance == " + str(cash))
 
     # add trade to portfolio
     db.execute("INSERT INTO trades (user_id, shares, symbol, company_name, price, timestamp) \
         VALUES(:user_id, :shares, :symbol, :company_name, :price, :timestamp)", \
         user_id=user_id,shares=shares,symbol=symbol,company_name=company_name,price=price,timestamp=timestamp)
 
-    # Query database for cash and caclulate cash balance after trade
-    cashBalance = getCashBalance() - tradeTotal
-    print("375. cashBal == ")
-    print(cashBalance)
-
     id = session["user_id"]
-    db.execute("UPDATE users SET cash = :cashBalance WHERE id = :id", \
-        id=id, cashBalance=cashBalance)
+    db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
+        id=id, cash=cash)
 
 # retrieve portfolio view for display to index.html
+@login_required
 def viewPortfolio():
 
     user_id = session["user_id"]
-    print("386. user_id == " + str(user_id))
+    eprint("\n469. user_id == " + str(user_id))
 
-    # Query database for view
+    portfolio = {}
+
+    # Query database for portfolio view
     rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
                       user_id=user_id)
 
+    eprint(len(rows))
+    eprint(rows) # prints an array of objects
+
     if len(rows) == 0:
-        return apology("sorry, you have no stocks", 403)
+        eprint("\n rows == " + str(len(rows)))
 
-    print(len(rows))
-    print("396. rows == " + str(len(rows)))
-    print(rows)
+    else:
+        eprint("len(rows) == " + str(len(rows)))
+        for row in range(len(rows)):
+            session["quote"] = lookup(rows[row]["symbol"]) # get fresh data
+            portfolio[rows[row]["symbol"]] = (
+                rows[row]["symbol"],
+                rows[row]["company_name"],
+                rows[row]["sum(shares)"],
+                session["quote"].get("price"),
+                rows[row]["sum(shares * price)"]
+                )
+            eprint(portfolio[rows[row]["symbol"]])
 
-    return rows
+    eprint(portfolio) # prints a dict of lists
+    eprint(portfolio["G"][1]) # key, index
+    # return rows
+    return portfolio
 
 
 # add up the total of all positions
@@ -424,16 +508,19 @@ def sumPortfolio():
     rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
                       user_id=user_id)
 
-    if len(rows) == 0:
-        return apology("sorry, you have no stocks", 403)
+    eprint(rows)
+    # if len(rows) == 0:
+    #     return apology("sorry, you have no stocks", 403)
 
-    print("422. ")
+    eprint(str(len(rows)))
     sumStocks = 0
-    for row in range(len(rows)):
-        print(rows[row]["sum(shares * price)"])
-        sumStocks = sumStocks + rows[row]["sum(shares * price)"]
-        print(sumStocks)
+    if (len(rows) > 0):
+        for row in range(len(rows)):
+            eprint(rows[row]["sum(shares * price)"])
+            sumStocks += rows[row]["sum(shares * price)"]
+            eprint(sumStocks)
 
+    eprint(str(sumStocks))
     return sumStocks
 
 def getCashBalance():
@@ -443,10 +530,8 @@ def getCashBalance():
     # Query database for cash
     rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
 
-    if len(rows) == 0:
-        return apology("sorry, you have no cash", 403)
-
     cash = rows[0]["cash"]
+    eprint(cash)
 
     return cash
 
@@ -459,7 +544,7 @@ def getNumSharesOwned(symbol):
       user_id=session["user_id"], symbol=symbol)
 
     numShares = int(numShares[0]["sum(shares)"])
-    print("347. numShares == " + str(numShares))
+    eprint("\n474. numShares == " + str(numShares))
 
     return numShares
 
@@ -494,24 +579,105 @@ def utility_processor():
 
 @app.route("/deposit", methods=["GET", "POST"])
 @login_required
-def deposit(amount):
+def deposit():
+    eprint("\nin deposit():")
 
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    id = session["user_id"]
+    username = session["username"]
+    eprint(str(username) + " " + str(id))
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
+        # Ensure amount was submitted
+        if not request.form.get("amount"):
+            return apology("must provide amount", 403)
+        else:
+            session["amount"] = request.form.get("amount")
+            eprint(session["amount"])
 
-        print("in confirm():")
-        id = session["user_id"]
-        deposit = session.get('amount')
+            deposit = session.get('amount')
+            eprint(deposit)
 
-        # Query database for cash
-        rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
+            # # Query database for cash
+            rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
 
-        if len(rows) == 0:
-            return apology("sorry, you have no cash", 403)
+            # # if len(rows) == 0:
+            # #     return apology("sorry, you have no cash", 403)
 
-        cash = rows[0]["cash"]
+            cash = rows[0]["cash"]
+            eprint(cash)
+            eprint(deposit)
+            eprint(cash + float(deposit))
+            cash = cash + float(deposit)
+            eprint(cash)
 
-        print("\n515. " + deposit)
+            db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
+                id=id, cash=cash)
 
-    return cash
+            # return render_template("/",
+            #     username=username,
+            #     user_id=id)
+
+            return redirect("/")
+
+        # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("deposit.html",
+            username=username,
+            user_id=id)
+
+
+@app.route("/withdraw", methods=["GET", "POST"])
+@login_required
+def withdraw():
+    eprint("\nin withdraw():")
+
+    if(session["user_id"] is None):
+        return render_template("login.html")
+
+    id = session["user_id"]
+    username = session["username"]
+    eprint(str(username) + " " + str(id))
+
+    # User reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+        # Ensure amount was submitted
+        if not request.form.get("amount"):
+            return apology("must provide amount", 403)
+        else:
+            session["amount"] = request.form.get("amount")
+            eprint(session["amount"])
+
+            withdraw = session.get('amount')
+            eprint(withdraw)
+
+            # # Query database for cash
+            rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
+
+            # # if len(rows) == 0:
+            # #     return apology("sorry, you have no cash", 403)
+
+            cash = rows[0]["cash"]
+            eprint(cash)
+            eprint(withdraw)
+            eprint(cash - float(withdraw))
+            cash = cash - float(withdraw)
+            eprint(cash)
+
+            db.execute("UPDATE users SET cash = :cash WHERE id = :id", \
+                id=id, cash=cash)
+
+            # return render_template("/",
+            #     username=username,
+            #     user_id=id)
+
+            return redirect("/")
+
+        # User reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("withdraw.html",
+            username=username,
+            user_id=id)

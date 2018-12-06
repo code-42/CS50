@@ -35,20 +35,18 @@
                         <li class="nav-item"><a class="nav-link" href="/buy">Buy</a></li>
                         <li class="nav-item"><a class="nav-link" href="/sell">Sell</a></li>
                         <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
-<li class="nav-item">
+                        <li class="nav-item">
                         <div class="dropdown">
-  <button class="navbar navbar-expand-md navbar-light bg-light collapse navbar-collapse nav-link dropbtn">Cash</button>
-  <div class="dropdown-content">
-    <a class="nav-link" href="#">Deposit</a>
-    <a class="nav-link" href="#">Withdraw</a>
-  </div>
-</div>
-</li>
-
-
-
+                          <button class="navbar navbar-expand-md navbar-light bg-light collapse navbar-collapse nav-link dropbtn">Cash</button>
+                          <div class="dropdown-content">
+                            <a class="nav-link" href="/deposit">Deposit</a>
+                            <a class="nav-link" href="/withdraw">Withdraw</a>
+                          </div>
+                        </div>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="/logout">Welcome <b>{{ username }}.</b> Your user_id is <b>{{ user_id }}</b></a></li>
                         <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
                     </ul>
                 {% else %}
