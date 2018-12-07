@@ -4,7 +4,9 @@ This project is an HTML UI front-end implementation I wrote for an Ethereum Soli
 my CareerDevs fellow student [Tim Wheeler](https://codesnippet.io/creating-your-own-cryptocurrency).
 However, I had to refactor Tim's dApp so it would work when uploaded to [Ropsten TestNet Verified Contract](https://ropsten.etherscan.io/address/0xd74a0f3606dbc4ad636760a751ecacbbc294d288#code) site.
 
-This project is an HTML UI front-end implementation for an Ethereum Solidity dApp back-end.  The front-end HTML User Interface is hosted on [Amazon S3](http://brooklyn-token-dapp.s3-website.us-east-2.amazonaws.com)  The back-end Solidity dApp is hosted on the [Ropsten Etherscan TestNet](https://ropsten.etherscan.io/address/0xd74a0f3606dbc4ad636760a751ecacbbc294d288#code)
+This project is an HTML UI front-end implementation for an Ethereum Solidity dApp back-end.
+The front-end HTML User Interface is hosted on [Amazon S3](http://brooklyn-token-dapp.s3-website.us-east-2.amazonaws.com)
+The back-end Solidity dApp is hosted on the [Ropsten Etherscan TestNet](https://ropsten.etherscan.io/address/0xd74a0f3606dbc4ad636760a751ecacbbc294d288#code)
 
 You must have MetaMask browser plug-in installed in your Chrome Firefox or Opera browser for this blockchain app to work.
 There are other browser plug-ins available for running blockchain dApps in your browser,

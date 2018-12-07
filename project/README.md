@@ -19,10 +19,12 @@ or send money (Ether) to another person or entity, or engage in some online gamb
 and have an immutable record of that transaction.
 
 The front-end HTML User Interface is hosted on [Amazon S3](http://brooklyn-token-dapp.s3-website.us-east-2.amazonaws.com)
+<= click there to get to the app (dApp).
 
 The back-end Solidity dApp is hosted on the [Ropsten Etherscan TestNet](https://ropsten.etherscan.io/address/0xd74a0f3606dbc4ad636760a751ecacbbc294d288#code)
+<= click there to see the smart contract.
 
-You must have MetaMask browser plug-in installed in your Chrome Firefox or Opera browser for this blockchain app to work.
+You must have MetaMask browser plug-in installed in your Chrome Firefox or Opera browser for this blockchain app (dApp) to work.
 There are other browser plug-ins available for running blockchain dApps in your browser,
 but MetaMask is by far the most popular and the one I recommend.
 So if you don't have MetaMask installed, head on over to [MetaMask](https://metamask.io/) and install it.
