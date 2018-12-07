@@ -1,4 +1,4 @@
-# Harvard SC50 Final Project: BrooklynToken
+# Harvard CS50 Final Project: BrooklynToken
 
 This project is an HTML UI front-end implementation I wrote for an Ethereum Solidity dApp back-end program written by
 my CareerDevs fellow student [Tim Wheeler](https://codesnippet.io/creating-your-own-cryptocurrency).
