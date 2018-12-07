@@ -1,6 +1,6 @@
 # Harvard SC50 Final Project Design Document: BrooklynToken
 
-This project is an HTML UI front-end implementation I wrote for an Ethereum Solidity dApp back-end written by my CareerDevs fellow student Tim Wheeler.
+This project is an HTML UI front-end implementation I wrote for an Ethereum Solidity dApp back-end program written by my CareerDevs fellow student Tim Wheeler.
 However, I had to refactor Tim's dApp so it would work when uploaded to Ropsten TestNet Verified Contract site.
 
 This is a small simple app (dApp) that transfers tokens from one blockchain address to another.
@@ -13,7 +13,7 @@ The front end you see here is written in HTML, and the back end is written in So
 
 This project is an HTML UI front-end implementation for an Ethereum Solidity dApp back-end written by my CareerDevs fellow student Tim Wheeler.
 
-The front-end HTML User Interface is hosted on Amazon S3 here =>  http://brooklyn-token-dapp.s3-website.us-east-2.amazonaws.com/
+The front-end HTML User Interface is hosted on [Amazon S3](http://brooklyn-token-dapp.s3-website.us-east-2.amazonaws.com)
 
 The back-end Solidity dApp is hosted on the Ropsten Etherscan TestNet here =>  https://ropsten.etherscan.io/address/0xd74a0f3606dbc4ad636760a751ecacbbc294d288#code
 
