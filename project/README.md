@@ -1,5 +1,7 @@
 # Harvard CS50 Final Project: BrooklynToken
 
+See my youtube video here => https://youtu.be/ty8KRLJEyXI
+
 This project is an HTML UI front-end implementation I wrote for an Ethereum Solidity dApp back-end program written by
 my CareerDevs fellow student [Tim Wheeler](https://codesnippet.io/creating-your-own-cryptocurrency).
 
@@ -30,5 +32,6 @@ but MetaMask is by far the most popular and the one I recommend.
 So if you don't have MetaMask installed, head on over to [MetaMask](https://metamask.io/) and install it.
 
 The project is also hosted on the CS50 IDE on Cloud9.
+
 
 
