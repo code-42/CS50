@@ -1,9 +1,10 @@
 # Harvard SC50 Final Project: BrooklynToken
 
-This project is an HTML UI front-end implementation I wrote for an Ethereum Solidity dApp back-end program written by my CareerDevs fellow student Tim Wheeler.
+This project is an HTML UI front-end implementation I wrote for an Ethereum Solidity dApp back-end program written by
+my CareerDevs fellow student [Tim Wheeler](https://codesnippet.io/creating-your-own-cryptocurrency).
 
 Solidity is an object-oriented, high-level language for implementing smart contracts on the Ethereum Blockchain.
-The beauty of it, as relates to CS50, is that it is influenced by JavaScript, Python, C and C++.
+The beauty of it, as relates to **CS50**, is that it is influenced by JavaScript, Python, C and C++.
 Solidity is object-oriented much like JavaScript, is statically typed and uses structs just like C,
 supports multiple inheritance, and libraaries.
 
