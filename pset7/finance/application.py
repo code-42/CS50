@@ -74,6 +74,7 @@ def index():
         eprint(cash)
         eprint(sumTotal)
 
+    # add username and user_id for the Welcome message in navbar
     return render_template("index.html",
                            portfolio=portfolio,
                            sumOfStocks=sumOfStocks,
@@ -135,6 +136,7 @@ def buy():
                                user_id=user_id)
 
     # User reached route via GET (as by clicking a link or via redirect)
+    # add username and user_id for the Welcome message in navbar
     else:
         return render_template("buy.html",
                                username=username,
@@ -177,8 +179,11 @@ def confirm():
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
+    # add username and user_id for the Welcome message in navbar
     else:
-        return render_template("buy.html")
+        return render_template("buy.html",
+                               username=username,
+                               user_id=user_id)
 
 
 @app.route("/history")
@@ -203,6 +208,7 @@ def history():
     if len(rows) == 0:
         return apology("sorry, you have't bought or sold any stocks yet", 403)
 
+    # add username and user_id for the Welcome message in navbar
     return render_template("history.html",
                            trades=rows,
                            username=username,
@@ -293,12 +299,14 @@ def quote():
                 print("invalid symbol")
                 return apology("invalid symbol", 403)
 
+            # add username and user_id for the Welcome message in navbar
             return render_template("quoted.html",
                                    quote=session,
                                    username=username,
                                    user_id=user_id)
 
     # User reached route via GET (as by clicking a link or via redirect)
+    # add username and user_id for the Welcome message in navbar
     else:
         return render_template("quote.html",
                                username=username,
@@ -409,6 +417,7 @@ def sell():
         if(getNumSharesOwned(symbol) < abs(session["shares"])):
             return apology("Sorry, you don't have enough shares for this trade.", 403)
 
+        # add username and user_id for the Welcome message in navbar
         return render_template("confirm.html",
                                shares=session,
                                quote=session,
@@ -430,6 +439,7 @@ def sell():
             portfolio.append(rows[row]["symbol"])
             eprint(portfolio)
 
+        # add username and user_id for the Welcome message in navbar
         return render_template("sell.html",
                                portfolio=portfolio,
                                username=username,
@@ -654,6 +664,7 @@ def deposit():
             return redirect("/")
 
         # User reached route via GET (as by clicking a link or via redirect)
+        # add username and user_id for the Welcome message in navbar
     else:
         return render_template("deposit.html",
                                username=username,
@@ -717,6 +728,7 @@ def withdraw():
             return redirect("/")
 
         # User reached route via GET (as by clicking a link or via redirect)
+        # add username and user_id for the Welcome message in navbar
     else:
         return render_template("withdraw.html",
                                username=username,

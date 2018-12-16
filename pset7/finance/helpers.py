@@ -26,6 +26,8 @@ def apology(message, code=400):
                          ("%", "~p"), ("#", "~h"), ("/", "~s"), ("\"", "''")]:
             s = s.replace(old, new)
         return s
+
+    # add username and user_id for the Welcome message in navbar
     return render_template("apology.html", top=code, bottom=escape(message), username=username, user_id=user_id), code
 
 
