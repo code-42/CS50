@@ -14,10 +14,17 @@ import datetime
 # Configure application
 app = Flask(__name__)
 
+# http://flask.pocoo.org/docs/1.0/quickstart/#sessions
+# Set the secret key to some random bytes. Keep this really secret!
+# $ python -c 'import os; print(os.urandom(24))'
+app.secret_key = '\xcfP\x0cC\xb4\xc8\x9cL\xadG\xd4>\xbd:\x1e\x12\xd8\x07\xde\x9f\x06\x1189'
+
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Ensure responses aren't cached
+
+
 @app.after_request
 def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -633,7 +640,7 @@ def deposit():
         # Ensure amount was submitted
         if not request.form.get("amount"):
             return apology("must provide amount", 403)
-        elif(request.form.get("amount") < 0):
+        elif(int(request.form.get("amount")) < 0):
             return apology("amount must be > 0", 403)
         else:
             session["amount"] = request.form.get("amount")
@@ -692,7 +699,7 @@ def withdraw():
         # Ensure amount was submitted
         if not request.form.get("amount"):
             return apology("must provide amount", 403)
-        elif(request.form.get("amount") < 0):
+        elif(int(request.form.get("amount")) < 0):
             return apology("amount must be > 0", 403)
         else:
             session["amount"] = request.form.get("amount")
