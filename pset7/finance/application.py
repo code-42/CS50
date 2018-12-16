@@ -219,7 +219,7 @@ def history():
 def login():
     """Log user in"""
 
-    eprint("\n\n213. ******************* inside /login()")
+    eprint("\n\n******************* inside /login()")
 
     # Forget any user_id
     session.clear()
@@ -246,7 +246,7 @@ def login():
             eprint("\n238. rows == " + str(len(rows)))
             return apology("invalid username and/or password", 403)
 
-        eprint("\n241. username == " + str(rows[0]["username"]))
+        eprint("username == " + str(rows[0]["username"]))
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
