@@ -41,7 +41,9 @@
                     {% endfor %}
 
                     <tr>
-                        <td>Stocks</td><td></td><td></td><td></td><td class="rt">{{ '%0.2f' % sumOfStocks|float }}</td>
+                        <td style="border-top: 1px solid black;">Stocks</td>
+                        <td colspan = "3" style="border-top: 1px solid black;"></td>
+                        <td class="rt" style="border-top: 1px solid black;">{{ '%0.2f' % sumOfStocks|float }}</td>
                     </tr>
                     <tr>
                         <td>Cash</td><td></td><td></td><td></td><td class="rt">{{ '%0.2f' % cash|float }}</td>
