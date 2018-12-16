@@ -259,6 +259,9 @@ def login():
 
         eprint("\n247. username == " + session["username"])
 
+        # give feedback to user with flash message
+        flash('You were successfully logged in')
+
         # Redirect user to home page
         return redirect("/")  # change to / when finish testing /buy
 
@@ -381,6 +384,9 @@ def register():
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
         session["username"] = rows[0]["username"]
+
+        # give feedback to user with flash message
+        flash('You were successfully registered')
 
         # Redirect user to home page
         return redirect("/")
