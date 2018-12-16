@@ -633,6 +633,8 @@ def deposit():
         # Ensure amount was submitted
         if not request.form.get("amount"):
             return apology("must provide amount", 403)
+        elif(request.form.get("amount") < 0):
+            return apology("amount must be > 0", 403)
         else:
             session["amount"] = request.form.get("amount")
             eprint(session["amount"])
@@ -690,6 +692,8 @@ def withdraw():
         # Ensure amount was submitted
         if not request.form.get("amount"):
             return apology("must provide amount", 403)
+        elif(request.form.get("amount") < 0):
+            return apology("amount must be > 0", 403)
         else:
             session["amount"] = request.form.get("amount")
             eprint(session["amount"])
