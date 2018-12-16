@@ -686,10 +686,16 @@ def withdraw():
             eprint(session["amount"])
 
             amount = float(session.get('amount'))
-            amount = amount * -1
             eprint(amount)
 
-            # add deposit to cashInOut
+            # determine if available cash > withdraw amount
+            cashBalance = getCashBalance()
+            eprint(cashBalance)
+            if(cashBalance < amount):
+                return apology("sorry, you don't have enough cash to withdraw that amount", 403)
+
+            # subtract withdraw to cashInOut
+            amount = amount * -1
             db.execute("INSERT INTO cashInOut (user_id, amount, timestamp) \
                 VALUES (:user_id, :amount, :timestamp)", user_id=user_id, amount=amount, timestamp=timestamp)
 
