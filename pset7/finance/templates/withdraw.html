@@ -8,7 +8,7 @@
 <!-- adapted from deposit.html -->
     <form action="/withdraw" method="POST">
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="amount" placeholder="amount" type="number" step=".01"/>
+            <input autocomplete="off" autofocus class="form-control" name="amount" placeholder="amount" type="number" min="0" step=".01"/>
         </div>
 
         <button class="btn btn-primary" type="submit" id="submit">Withdraw</button>

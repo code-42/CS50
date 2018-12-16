@@ -14,6 +14,11 @@ import datetime
 # Configure application
 app = Flask(__name__)
 
+# http://flask.pocoo.org/docs/1.0/quickstart/#sessions
+# Set the secret key to some random bytes. Keep this really secret!
+# $ python -c 'import os; print(os.urandom(24))'
+app.secret_key = '\xcfP\x0cC\xb4\xc8\x9cL\xadG\xd4>\xbd:\x1e\x12\xd8\x07\xde\x9f\x06\x1189'
+
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
@@ -219,7 +224,7 @@ def history():
 def login():
     """Log user in"""
 
-    eprint("\n\n213. ******************* inside /login()")
+    eprint("\n\n******************* inside /login()")
 
     # Forget any user_id
     session.clear()
@@ -246,7 +251,7 @@ def login():
             eprint("\n238. rows == " + str(len(rows)))
             return apology("invalid username and/or password", 403)
 
-        eprint("\n241. username == " + str(rows[0]["username"]))
+        eprint("username == " + str(rows[0]["username"]))
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -635,6 +640,8 @@ def deposit():
         # Ensure amount was submitted
         if not request.form.get("amount"):
             return apology("must provide amount", 403)
+        elif(int(request.form.get("amount")) < 0):
+            return apology("amount must be > 0", 403)
         else:
             session["amount"] = request.form.get("amount")
             eprint(session["amount"])
@@ -692,6 +699,8 @@ def withdraw():
         # Ensure amount was submitted
         if not request.form.get("amount"):
             return apology("must provide amount", 403)
+        elif(int(request.form.get("amount")) < 0):
+            return apology("amount must be > 0", 403)
         else:
             session["amount"] = request.form.get("amount")
             eprint(session["amount"])

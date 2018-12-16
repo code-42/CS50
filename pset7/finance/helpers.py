@@ -8,12 +8,15 @@ from cs50 import eprint
 def apology(message, code=400):
     eprint("\nin apology():")
 
-    if(session["user_id"] is None):
-        return render_template("login.html")
-
-    user_id = session["user_id"]
-    username = session["username"]
-    eprint(str(username) + " " + str(user_id))
+    # if the user is logged in, then there is a session object
+    if(session):
+        # User reached route via GET (as by clicking a link or via redirect)
+        if(session["user_id"] is None):
+            return render_template("login.html")
+        else:
+            user_id = session["user_id"]
+            username = session["username"]
+            eprint(str(username) + " " + str(user_id))
 
     """Render message as an apology to user."""
     def escape(s):
@@ -27,8 +30,14 @@ def apology(message, code=400):
             s = s.replace(old, new)
         return s
 
-    # add username and user_id for the Welcome message in navbar
-    return render_template("apology.html", top=code, bottom=escape(message), username=username, user_id=user_id), code
+    # if the user is logged in, then there is a session object
+    if(session):
+        # add username and user_id for the Welcome message in navbar
+        return render_template("apology.html", top=code, bottom=escape(message), username=username, user_id=user_id), code
+    # if the user is not logged in, no username and user_id for navbar
+    else:
+        return render_template("apology.html", top=code, bottom=escape(message)), code
+
 
 
 def login_required(f):
