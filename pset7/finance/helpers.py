@@ -3,10 +3,10 @@ import urllib.parse
 
 from flask import redirect, render_template, request, session
 from functools import wraps
-from cs50 import eprint
+# from cs50 import eprint
 
 def apology(message, code=400):
-    eprint("\nin apology():")
+    # eprint("\nin apology():")
 
     # if the user is logged in, then there is a session object
     if(session):
@@ -16,7 +16,7 @@ def apology(message, code=400):
         else:
             user_id = session["user_id"]
             username = session["username"]
-            eprint(str(username) + " " + str(user_id))
+            # eprint(str(username) + " " + str(user_id))
 
     """Render message as an apology to user."""
     def escape(s):
