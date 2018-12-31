@@ -1,6 +1,6 @@
 import os
 
-from cs50 import SQL, eprint
+from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for, make_response
 # url_for() added by me 201808112215 per Doug Lloyds flask video
 # https://www.youtube.com/watch?v=0SQdkDpMzKE&list=PLXmMXHVSvS-CMpHUeyIeqzs3kl-tIG-8R
@@ -57,27 +57,16 @@ def index():
 
     user_id = session["user_id"]
     username = session["username"]
-    eprint("\n52. " + str(username) + " " + str(user_id))
 
     portfolio = viewPortfolio()
-    eprint(" len(portfolio) == " + str(len(portfolio)))
-    eprint(viewPortfolio())
-    eprint(portfolio)
-    eprint("*** len(portfolio) == " + str(len(portfolio)))
     if len(portfolio) == 0:
         sumOfStocks = sumStocks()
         cash = getCashBalance()
         sumTotal = cash
-        eprint(sumOfStocks)
-        eprint(cash)
-        eprint(sumTotal)
     else:
         sumOfStocks = sumStocks()
         cash = getCashBalance()
         sumTotal = cash + sumOfStocks
-        eprint(sumOfStocks)
-        eprint(cash)
-        eprint(sumTotal)
 
     # add username and user_id for the Welcome message in navbar
     return render_template("index.html",
@@ -99,7 +88,6 @@ def buy():
 
     user_id = session["user_id"]
     username = session["username"]
-    eprint("\n94. " + str(username) + " " + str(user_id))
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -129,7 +117,6 @@ def buy():
         price = session["quote"].get("price")
         shares = session["shares"]
         total = price * shares
-        eprint("total == " + str(total))
 
         if(cash < total):
             return apology("Sorry, you don't have enough money for this trade.", 403)
@@ -161,26 +148,12 @@ def confirm():
 
         user_id = session["user_id"]
         username = session["username"]
-        eprint(str(username) + " " + str(user_id))
-
-        eprint("in confirm():")
         shares = session.get('shares')
         quote = session.get('quote')
-
-        eprint("num shares " + str(shares))
-        eprint(quote)
-        eprint(shares * quote["price"])
-        eprint(quote["symbol"])
-        eprint(quote["price"])
-
-        eprint(str(session.get('quote').get('price')))
-        eprint(str(quote["price"]))
 
         addTradeToDatabase(shares, quote, user_id)
 
         rows = viewPortfolio()
-        eprint(rows)
-        # return render_template("index.html", portfolio=rows)
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -202,7 +175,6 @@ def history():
 
     user_id = session["user_id"]
     username = session["username"]
-    eprint("\n52. " + str(username) + " " + str(user_id))
 
     user_id = session["user_id"]
 
@@ -224,8 +196,6 @@ def history():
 def login():
     """Log user in"""
 
-    eprint("\n\n******************* inside /login()")
-
     # Forget any user_id
     session.clear()
 
@@ -244,20 +214,13 @@ def login():
         rows = db.execute("SELECT * FROM users WHERE username = :username",
                           username=request.form.get("username"))
 
-        eprint("\n233. rows == " + str(len(rows)))
-
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            eprint("\n238. rows == " + str(len(rows)))
             return apology("invalid username and/or password", 403)
-
-        eprint("username == " + str(rows[0]["username"]))
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
         session["username"] = rows[0]["username"]
-
-        eprint("\n247. username == " + session["username"])
 
         # give feedback to user with flash message
         flash('You were successfully logged in')
@@ -291,7 +254,6 @@ def quote():
 
     user_id = session["user_id"]
     username = session["username"]
-    eprint("\n379. " + str(username) + " " + str(user_id))
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -324,7 +286,6 @@ def quote():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-    eprint("\n\n297. ******************* inside /register()")
 
     # Adapted from "/login" above
     # Forget any user_id
@@ -352,7 +313,6 @@ def register():
         # passed above tests so add name and password hash to database
         username = request.form.get("username")
         password = request.form.get("password")
-        eprint(username + password)
 
         # Query database for username used already
         # NOTE: this can be accomplished with keyword UNIQUE in db schema
@@ -364,10 +324,7 @@ def register():
 
         # source https://docs.python.org/2/library/hashlib.html
         hash = generate_password_hash(password)
-        eprint(hash)
-
         check_hash = check_password_hash(hash, password)
-        eprint(check_hash)
 
         # source Zamylas walkthrough video 2 @ 2:27
         db.execute("INSERT INTO users (username, hash) \
@@ -405,7 +362,6 @@ def sell():
 
     user_id = session["user_id"]
     username = session["username"]
-    eprint(str(username) + " " + str(user_id))
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -444,11 +400,8 @@ def sell():
         rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
                           user_id=user_id)
 
-        eprint("len(rows) == " + str(len(rows)))
-        eprint(rows)
         for row in range(len(rows)):
             portfolio.append(rows[row]["symbol"])
-            eprint(portfolio)
 
         # add username and user_id for the Welcome message in navbar
         return render_template("sell.html",
@@ -480,12 +433,9 @@ def addTradeToDatabase(shares, quote, user_id):
     timestamp = quote["timestamp"]
     tradeTotal = shares * price
 
-    eprint("getCashBalance() == " + str(getCashBalance()))
-    eprint("tradeTotal == " + str(tradeTotal))
 
     # Query database for cash and caclulate cash balance after trade
     cash = getCashBalance() - tradeTotal
-    eprint("cashBalance == " + str(cash))
 
     # add trade to portfolio
     db.execute("INSERT INTO trades (user_id, shares, symbol, company_name, price, timestamp) \
@@ -501,7 +451,6 @@ def addTradeToDatabase(shares, quote, user_id):
 def viewPortfolio():
 
     user_id = session["user_id"]
-    eprint(user_id)
 
     portfolio = {}
 
@@ -509,20 +458,13 @@ def viewPortfolio():
     rows = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
                       user_id=user_id)
 
-    eprint(len(rows))
-    eprint(rows)  # prints an array of objects
-
     if len(rows) == 0:
-        eprint("\n rows == " + str(len(rows)))
-
+        print("\n rows == " + str(len(rows)))
     else:
-        eprint("len(rows) == " + str(len(rows)))
         for row in range(len(rows)):
             session["quote"] = lookup(rows[row]["symbol"])  # get fresh data
             price = session["quote"].get("price")
             shares = rows[row]["sum(shares)"]
-            eprint(shares)
-            eprint(price)
             if(int(shares) > 0):
                 portfolio[rows[row]["symbol"]] = (
                     rows[row]["symbol"],
@@ -530,9 +472,7 @@ def viewPortfolio():
                     shares,
                     price,
                     shares * price)
-                eprint(portfolio[rows[row]["symbol"]])
 
-    eprint(portfolio)  # prints a dict of lists
     return portfolio
 
 
@@ -545,28 +485,17 @@ def sumStocks():
     # Query database for portfolio
     trades = db.execute("SELECT * FROM trades WHERE user_id = :user_id",
                         user_id=user_id)
-    eprint(str(len(trades)))
-    eprint(trades)
 
     portfolio = db.execute("SELECT * FROM portfolio WHERE user_id = :user_id",
                            user_id=user_id)
-    eprint(str(len(portfolio)))
-    eprint(portfolio)
 
     if (len(trades) > 0):
         for row in range(len(trades)):
             session["quote"] = lookup(trades[row]["symbol"])  # get fresh data
             price = session["quote"].get("price")
-            eprint(price)
-
             shares = trades[row]["shares"]
-            # price = trades[row]["price"]
-            # eprint(rows[row]["sum(shares * price)"])
-            eprint(shares * price)
             sumStocks += shares * price
-            eprint(sumStocks)
 
-    # eprint(str(sumStocks))
     return sumStocks
 
 
@@ -578,7 +507,6 @@ def getCashBalance():
     rows = db.execute("SELECT cash FROM users WHERE id = :id", id=id)
 
     cash = rows[0]["cash"]
-    eprint(cash)
 
     return cash
 
@@ -591,7 +519,6 @@ def getNumSharesOwned(symbol):
                            user_id=session["user_id"], symbol=symbol)
 
     numShares = int(numShares[0]["sum(shares)"])
-    eprint("numShares == " + str(numShares))
 
     return numShares
 
@@ -628,7 +555,6 @@ def utility_processor():
 @app.route("/deposit", methods=["GET", "POST"])
 @login_required
 def deposit():
-    eprint("\nin deposit():")
 
     if(session["user_id"] is None):
         return render_template("login.html")
@@ -636,10 +562,8 @@ def deposit():
     id = session["user_id"]
     user_id = id
     username = session["username"]
-    eprint(str(username) + " " + str(id))
 
     timestamp = datetime.datetime.now().timestamp()
-    eprint(timestamp)
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -650,10 +574,8 @@ def deposit():
             return apology("amount must be > 0", 403)
         else:
             session["amount"] = request.form.get("amount")
-            eprint(session["amount"])
 
             amount = float(session.get('amount'))
-            eprint(amount)
 
             # add deposit to cashInOut
             db.execute("INSERT INTO cashInOut (user_id, amount, timestamp) \
@@ -666,11 +588,7 @@ def deposit():
             #     return apology("sorry, you have no cash", 403)
 
             cash = rows[0]["cash"]
-            eprint(cash)
-            eprint(amount)
-            eprint(cash + float(amount))
             cash = cash + float(amount)
-            eprint(cash)
 
             db.execute("UPDATE users SET cash = :cash WHERE id = :id", id=id, cash=cash)
 
@@ -687,18 +605,14 @@ def deposit():
 @app.route("/withdraw", methods=["GET", "POST"])
 @login_required
 def withdraw():
-    eprint("\nin withdraw():")
-
     if(session["user_id"] is None):
         return render_template("login.html")
 
     id = session["user_id"]
     user_id = id
     username = session["username"]
-    eprint(str(username) + " " + str(id))
 
     timestamp = datetime.datetime.now().timestamp()
-    eprint(timestamp)
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -709,14 +623,11 @@ def withdraw():
             return apology("amount must be > 0", 403)
         else:
             session["amount"] = request.form.get("amount")
-            eprint(session["amount"])
 
             amount = float(session.get('amount'))
-            eprint(amount)
 
             # determine if available cash > withdraw amount
             cashBalance = getCashBalance()
-            eprint(cashBalance)
             if(cashBalance < amount):
                 return apology("sorry, you don't have enough cash to withdraw that amount", 403)
 
@@ -732,11 +643,7 @@ def withdraw():
             #     return apology("sorry, you have no cash", 403)
 
             cash = rows[0]["cash"]
-            eprint(cash)
-            eprint(amount)
-            eprint(cash + float(amount))
             cash = cash + float(amount)
-            eprint(cash)
 
             db.execute("UPDATE users SET cash = :cash WHERE id = :id", id=id, cash=cash)
 
