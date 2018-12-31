@@ -433,7 +433,6 @@ def addTradeToDatabase(shares, quote, user_id):
     timestamp = quote["timestamp"]
     tradeTotal = shares * price
 
-
     # Query database for cash and caclulate cash balance after trade
     cash = getCashBalance() - tradeTotal
 
